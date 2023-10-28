@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">api.cinimo.ir</domain>
+        <domain includeSubdomains="true">https://raw.githubusercontent.com</domain>
+        <domain includeSubdomains="true">cinimo.ir</domain>
+        <domain includeSubdomains="true">file.cinimo.ir</domain>
+        <domain includeSubdomains="true">https://api.ipify.org</domain>
+        <domain includeSubdomains="true">https://play.google.com</domain>
+        <domain includeSubdomains="true">https://arianaad.online/</domain>
+    </domain-config>
+</network-security-config>

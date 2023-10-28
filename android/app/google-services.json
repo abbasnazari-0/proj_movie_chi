@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "628256163112",
+    "project_id": "movi-chi",
+    "storage_bucket": "movi-chi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628256163112:android:9614086d6a106af83bbc1d",
+        "android_client_info": {
+          "package_name": "com.arianadeveloper.movie.chi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628256163112-2360ka081j5sb5voe0718dmd3mm7k730.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arianadeveloper.movie.chi",
+            "certificate_hash": "70c4c9af6e38c0d27e7f5984e1d2c8171399d8f8"
+          }
+        },
+        {
+          "client_id": "628256163112-rk4cl95sbkqtcehb5gfbba03mccl4gtn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arianadeveloper.movie.chi",
+            "certificate_hash": "ee0d927096649ab9728f68b75c3be5632f0ae0ea"
+          }
+        },
+        {
+          "client_id": "628256163112-o731bv06e5k7bqkvuc9lg6etnv0am9ie.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxqhNIkBpmBUFOZh5WH0qB75zcY6Q2uL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628256163112-7llo6dgoj81d5fd2s0ll29fg4rd87u2e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.arianadeveloper.world.movie"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
