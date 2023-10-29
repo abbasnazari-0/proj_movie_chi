@@ -25,6 +25,7 @@ class VideoPlayerViewController extends GetxController {
   bool showWaterMark = true;
   MeeduPlayerController? videoController;
   VideoPlayerViewController(this.videoPlayerUseCase);
+  bool showSubtitleValue = true;
 
   final pagePlayerController = Get.find<PageVideoPlayerController>();
 
@@ -149,6 +150,7 @@ class VideoPlayerViewController extends GetxController {
     await videocontroller.pause();
     showDialog(
       context: context,
+      barrierColor: Colors.transparent,
       builder: (context) {
         return Material(
           color: Colors.transparent,
@@ -176,75 +178,118 @@ class VideoPlayerViewController extends GetxController {
                   if (dataState is DataSuccess) {
                     VideoSubtitle videoSubtitle = dataState.data;
 
-                    return Container(
-                      color: Theme.of(context).colorScheme.background,
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Column(
-                          children: [
-                            if ((videoSubtitle.amount ?? 0) == 0)
-                              Column(
+                    return GetBuilder<VideoPlayerViewController>(
+                        id: "subtitle",
+                        builder: (controller) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.background,
+                                borderRadius: BorderRadius.circular(20)),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20.w, vertical: 20.h),
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Column(
                                 children: [
-                                  Lottie.asset("assets/lotties/empty.json",
-                                      height: 120.h),
-                                  const MyText(
-                                      txt: "زیر نویسی برای این فیلم یافت نشد")
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 0.05.sh),
+                                      IconButton(
+                                          onPressed: () {
+                                            Get.close(0);
+                                          },
+                                          icon: const Icon(Icons.close_rounded))
+                                    ],
+                                  ),
+                                  if ((videoSubtitle.amount ?? 0) == 0)
+                                    Column(
+                                      children: [
+                                        Lottie.asset(
+                                            "assets/lotties/empty.json",
+                                            height: 120.h),
+                                        const MyText(
+                                            txt:
+                                                "زیر نویسی برای این فیلم یافت نشد")
+                                      ],
+                                    ),
+                                  if ((videoSubtitle.amount ?? 0) > 0)
+                                    SizedBox(height: 0.05.sh),
+                                  MyText(
+                                    txt: "انتخاب زیرنویس",
+                                    size: 20.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 0.01.sh),
+                                  if ((videoSubtitle.amount ?? 0) > 0)
+                                    MyText(
+                                      txt:
+                                          "لطفا یکی از زیرنویس های زیر را انتخاب کنید",
+                                      size: 16.sp,
+                                      fontWeight: FontWeight.w300,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  SizedBox(height: 0.07.sh),
+                                  if ((videoSubtitle.amount ?? 0) > 0)
+                                    Expanded(
+                                      child: ListView.separated(
+                                        separatorBuilder: (context, index) {
+                                          return const Divider(
+                                            thickness: 0.2,
+                                          );
+                                        },
+                                        itemCount: videoSubtitle.amount ?? 0,
+                                        itemBuilder: (context, index) {
+                                          return TextButton(
+                                            onPressed: () {
+                                              subtitleClicked(
+                                                  index, videoSubtitle);
+                                              Get.close(0);
+                                            },
+                                            child: MyText(
+                                              textAlign: TextAlign.center,
+                                              txt: videoSubtitle
+                                                  .data![index].title
+                                                  .toString(),
+                                              size: 15.sp,
+                                              color: Colors.amber,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  SizedBox(
+                                    width: 0.5.sw,
+                                    child: SwitchListTile(
+                                        value: showSubtitleValue,
+                                        subtitle: MyText(
+                                          txt:
+                                              "با غیرفعال کردن دیگر زیرنویس نمایش داده نمیشود",
+                                          color: Colors.white70,
+                                          size: 14.sp,
+                                        ),
+                                        onChanged: (v) {
+                                          chnageSubtitleStatus(v);
+                                        },
+                                        thumbColor: MaterialStateProperty.all(
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                        inactiveThumbColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary
+                                            .withAlpha(100),
+                                        title: MyText(
+                                          txt: "فعال کردن زیرنویس",
+                                          size: 18.sp,
+                                          color: Colors.white,
+                                        )),
+                                  )
                                 ],
                               ),
-                            if ((videoSubtitle.amount ?? 0) > 0)
-                              Expanded(
-                                child: ListView.separated(
-                                  separatorBuilder: (context, index) {
-                                    return const Divider(
-                                      thickness: 0.2,
-                                    );
-                                  },
-                                  itemCount: videoSubtitle.amount ?? 0,
-                                  itemBuilder: (context, index) {
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        MyText(
-                                            // textAlign: TextAlign.center,
-                                            txt: videoSubtitle
-                                                    .data![index].title
-                                                    .toString() +
-                                                videoSubtitle.data![index].year
-                                                    .toString()),
-                                        TextButton(
-                                          onPressed: () async {
-                                            subtitleClicked(
-                                                index, videoSubtitle);
-
-                                            Get.back();
-
-                                            // change screen direction
-                                            // if (pagePlayerController.controller
-                                            //         .fullscreen.value ==
-                                            //     false) {
-                                            // pagePlayerController.controller
-                                            //     .toggleFullScreen(
-                                            //         Get.context!);
-                                            // }
-                                          },
-                                          child: const MyText(
-                                              txt: "انتخاب زیر نویس"),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ),
-                            IconButton(
-                                onPressed: () {
-                                  Get.close(0);
-                                },
-                                icon: const Icon(Icons.close_rounded))
-                          ],
-                        ),
-                      ),
-                    );
+                            ),
+                          );
+                        });
                   }
                 }
                 return const MyText(txt: "unk");
@@ -252,8 +297,16 @@ class VideoPlayerViewController extends GetxController {
         );
       },
     );
+  }
 
-    // if (data is DataSuccess) {}
-    // if (data is DataFailed) {}
+  chnageSubtitleStatus(bool val) {
+    showSubtitleValue = val;
+    update(['subtitle']);
+
+    if (val == false) {
+      pagePlayerController.controller.onClosedCaptionEnabled(false);
+    } else {
+      pagePlayerController.controller.onClosedCaptionEnabled(true);
+    }
   }
 }
