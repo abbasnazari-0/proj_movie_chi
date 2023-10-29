@@ -310,8 +310,12 @@ class DetailPageController extends GetxController {
     update();
   }
 
+  PageStatus commentStatus = PageStatus.empty;
+
   submitComment() async {
     if (userCommentController.text.isNotEmpty) {
+      commentStatus = PageStatus.loading;
+      update();
       DataState dataState = await videoDetailUseCase.addVideoComments(
           videoDetail!.tag!,
           GetStorageData.getData("user_tag"),
@@ -321,10 +325,14 @@ class DetailPageController extends GetxController {
         userCommentController.clear();
         showCommentInput = false;
         getVideoComments(videoDetail!.tag!);
+
+        commentStatus = PageStatus.success;
         update();
       }
       if (dataState is DataFailed) {
         // return dataState.error;
+        commentStatus = PageStatus.success;
+        update();
       }
     }
   }
@@ -543,6 +551,4 @@ class DetailPageController extends GetxController {
         "$twoDigitMinutes:"
         "$twoDigitSeconds";
   }
-
-
 }

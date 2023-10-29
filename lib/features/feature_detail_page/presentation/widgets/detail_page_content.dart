@@ -638,10 +638,12 @@ class DetailPageContent extends StatelessWidget {
                   onPressed: () {
                     controller.submitComment();
                   },
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.white,
-                  ),
+                  icon: controller.commentStatus == PageStatus.loading
+                      ? const CircularProgressIndicator()
+                      : const Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
                 ),
               ],
             ),
