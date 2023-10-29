@@ -18,6 +18,10 @@ import 'package:movie_chi/features/feature_plans/data/repositories/plan_reposito
 import 'package:movie_chi/features/feature_plans/domain/repositories/plan_repositry.dart';
 import 'package:movie_chi/features/feature_plans/domain/usecase/plan_usecase.dart';
 import 'package:movie_chi/features/feature_series_movies/data/data_sources/remote/data_sources.dart';
+import 'package:movie_chi/features/feature_support/data/data_source/remote.dart';
+import 'package:movie_chi/features/feature_support/data/repository/support_repository_impl.dart';
+import 'package:movie_chi/features/feature_support/domain/repository/support_repository.dart';
+import 'package:movie_chi/features/feature_support/domain/usecases/support_use_case.dart';
 import 'package:movie_chi/features/feature_zhanner/data/data_source/remote/zhanner_data_source.dart';
 import 'package:movie_chi/features/feature_home/data/respository/home_catagory_repository_impl.dart';
 import 'package:movie_chi/features/feature_home/domain/repositories/home_cataogry_repository.dart';
@@ -124,6 +128,12 @@ setup() async {
   locator.registerSingleton<PlanApiProvider>(PlanApiProvider());
   locator.registerSingleton<PlanRepository>(PlanRepositoryImpl(locator()));
   locator.registerSingleton<PlanUseCase>(PlanUseCase(locator()));
+
+  locator.registerSingleton<SupportApiProvider>(SupportApiProvider());
+  locator.registerSingleton<SupportRepository>(
+      SupportRepositoryImpl(apiProvider: locator()));
+  locator
+      .registerSingleton<SupportUseCase>(SupportUseCase(repository: locator()));
 
   locatConfigSecoundPage();
 /*

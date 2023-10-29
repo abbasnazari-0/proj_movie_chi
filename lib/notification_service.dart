@@ -79,6 +79,7 @@ class LocalNotificationService {
 
     var messaging = FirebaseMessaging.instance;
     var token = await messaging.getToken();
+    GetStorageData.writeData("user_noti", token);
     debugPrint("user token is $token");
 
     try {

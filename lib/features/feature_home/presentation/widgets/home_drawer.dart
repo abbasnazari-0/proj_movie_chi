@@ -13,6 +13,7 @@ import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/random_string.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/drawer_controller.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
+import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
@@ -162,11 +163,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 color: Theme.of(context).colorScheme.onSurface.withAlpha(20)),
             ListTile(
               onTap: () {
-                Get.to(() => const CriticismPage());
+                Scaffold.of(context).closeDrawer();
+                Get.to(() => SupportPage());
               },
-              leading: Icon(LineAwesome.flag,
+              leading: Icon(Iconsax.support,
                   color: Theme.of(context).primaryIconTheme.color),
-              title: const MyText(txt: 'انتقادات و پیشنهادات'),
+              title: const MyText(txt: "چت با پشتیبانی"),
             ),
             ListTile(
               onTap: () {
