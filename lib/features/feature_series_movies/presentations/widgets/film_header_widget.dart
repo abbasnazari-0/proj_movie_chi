@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../../core/widgets/mytext.dart';
 import '../../../../locator.dart';
-import '../../../feature_artists/presentation/widgets/artist_search_box.dart';
 import '../controllers/movies_controller.dart';
 
 class FilmHeader extends StatelessWidget {
@@ -20,28 +19,28 @@ class FilmHeader extends StatelessWidget {
       height: 80,
       child: Row(
         children: [
-          Expanded(
-            child: ArtistSearchBox(
-              searchController: filmController.searchController,
-              size: MediaQuery.of(context).size,
-              onChanegd: () {
-                if (filmController.searchController.text.isEmpty) {
-                  filmController.searchQ = "";
+          // Expanded(
+          //   child: ArtistSearchBox(
+          //     searchController: filmController.searchController,
+          //     size: MediaQuery.of(context).size,
+          //     onChanegd: () {
+          //       if (filmController.searchController.text.isEmpty) {
+          //         filmController.searchQ = "";
 
-                  filmController.getMovies(true);
-                }
-              },
-              onSubmited: (value) {
-                filmController.searchQ = filmController.searchController.text;
+          //         filmController.getMovies(true);
+          //       }
+          //     },
+          //     onSubmited: (value) {
+          //       filmController.searchQ = filmController.searchController.text;
 
-                filmController.getMovies(true);
-              },
-              onClosed: () {
-                filmController.searchQ = "";
-                filmController.getMovies(true);
-              },
-            ),
-          ),
+          //       filmController.getMovies(true);
+          //     },
+          //     onClosed: () {
+          //       filmController.searchQ = "";
+          //       filmController.getMovies(true);
+          //     },
+          //   ),
+          // ),
           GetBuilder<MvoiesController>(builder: (controller) {
             return PopupMenuButton(
                 icon: const Icon(Icons.filter_list),

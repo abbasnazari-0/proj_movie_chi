@@ -32,6 +32,7 @@ class HomeCategoryRepositoryImpl implements HomeCategoryRepository {
       // check if json or not
       // if (isJson(res.data)) {
       // List homeCatagoryList = json.decode(res.data);
+
       try {
         return DataSuccess(HomeCatagory.fromJson((res.data)));
       } catch (e) {
@@ -58,7 +59,6 @@ class HomeCategoryRepositoryImpl implements HomeCategoryRepository {
       List vidIds, String title) async {
     Response res =
         await homeCategoryDataGetter.getCatagoryItemData(vidIds, title);
-
     if (res.statusCode == 200) {
       // check if json or not
       if (isJson(res.data)) {

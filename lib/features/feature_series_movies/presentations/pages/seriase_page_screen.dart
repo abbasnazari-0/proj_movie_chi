@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/core/resources/home_view_exported.dart';
+import 'package:movie_chi/features/feature_home/data/model/home_catagory_model.dart';
+
 import 'package:movie_chi/features/feature_series_movies/presentations/controllers/seriase_controller.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-import '../../../../core/models/search_video_model.dart';
 import '../../../../core/utils/page_status.dart';
 import '../../../feature_home/presentation/widgets/search_shimmer.dart';
 import '../../../feature_search/presentation/widgets/custom_footer_refresh.dart';
-import '../../../feature_search/presentation/widgets/search_screen_item.dart';
 
 class SeriaseScreen extends StatelessWidget {
   const SeriaseScreen({super.key});
@@ -30,15 +31,35 @@ class SeriaseScreen extends StatelessWidget {
         },
         child: (controller.pageStatus == PageStatus.loading)
             ? const SearchShimmer()
-            : GridView.builder(
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisExtent: MediaQuery.of(context).size.height * 0.25,
-                    crossAxisCount: 3),
-                itemCount: controller.searis.length,
-                itemBuilder: (BuildContext context, int index) {
-                  SearchVideo item = controller.searis[index];
-                  return SearchItem(item: item);
+            : ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: ((controller.homeCatagory?.data?.data?.length) ?? 0),
+                itemBuilder: (context, index) {
+                  HomeCatagoryItemModel homeCatagoryItem =
+                      controller.homeCatagory!.data!.data![index];
+
+                  switch (homeCatagoryItem.viewName) {
+                    case "carousel_slider":
+                      return HomeGalleryVideos(
+                          itemGalleryData: homeCatagoryItem);
+
+                    case "extended_slider":
+                      return ExtendedSliderHomeView(
+                          homeCatagoryItem: homeCatagoryItem);
+                    case "banner":
+                      return HomeBannerView(homeCatagoryItem: homeCatagoryItem);
+                    case "catagory":
+                      return CatagoryHomeView(
+                          homeCatagoryItem: homeCatagoryItem);
+                    case "mini_slider":
+                      return MiniSliderView(homeCatagoryItem: homeCatagoryItem);
+                    case "grid":
+                      return GridHomeView(homeCatagoryItem: homeCatagoryItem);
+
+                    default:
+                      return Container();
+                  }
                 },
               ),
       );

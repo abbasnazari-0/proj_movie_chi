@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:movie_chi/core/models/search_video_model.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
+import 'package:movie_chi/features/feature_home/data/model/home_catagory_model.dart';
 import 'package:movie_chi/features/feature_series_movies/domain/usecases/serias_movies_use_cases.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
@@ -23,7 +23,8 @@ class MvoiesController extends GetxController {
     getTypeShow();
   }
 
-  List<SearchVideo> movies = [];
+  // List<SearchVideo> movies = [];
+  HomeCatagory? homeCatagory;
   MvoiesController({required this.seriasMoviesUseCases});
   TextEditingController searchController = TextEditingController();
   PageStatus pageStatus = PageStatus.loading;
@@ -32,7 +33,7 @@ class MvoiesController extends GetxController {
   getMovies(bool withUpdate) async {
     if (withUpdate) {
       page = 0;
-      movies.clear();
+      // movies.clear();
       pageStatus = PageStatus.loading;
       update();
     } else {
@@ -42,7 +43,12 @@ class MvoiesController extends GetxController {
     DataState data =
         await seriasMoviesUseCases.getMovies(page, showType, searchQ);
     if (data is DataSuccess) {
-      movies.addAll(data.data);
+      if (homeCatagory == null) {
+        homeCatagory = data.data;
+      } else {
+        HomeCatagory newHomeCatagory = data.data;
+        homeCatagory?.data?.data?.addAll(newHomeCatagory.data!.data!);
+      }
       pageStatus = PageStatus.success;
       update();
     }

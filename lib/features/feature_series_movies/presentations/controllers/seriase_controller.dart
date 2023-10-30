@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/features/feature_home/data/model/home_catagory_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-import '../../../../core/models/search_video_model.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/page_status.dart';
 import '../../data/models/movies_serias_type_show.dart';
@@ -23,7 +23,7 @@ class SeriasController extends GetxController {
 
   String showType = "";
   RefreshController refreshController = RefreshController();
-  List<SearchVideo> searis = [];
+  HomeCatagory? homeCatagory;
   String searchQ = "";
   List<TypeShow> typeShow = [
     //add all
@@ -36,7 +36,7 @@ class SeriasController extends GetxController {
   getSerias(bool withUpdate) async {
     if (withUpdate) {
       pages = 0;
-      searis.clear();
+      // searis.clear();
       pageStatus = PageStatus.loading;
 
       update();
@@ -48,7 +48,14 @@ class SeriasController extends GetxController {
         await seriasMoviesUseCases.getSerias(pages, showType, searchQ);
 
     if (data is DataSuccess) {
-      searis.addAll(data.data);
+      if (homeCatagory == null) {
+        homeCatagory = data.data;
+      } else {
+        HomeCatagory newHomeCatagory = data.data;
+        homeCatagory?.data?.data?.addAll(newHomeCatagory.data!.data!);
+      }
+
+      // searis.addAll(data.data);
       pageStatus = PageStatus.success;
       update();
     }

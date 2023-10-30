@@ -28,14 +28,14 @@ class HomeCatagory {
 
 class HomeCatagoryData {
   String? page;
-  String? amount;
+  // String? amount;
   List<HomeCatagoryItemModel>? data;
 
-  HomeCatagoryData({this.page, this.amount, this.data});
+  HomeCatagoryData({this.page, this.data});
 
   HomeCatagoryData.fromJson(Map<String, dynamic> json) {
     page = json['page'];
-    amount = json['amount'];
+    // amount = json['amount'];
     if (json['data'] != null) {
       data = <HomeCatagoryItemModel>[];
       json['data'].forEach((v) {
@@ -47,7 +47,7 @@ class HomeCatagoryData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['page'] = page;
-    data['amount'] = amount;
+    // data['amount'] = amount;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
