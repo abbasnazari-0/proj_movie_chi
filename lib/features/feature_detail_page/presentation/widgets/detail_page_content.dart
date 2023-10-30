@@ -110,164 +110,7 @@ class DetailPageContent extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 4.0),
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.horizontal,
-        //   child: Row(
-        //     children: [
-        //       IconButton(
-        //         onPressed: () {
-        //           controller.submitLike();
-        //         },
-        //         icon: Icon(
-        //           controller.videoLiked ? Iconsax.heart5 : Iconsax.heart4,
-        //           color: controller.videoLiked
-        //               ? Colors.red
-        //               : Theme.of(context).colorScheme.onBackground,
-        //         ),
-        //       ),
-        //       IconButton(
-        //         onPressed: () {
-        //           controller.submitBookmark();
-        //         },
-        //         icon: Icon(
-        //           controller.videoBookMarked ? Iconsax.save_25 : Iconsax.save_2,
-        //         ),
-        //       ),
-        //       IconButton(
-        //         onPressed: () {
-        //           Share.share("${pageController.videoDetail?.title} \n"
-        //               'https://www.cinimo.ir/video/${pageController.videoDetail?.tag} '
-        //               "  \n\n دانلود اپلیکیشن مووی چی! از لینک زیر \n https://www.cinimo.ir/");
-        //         },
-        //         icon: const Icon(Iconsax.share4),
-        //       ),
 
-        //       if (pageController.videoDetail?.type == "video" &&
-        //           Constants.allowToShowAd())
-        //         ElevatedButton.icon(
-        //             style: ElevatedButton.styleFrom(
-        //               backgroundColor: Theme.of(context).colorScheme.secondary,
-        //               foregroundColor:
-        //                   Theme.of(context).colorScheme.onSecondary,
-        //               shape: RoundedRectangleBorder(
-        //                 borderRadius: BorderRadius.circular(40 / 4),
-        //               ),
-        //             ),
-        //             onPressed: () {
-        //               final downloadController =
-        //                   Get.find<DownloadPageController>();
-
-        //               if (pageController.isDownloading) {
-        //                 // should cancel download
-        //                 if (pageController.videoDetail?.tag ==
-        //                     downloadController.video?.tag) {
-        //                   pageController.cancellTaskDownlod();
-        //                   return;
-        //                 }
-        //               }
-
-        //               downloadController.startNewDownload(
-        //                   pageController.videoDetail!,
-        //                   detailController: pageController);
-        //             },
-        //             icon: pageController.isVideoDownloaded
-        //                 ? const Icon(
-        //                     Iconsax.play,
-        //                   )
-        //                 : pageController.isDownloading == true &&
-        //                         pageController.videoDetail?.tag ==
-        //                             downloadController.video?.tag
-        //                     ? const Icon(
-        //                         Icons.close,
-        //                       )
-        //                     : const Icon(
-        //                         Iconsax.arrow_down_24,
-        //                       ),
-        //             label: MyText(
-        //               txt: pageController.isVideoDownloaded
-        //                   ? 'پخش دانلود شده'
-        //                   : pageController.isDownloading == true &&
-        //                           pageController.videoDetail?.tag ==
-        //                               downloadController.video?.tag
-        //                       ? 'لغو دانلود'
-        //                       : "دانلود نیم بها",
-        //               color: Theme.of(context).colorScheme.onSecondary,
-        //             )),
-
-        //       // const Spacer(),
-        //       // View Section
-        //       const SizedBox(width: 20),
-        //       if (pageController.videoDetail?.view != null &&
-        //           (config.config?.viewShow ?? false) == true)
-        //         Row(
-        //           children: [
-        //             MyText(
-        //               txt: pageController.videoDetail!.view.toString(),
-        //               fontWeight: FontWeight.bold,
-        //             ),
-        //             SizedBox(
-        //               width: width * 0.01,
-        //             ),
-        //             Icon(
-        //               Iconsax.eye,
-        //               color: Theme.of(context).colorScheme.secondary,
-        //               size: 15,
-        //             ),
-        //           ],
-        //         ),
-        //       const SizedBox(width: 10),
-
-        //       // IMDB Section
-        //       if (pageController.videoDetail?.imdb != null)
-        //         Container(
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(5),
-        //             color: Colors.orangeAccent,
-        //           ),
-        //           padding: const EdgeInsets.all(3),
-        //           child: Row(
-        //             children: [
-        //               const MyText(
-        //                 txt: "10/",
-        //                 color: Colors.black87,
-        //               ),
-        //               MyText(
-        //                 txt:
-        //                     "IMDB ${double.parse(pageController.videoDetail!.imdb ?? '0').toStringAsFixed(1)}",
-        //                 color: Colors.black87,
-        //                 fontWeight: FontWeight.bold,
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       const SizedBox(width: 10),
-
-        //       // Notif Section
-        //       if (pageController.videoDetail?.status == "released")
-        //         Container(
-        //             decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(999),
-        //               color: Colors.black,
-        //             ),
-        //             margin: const EdgeInsets.symmetric(
-        //                 horizontal: 20, vertical: 10),
-        //             child: MaterialButton(
-        //               onPressed: () {},
-        //               child: Row(
-        //                 children: [
-        //                   const SizedBox(
-        //                     width: 20,
-        //                   ),
-        //                   const MyText(
-        //                     txt: "اطلاع بده بهم",
-        //                   ),
-        //                   Icon(Icons.notification_add)
-        //                 ],
-        //               ),
-        //             ))
-        //     ],
-        //   ),
-        // ),
         SizedBox(height: 10.h),
         // Title Section
         SizedBox(height: 1.h),
@@ -281,100 +124,6 @@ class DetailPageContent extends StatelessWidget {
         SizedBox(height: 20.h),
         HeaderActionButtonGroup(),
 
-        // if (pageController.isDownloading &&
-        //     downloadController.video?.tag == pageController.videoDetail?.tag)
-        //   Column(
-        //     children: [
-        //       SizedBox(height: 10.h),
-        //       Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           MyText(
-        //             txt: "در حال دانلود",
-        //             textAlign: TextAlign.center,
-        //             fontWeight: FontWeight.bold,
-        //             size: 16.sp,
-        //           ),
-        //           const SizedBox(width: 10),
-        //           MyText(
-        //             txt: '${((pageController.prog?.toStringAsFixed(2) ?? 0))}%',
-        //             textAlign: TextAlign.center,
-        //           )
-        //         ],
-        //       ),
-        //       SizedBox(height: 5.h),
-        //       Row(
-        //         children: [
-        //           const SizedBox(
-        //             width: 10,
-        //           ),
-        //           IconButton(
-        //               onPressed: () {
-        //                 pageController.cancellTaskDownlod();
-        //               },
-        //               icon: const Icon(Icons.close)),
-        //           Expanded(
-        //             child: Padding(
-        //               padding: const EdgeInsets.symmetric(horizontal: 10),
-        //               child: Directionality(
-        //                   textDirection: TextDirection.ltr,
-        //                   child: pageController.prog != null
-        //                       ? LinearProgressIndicator(
-        //                           backgroundColor:
-        //                               Theme.of(context).colorScheme.onSecondary,
-        //                           value: pageController.prog! / 100,
-        //                           color:
-        //                               Theme.of(context).colorScheme.secondary,
-        //                         )
-        //                       : LinearProgressIndicator(
-        //                           backgroundColor:
-        //                               Theme.of(context).colorScheme.onSecondary,
-        //                           color:
-        //                               Theme.of(context).colorScheme.secondary,
-        //                         )),
-        //             ),
-        //           ),
-        //           LoadingAnimationWidget.bouncingBall(
-        //             color: Theme.of(context).colorScheme.secondary,
-        //             size: 25,
-        //           ),
-        //           // IconButton(
-        //           //     onPressed: () {
-        //           //       pageController.pauseDownload();
-        //           //     },
-        //           //     icon: const Icon(Icons.pause)),
-        //         ],
-        //       ),
-        //       const SizedBox(height: 5),
-        //       Padding(
-        //         padding: const EdgeInsets.symmetric(horizontal: 15),
-        //         child: Directionality(
-        //           textDirection: TextDirection.ltr,
-        //           child: Row(
-        //             children: [
-        //               MyText(
-        //                 txt:
-        //                     '${pageController.getFileSizeString(bytes: pageController.downloadedSize)} / ',
-        //                 fontWeight: FontWeight.bold,
-        //               ),
-        //               MyText(
-        //                 txt: pageController
-        //                     .getFileSizeString(
-        //                         bytes: pageController.fileSize.toDouble())
-        //                     .toString(),
-        //                 fontWeight: FontWeight.bold,
-        //               ),
-        //               const Spacer(),
-        //               // MyText(
-        //               //   txt: pageController.remaingTime,
-        //               // )
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //       SizedBox(height: 20.h),
-        //     ],
-        //   ),
         // SizedBox(height: 10.h),
 
         // Desc Section
@@ -437,16 +186,33 @@ class DetailPageContent extends StatelessWidget {
                       ),
                     )),
               ),
-              expanded: InkWell(
-                onTap: () {
-                  expanableController.toggle();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: MyText(
-                    txt: pageController.videoDetail!.desc!,
-                    textAlign: TextAlign.right,
-                  ),
+              expanded: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
+                child: Column(
+                  children: [
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                            onPressed: () {
+                              expanableController.toggle();
+                            },
+                            icon: const Icon(Icons.close))),
+                    SelectableText(
+                      pageController.videoDetail?.desc ?? "",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        fontSize: 14.sp,
+                      ),
+                      // change color of thumb and selection
+                      // selectionControls: TextSelectionControls ,
+                    )
+                    // MyText(
+                    //   txt:,
+                    //   textAlign: TextAlign.right,
+                    // ),
+                  ],
                 ),
               ),
             );
