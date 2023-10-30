@@ -116,11 +116,7 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
                             icon: const Icon(Icons.edit_rounded)),
                       ],
                     ),
-                    // MyText(
-                    //     txt: ,
-                    //     color: Colors.white,
-                    //     fontWeight: FontWeight.bold,
-                    //     size: 20.sp),
+
                     MyText(
                         txt: signInParams.email,
                         color: Colors.grey,
@@ -154,28 +150,6 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
                       useEqualLoadingStateWidgetDimension: false,
                       onPressed: profileController.startApp,
                     ),
-
-                    // ClipRRect(
-                    //   borderRadius: BorderRadius.circular(20),
-                    //   child: SizedBox(
-                    //     width: size.width * 0.8,
-                    //     height: size.height * 0.06,
-                    //     child: ElevatedButton(
-                    //       onPressed: () {
-                    //         // Get.close(0);
-                    //         profileController.startApp();
-                    //       },
-                    //       style: ElevatedButton.styleFrom(
-                    //         backgroundColor: Colors.red,
-                    //       ),
-                    //       child: const MyText(
-                    //         txt: "ادامه",
-                    //         color: Colors.white,
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

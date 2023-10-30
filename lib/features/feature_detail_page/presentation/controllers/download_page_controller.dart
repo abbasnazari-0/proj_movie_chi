@@ -198,9 +198,11 @@ class DownloadPageController extends GetxController {
       DateTime now = (DateTime.now());
 
       if (expireTimeOut.millisecondsSinceEpoch < now.millisecondsSinceEpoch) {
-        Constants.showGeneralSnackBar("خطا", "اشتراک شما به پایان رسیده است");
-        await Get.to(() => const PlanScreen());
-
+        await Constants.showGeneralSnackBar(
+            "خطا", "اشتراک شما به پایان رسیده است");
+        Future.delayed(const Duration(milliseconds: 1000), () async {
+          await Get.to(() => const PlanScreen());
+        });
         return;
       } else {
         // check download count
@@ -212,8 +214,9 @@ class DownloadPageController extends GetxController {
         if (userDownloaded >= downloadMax && downloadMax != -1) {
           Constants.showGeneralSnackBar(
               "خطا", "شما به حداکثر تعداد دانلود رسیده اید");
-          await Get.to(() => const PlanScreen());
-
+          Future.delayed(const Duration(milliseconds: 1000), () async {
+            await Get.to(() => const PlanScreen());
+          });
           return;
         }
       }
@@ -223,10 +226,12 @@ class DownloadPageController extends GetxController {
 
       int downloadednumber = (GetStorageData.getData("downloaded_item") ?? 0);
       if (downloadednumber >= downloadMax) {
-        await Get.to(() => const PlanScreen());
         Constants.showGeneralSnackBar(
             "خطا", "شما به حداکثر تعداد دانلود رسیده اید");
-
+        // await Get.to(() => const PlanScreen());
+        Future.delayed(const Duration(milliseconds: 1000), () async {
+          await Get.to(() => const PlanScreen());
+        });
         return;
       }
     }

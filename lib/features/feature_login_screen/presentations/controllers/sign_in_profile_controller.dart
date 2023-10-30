@@ -18,6 +18,10 @@ class SignInProfileController extends GetxController {
   bool singInPage = true;
 
   startApp() async {
+    if (name.text == "") {
+      Constants.showGeneralSnackBar("نام", "لطفا نام خود را وارد کنید");
+      return;
+    }
     // await Future.delayed(const Duration(milliseconds: 3000), () => 42);
 
     // Constants.showGeneralProgressBar(backDismissable: true);
