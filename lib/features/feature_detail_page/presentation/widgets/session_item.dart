@@ -21,8 +21,10 @@ class SessionItem extends StatefulWidget {
   const SessionItem({
     Key? key,
     required this.video,
+    required this.index,
   }) : super(key: key);
   final Video video;
+  final int index;
 
   @override
   State<SessionItem> createState() => _SessionItemState();
@@ -43,12 +45,13 @@ class _SessionItemState extends State<SessionItem> {
       final downloadController = Get.find<DownloadPageController>();
       String qualityLink = await downloadController
           .checkQuality(pageController.videoDetail!, actionButton: "پخش");
-
       GetStorageData.writeData("logined", true);
       Constants.openVideoPlayer(
-          pageController.video ?? pageController.videoDetail!,
-          path: qualityLink,
-          customLink: qualityLink);
+        pageController.video ?? pageController.videoDetail!,
+        path: qualityLink,
+        customLink: qualityLink,
+        // episoidList: pageController.playListModel?.data,
+      );
 
       Get.close(0);
     }
@@ -83,8 +86,14 @@ class _SessionItemState extends State<SessionItem> {
             String qualityLink = await downloadController
                 .checkQuality(widget.video, actionButton: "پخش");
             if (qualityLink == "") return;
-            Constants.openVideoPlayer(widget.video,
-                path: qualityLink, customLink: qualityLink);
+            Constants.openVideoPlayer(
+              widget.video,
+              path: qualityLink,
+              customLink: qualityLink,
+              episoidList:
+                  pageController.playListModel?.data?[0].episoids ?? [],
+              episoidIndex: widget.index,
+            );
           } else {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../features/feature_detail_page/data/model/video_model.dart';
@@ -158,12 +159,18 @@ class Constants {
   }
 
   static openVideoPlayer(Video video,
-      {bool? isLocal, String? path, String? customLink}) {
+      {bool? isLocal,
+      String? path,
+      String? customLink,
+      List<EpisoidsData>? episoidList,
+      int? episoidIndex}) {
     Get.to(() => VideoPlayerScreen(isLocaled: isLocal ?? false), arguments: {
       "data": video,
       "isLocal": isLocal ?? false,
       "path": path ?? "",
-      "custom_link": customLink
+      "custom_link": customLink,
+      "episoids": episoidList ?? [],
+      "edpisoid_index": episoidIndex ?? 0
     });
     // show dialog to choose player
     // Get.dialog(

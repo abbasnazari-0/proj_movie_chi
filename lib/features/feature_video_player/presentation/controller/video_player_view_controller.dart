@@ -27,10 +27,32 @@ class VideoPlayerViewController extends GetxController {
   VideoPlayerViewController(this.videoPlayerUseCase);
   bool showSubtitleValue = true;
 
-  final pagePlayerController = Get.find<PageVideoPlayerController>();
+  bool videolastandfirstController = false;
+
+  toggleVideoLastAndFirst(bool show) {
+    videolastandfirstController = show;
+
+    if (show) {
+      Future.delayed(const Duration(seconds: 10), () {
+        toggleVideoLastAndFirst(false);
+      });
+    }
+    update();
+  }
+
+  nextVideo() {
+    print("ddddd");
+    return false;
+  }
+
+  prevVideo() {
+    print("ddddd");
+    // return;
+  }
 
   toggleWaterMark(bool show) {
     showWaterMark = show;
+    toggleVideoLastAndFirst(show);
     update();
   }
 
@@ -75,6 +97,7 @@ class VideoPlayerViewController extends GetxController {
   }
 
   subtitleClicked(int index, VideoSubtitle videoSubtitle) async {
+    final pagePlayerController = Get.find<PageVideoPlayerController>();
     pagePlayerController.videoUrl = pagePlayerController.videoUrl;
 
     if (videoSubtitle.data?.isEmpty ?? true) return;
@@ -300,6 +323,7 @@ class VideoPlayerViewController extends GetxController {
   }
 
   chnageSubtitleStatus(bool val) {
+    final pagePlayerController = Get.find<PageVideoPlayerController>();
     showSubtitleValue = val;
     update(['subtitle']);
 

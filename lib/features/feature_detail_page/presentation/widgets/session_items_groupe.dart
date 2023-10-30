@@ -44,39 +44,14 @@ class SessionItemGroupe extends StatelessWidget {
                     itemBuilder: (context, index) {
                       EpisoidsData episoid = pageController.playListModel!
                           .data![controllller.sessionId].episoids![index];
-
-                      Video video = Video(
-                        title: episoid.title,
-                        tag: episoid.qualityId,
-                        desc: pageController.videoDetail?.desc,
-                        thumbnail1x: pageController.videoDetail?.thumbnail1x,
-                        thumbnail2x: pageController.videoDetail?.thumbnail2x,
-                        qualitiesId: episoid.qualityId,
-                        galleryId: pageController.videoDetail?.galleryId,
-                        quality1080: episoid.quality1080,
-                        quality1440: episoid.quality1440,
-                        quality2160: episoid.quality2160,
-                        quality240: episoid.quality240,
-                        quality360: episoid.quality360,
-                        quality4320: episoid.quality4320,
-                        quality480: episoid.quality480,
-                        quality720: episoid.quality720,
-                        view: pageController.videoDetail?.view,
-                        userLiked: pageController.videoDetail?.userLiked,
-                        userBookmarked:
-                            pageController.videoDetail?.userBookmarked,
-                        tagData: pageController.videoDetail?.tagData,
-                        artistData: pageController.videoDetail?.artistData,
-                        lastSessionTime:
-                            pageController.videoDetail?.lastSessionTime,
-                        type: pageController.videoDetail?.type,
-                        commonTag: pageController.videoDetail?.commonTag,
-                        subtitle: pageController.videoDetail?.subtitle,
-                        dubble: pageController.videoDetail?.dubble,
-                      );
+                      Video video = controllller.episoidToVideo(
+                          episoid, pageController.videoDetail ?? Video());
 
                       // LogPrint(video.toJson());
-                      return SessionItem(video: video);
+                      return SessionItem(
+                        video: video,
+                        index: index,
+                      );
                     },
                   ),
                 ],

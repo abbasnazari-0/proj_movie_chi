@@ -1,25 +1,19 @@
 // ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison
 
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu_videoplayer/meedu_player.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart' as iconsax;
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/locator.dart';
-import 'package:status_bar_control/status_bar_control.dart';
 
 import '../../../../core/ad/ad_controller.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/database_helper.dart';
 import '../controller/video_player_controller.dart';
-import '../controller/video_player_view_controller.dart';
 import '../widgets/bottom_right_widget.dart';
 import '../widgets/header_widget.dart';
 import '../widgets/video_overly_widget.dart';
@@ -56,9 +50,8 @@ class VideoPlayerScreen extends StatefulWidget {
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   final pageVideoPlayerController =
       Get.put(PageVideoPlayerController(locator()));
+
   final adController = Get.find<AdController>();
-  final viewController = Get.put(VideoPlayerViewController(locator()));
-  bool isFullScreen = false;
 
   showAd() async {
     await adController.adInitilzer?.loadInterstitial();
@@ -79,160 +72,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     repeat: Icon(iconsax.Iconsax.repeat),
   );
 
-  var lastSeen = 0;
-
   @override
   void initState() {
     super.initState();
 
-    loadLastView();
+    pageVideoPlayerController.loadLastView();
   }
 
   DictionaryDataBaseHelper dbHelper = locator();
 
-  List lastView = [];
-  Map lastViewMap = {};
-  loadLastView() async {
-    pageVideoPlayerController.baseVideo = Get.arguments["data"];
-    if (Get.arguments["path"] != null) {
-      pageVideoPlayerController.localPath = Get.arguments["path"];
-    }
-
-    if (pageVideoPlayerController.baseVideo?.tag != null) {
-      List l = await dbHelper.getQuery("tbl_history",
-          where: "tag",
-          whereValue: pageVideoPlayerController.baseVideo?.tag ?? "");
-      if (l == null || l.isEmpty) {
-        lastSeen = 0;
-      } else {
-        lastView = json.decode(l[0]['data']);
-        if (lastView.isEmpty) {
-          if (pageVideoPlayerController.baseVideo?.lastSessionTime != null) {
-            lastSeen = int.parse(
-                pageVideoPlayerController.baseVideo?.lastSessionTime ?? "0");
-          } else {
-            lastSeen = 0;
-          }
-        } else {
-          lastViewMap = lastView[lastView.length - 1];
-          lastSeen = (lastViewMap['vid_time']);
-        }
-      }
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      videoPlaying();
-    });
-
-    // hide status bar and navigation bar
-    screenUtils();
-
-    // showAd();
-
-    viewController
-        .subtitleLoader(pageVideoPlayerController.baseVideo?.qualitiesId ?? "");
-  }
-
-  screenUtils() async {
-    try {
-      // hide status bar and navigation bar
-      await StatusBarControl.setHidden(!isFullScreen);
-      await StatusBarControl.setTranslucent(!isFullScreen);
-      await StatusBarControl.setFullscreen(!isFullScreen);
-      isFullScreen = !isFullScreen;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  videoPlaying() async {
-    pageVideoPlayerController.controller.loadingWidget = Center(
-        child: LoadingAnimationWidget.flickr(
-      size: 50,
-      leftDotColor: Get.theme.colorScheme.secondary,
-      rightDotColor: Get.theme.colorScheme.background.withOpacity(0.5),
-    ));
-
-    // pageVideoPlayerController.controller.setFullScreen(true, context);
-    // pageVideoPlayerController.controller.fullScreenWidget = Container();
-    // pageVideoPlayerController.controller.customControls = Container();
-    // pageVideoPlayerController.reportPlaye(pageVideoPlayerController.baseVideo?.tag, );
-
-    if (widget.isLocaled) {
-      await pageVideoPlayerController.controller.setDataSource(
-        DataSource(
-            type: DataSourceType.file,
-
-            // source: localPath,
-            file: File(pageVideoPlayerController.localPath!
-                .replaceAll("file:///", "/"))),
-        autoplay: true,
-      );
-    } else {
-      pageVideoPlayerController.videoUrl = Get.arguments['custom_link'] ??
-          getVideoUrl(pageVideoPlayerController.baseVideo!);
-
-      await pageVideoPlayerController.controller.setDataSource(
-          DataSource(
-              type: DataSourceType.network,
-              source: pageVideoPlayerController.videoUrl),
-          autoplay: true,
-          seekTo: Duration(seconds: lastSeen));
-      // ignore: use_build_context_synchronously
-      pageVideoPlayerController.controller.toggleFullScreen(context);
-
-      // pageVideoPlayerController.controller.erro = "خطا در پخش ویدیو";
-      pageVideoPlayerController.controller.onShowControlsChanged
-          .listen((event) {
-        viewController.toggleWaterMark(!event);
-      });
-      // pageVideoPlayerController.controller.onClosedCaptionEnabled(true);
-
-      pageVideoPlayerController.controller.play();
-
-      // set custom caption
-      pageVideoPlayerController.controller.customCaptionView =
-          (context, controller, responsive, string) {
-        return CustomCaption(responsive: responsive, string: string);
-      };
-
-      pageVideoPlayerController.controller.onPositionChanged.listen((event) {
-        // if  start video and last seen is not 0
-        if (event.inSeconds == 0 && lastSeen != 0) {
-          pageVideoPlayerController.controller
-              .seekTo(Duration(seconds: lastSeen));
-        }
-
-        if (pageVideoPlayerController.lastSecound == event.inSeconds) {
-        } else {
-          pageVideoPlayerController.lastSecound = event.inSeconds;
-          pageVideoPlayerController.playSecound =
-              pageVideoPlayerController.playSecound + 1;
-          debugPrint("watched time is ${event.inSeconds}");
-        }
-
-        int currentTimeInSeconds = event.inSeconds;
-        pageVideoPlayerController.viewedStatus
-            .addIf(currentTimeInSeconds > 0 && currentTimeInSeconds % 10 == 0, {
-          "vid_time": currentTimeInSeconds.toString(),
-          "timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
-        });
-        pageVideoPlayerController.viewedStatus = pageVideoPlayerController
-            .removeDuplicates(pageVideoPlayerController.viewedStatus);
-        pageVideoPlayerController.reportEvery1Minute();
-        //
-      });
-    }
-  }
-
   @override
   void dispose() {
     super.dispose();
-    // screenUtils();
-    // pageVideoPlayerController.controller.pause();
     pageVideoPlayerController.controller.dispose();
-
-    //  pageVideoPlayerController.controller.
   }
 
   @override
@@ -259,7 +111,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 },
                 bottomRight: (context, controller, responsive) {
                   return BottomRightWidget(
-                      viewController: viewController,
                       pageVideoPlayerController: pageVideoPlayerController);
                 },
               ),

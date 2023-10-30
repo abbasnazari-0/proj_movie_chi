@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, unnecessary_null_comparison
 
 import 'dart:async';
 import 'dart:convert';
@@ -6,9 +6,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu_videoplayer/meedu_player.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
+import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
 import 'package:movie_chi/features/feature_video_player/domain/usecases/video_player_usecase.dart';
+import 'package:movie_chi/features/feature_video_player/presentation/controller/video_player_view_controller.dart';
+import 'package:movie_chi/features/feature_video_player/presentation/pages/feature_video_player.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 
 import '../../../../core/utils/database_helper.dart';
 import '../../../../locator.dart';
@@ -16,9 +21,13 @@ import '../../../feature_detail_page/data/model/video_model.dart';
 import '../../../feature_home/presentation/controller/home_page_controller.dart';
 
 class PageVideoPlayerController extends GetxController {
+  bool isFullScreen = false;
   final homePageController = Get.find<HomePageController>();
   bool showControllerStatus = false;
   bool playMode = true;
+  Video videoArguman = Get.arguments['data'];
+  String? cutomLink = Get.arguments['custom_link'];
+
   MeeduPlayerController controller = MeeduPlayerController(
     errorText: "خطا در پخش ویدیو",
     enabledButtons: const EnabledButtons(
@@ -40,6 +49,8 @@ class PageVideoPlayerController extends GetxController {
   bool isPlayerLocked = false;
   int playSecound = 0;
   int lastSecound = 0;
+  final List<EpisoidsData> eposiod = Get.arguments['episoids'];
+  int episoidIndex = Get.arguments['edpisoid_index'];
 
   DictionaryDataBaseHelper dbHelper = locator();
 
@@ -490,6 +501,18 @@ class PageVideoPlayerController extends GetxController {
     // showCoinHalf();
   }
 
+  screenUtils() async {
+    try {
+      // hide status bar and navigation bar
+      await StatusBarControl.setHidden(!isFullScreen);
+      await StatusBarControl.setTranslucent(!isFullScreen);
+      await StatusBarControl.setFullscreen(!isFullScreen);
+      isFullScreen = !isFullScreen;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   // function convert secound to readable duration
   String formatTime(int seconds) {
     int minutes = (seconds / 60).truncate();
@@ -497,5 +520,107 @@ class PageVideoPlayerController extends GetxController {
     String formattedMinutes = minutes.toString().padLeft(2, '0');
     String formattedSeconds = remainingSeconds.toString().padLeft(2, '0');
     return "$formattedMinutes:$formattedSeconds";
+  }
+
+  final viewController =
+      Get.put<VideoPlayerViewController>(VideoPlayerViewController(locator()));
+
+  var lastSeen = 0;
+  List lastView = [];
+  Map lastViewMap = {};
+  loadLastView() async {
+    baseVideo = videoArguman;
+
+    if (baseVideo?.tag != null) {
+      List l = await dbHelper.getQuery("tbl_history",
+          where: "tag", whereValue: baseVideo?.tag ?? "");
+      if (l == null || l.isEmpty) {
+        lastSeen = 0;
+      } else {
+        lastView = json.decode(l[0]['data']);
+        if (lastView.isEmpty) {
+          if (baseVideo?.lastSessionTime != null) {
+            lastSeen = int.parse(baseVideo?.lastSessionTime ?? "0");
+          } else {
+            lastSeen = 0;
+          }
+        } else {
+          lastViewMap = lastView[lastView.length - 1];
+          lastSeen = (lastViewMap['vid_time']);
+        }
+      }
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      videoPlaying();
+    });
+
+    // hide status bar and navigation bar
+    screenUtils();
+
+    // showAd();
+    viewController.subtitleLoader(baseVideo?.qualitiesId ?? "");
+
+    update();
+  }
+
+  videoPlaying() async {
+    controller.loadingWidget = Center(
+        child: LoadingAnimationWidget.flickr(
+      size: 50,
+      leftDotColor: Get.theme.colorScheme.secondary,
+      rightDotColor: Get.theme.colorScheme.background.withOpacity(0.5),
+    ));
+
+    // pageVideoPlayerController.controller.setFullScreen(true, context);
+    // pageVideoPlayerController.controller.fullScreenWidget = Container();
+    // pageVideoPlayerController.controller.customControls = Container();
+    // pageVideoPlayerController.reportPlaye(pageVideoPlayerController.baseVideo?.tag, );
+
+    videoUrl = cutomLink ?? getVideoUrl(baseVideo!);
+
+    await controller.setDataSource(
+        DataSource(type: DataSourceType.network, source: videoUrl),
+        autoplay: true,
+        seekTo: Duration(seconds: lastSeen));
+    // ignore: use_build_context_synchronously
+    // controller.toggleFullScreen(context);
+
+    // pageVideoPlayerController.controller.erro = "خطا در پخش ویدیو";
+    controller.onShowControlsChanged.listen((event) {
+      viewController.toggleWaterMark(!event);
+    });
+    // pageVideoPlayerController.controller.onClosedCaptionEnabled(true);
+
+    controller.play();
+
+    // set custom caption
+    controller.customCaptionView = (context, controller, responsive, string) {
+      return CustomCaption(responsive: responsive, string: string);
+    };
+
+    controller.onPositionChanged.listen((event) {
+      // if  start video and last seen is not 0
+      if (event.inSeconds == 0 && lastSeen != 0) {
+        controller.seekTo(Duration(seconds: lastSeen));
+      }
+
+      if (lastSecound == event.inSeconds) {
+      } else {
+        lastSecound = event.inSeconds;
+        playSecound = playSecound + 1;
+        debugPrint("watched time is ${event.inSeconds}");
+      }
+
+      int currentTimeInSeconds = event.inSeconds;
+      viewedStatus
+          .addIf(currentTimeInSeconds > 0 && currentTimeInSeconds % 10 == 0, {
+        "vid_time": currentTimeInSeconds.toString(),
+        "timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
+      });
+      viewedStatus = removeDuplicates(viewedStatus);
+      reportEvery1Minute();
+      //
+    });
   }
 }
