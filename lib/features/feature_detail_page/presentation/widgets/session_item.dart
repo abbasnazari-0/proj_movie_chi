@@ -50,6 +50,11 @@ class _SessionItemState extends State<SessionItem> {
         pageController.video ?? pageController.videoDetail!,
         path: qualityLink,
         customLink: qualityLink,
+        episoidList: pageController
+                .playListModel?.data?[pageController.sessionId].episoids ??
+            [],
+        episoidIndex: widget.index,
+
         // episoidList: pageController.playListModel?.data,
       );
 
@@ -90,8 +95,9 @@ class _SessionItemState extends State<SessionItem> {
               widget.video,
               path: qualityLink,
               customLink: qualityLink,
-              episoidList:
-                  pageController.playListModel?.data?[0].episoids ?? [],
+              episoidList: pageController.playListModel
+                      ?.data?[pageController.sessionId].episoids ??
+                  [],
               episoidIndex: widget.index,
             );
           } else {

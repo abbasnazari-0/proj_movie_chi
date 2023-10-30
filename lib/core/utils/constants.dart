@@ -158,19 +158,21 @@ class Constants {
     );
   }
 
-  static openVideoPlayer(Video video,
-      {bool? isLocal,
-      String? path,
-      String? customLink,
-      List<EpisoidsData>? episoidList,
-      int? episoidIndex}) {
+  static openVideoPlayer(
+    Video video, {
+    bool? isLocal,
+    String? path,
+    String? customLink,
+    List<EpisoidsData>? episoidList,
+    int? episoidIndex,
+  }) {
     Get.to(() => VideoPlayerScreen(isLocaled: isLocal ?? false), arguments: {
       "data": video,
       "isLocal": isLocal ?? false,
       "path": path ?? "",
       "custom_link": customLink,
       "episoids": episoidList ?? [],
-      "edpisoid_index": episoidIndex ?? 0
+      "edpisoid_index": episoidIndex ?? 0,
     });
     // show dialog to choose player
     // Get.dialog(
