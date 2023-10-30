@@ -34,6 +34,7 @@ class MvoiesController extends GetxController {
     if (withUpdate) {
       page = 0;
       // movies.clear();
+      homeCatagory = null;
       pageStatus = PageStatus.loading;
       update();
     } else {

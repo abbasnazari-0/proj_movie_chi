@@ -37,6 +37,7 @@ class SeriasController extends GetxController {
     if (withUpdate) {
       pages = 0;
       // searis.clear();
+      homeCatagory = null;
       pageStatus = PageStatus.loading;
 
       update();
