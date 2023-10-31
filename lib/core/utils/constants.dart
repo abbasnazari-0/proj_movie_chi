@@ -165,6 +165,7 @@ class Constants {
     String? customLink,
     List<EpisoidsData>? episoidList,
     int? episoidIndex,
+    String? additionTitle,
   }) {
     Get.to(() => VideoPlayerScreen(isLocaled: isLocal ?? false), arguments: {
       "data": video,
@@ -173,6 +174,7 @@ class Constants {
       "custom_link": customLink,
       "episoids": episoidList ?? [],
       "edpisoid_index": episoidIndex ?? 0,
+      "addition_title": additionTitle ?? "",
     });
     // show dialog to choose player
     // Get.dialog(

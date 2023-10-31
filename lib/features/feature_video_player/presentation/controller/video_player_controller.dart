@@ -27,6 +27,7 @@ class PageVideoPlayerController extends GetxController {
   bool playMode = true;
   Video videoArguman = Get.arguments['data'];
   String? cutomLink = Get.arguments['custom_link'];
+  String? addtionTitle = Get.arguments['addition_title'];
 
   MeeduPlayerController controller = MeeduPlayerController(
     errorText: "خطا در پخش ویدیو",

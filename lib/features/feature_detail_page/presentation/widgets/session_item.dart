@@ -46,6 +46,7 @@ class _SessionItemState extends State<SessionItem> {
       String qualityLink = await downloadController
           .checkQuality(pageController.videoDetail!, actionButton: "پخش");
       GetStorageData.writeData("logined", true);
+
       Constants.openVideoPlayer(
         pageController.video ?? pageController.videoDetail!,
         path: qualityLink,
@@ -54,6 +55,9 @@ class _SessionItemState extends State<SessionItem> {
                 .playListModel?.data?[pageController.sessionId].episoids ??
             [],
         episoidIndex: widget.index,
+        additionTitle: pageController.videoDetail?.type != "video"
+            ? pageController.videoDetail?.title ?? ""
+            : "",
 
         // episoidList: pageController.playListModel?.data,
       );
@@ -99,6 +103,9 @@ class _SessionItemState extends State<SessionItem> {
                       ?.data?[pageController.sessionId].episoids ??
                   [],
               episoidIndex: widget.index,
+              additionTitle: pageController.videoDetail?.type != "video"
+                  ? pageController.videoDetail?.title ?? ""
+                  : "",
             );
           } else {
             // launchUrl(Uri.parse(

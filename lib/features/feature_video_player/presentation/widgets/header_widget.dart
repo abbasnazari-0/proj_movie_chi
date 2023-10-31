@@ -79,7 +79,8 @@ class HeaderWidget extends StatelessWidget {
             const Spacer(),
             const SizedBox(width: 10),
             MyText(
-              txt: pageVideoPlayerController.baseVideo?.title ?? "",
+              txt:
+                  "${pageVideoPlayerController.baseVideo?.title ?? ""}${pageVideoPlayerController.addtionTitle != null && pageVideoPlayerController.addtionTitle.toString().isNotEmpty ? " - " : ""}${pageVideoPlayerController.addtionTitle ?? ""}",
               fontWeight: FontWeight.bold,
               overflow: TextOverflow.ellipsis,
               size: responsive.fontSize(),
