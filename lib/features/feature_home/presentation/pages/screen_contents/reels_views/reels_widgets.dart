@@ -29,64 +29,6 @@ class ReelsControllerWidgets extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Container(
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(999),
-              //     color: Colors.white.withAlpha(80),
-              //   ),
-              //   height: 40,
-              //   width: 40,
-              //   child: Center(
-              //     child: LikeButton(
-              //       size: 20,
-              //       isLiked: controller.reelsData[index].userLiked == "1"
-              //           ? true
-              //           : false,
-              //       circleColor: CircleColor(
-              //         start: Theme.of(context)
-              //             .colorScheme
-              //             .secondary
-              //             .withAlpha(100),
-              //         end: Theme.of(context)
-              //             .colorScheme
-              //             .secondary
-              //             .withAlpha(100),
-              //       ),
-              //       bubblesColor: BubblesColor(
-              //         dotPrimaryColor: Theme.of(context)
-              //             .colorScheme
-              //             .secondary
-              //             .withAlpha(100),
-              //         dotSecondaryColor: Theme.of(context)
-              //             .colorScheme
-              //             .secondary
-              //             .withAlpha(100),
-              //       ),
-              //       circleSize: 80,
-              //       bubblesSize: 150,
-              //       onTap: (bool isLiked) async {
-              //         controller.likeVideo(controller.reelsData, index);
-              //         return !isLiked;
-              //       },
-              //       likeBuilder: (bool isLiked) {
-              //         return Icon(
-              //           controller.reelsData[index].userLiked == "1"
-              //               ? Iconsax.heart5
-              //               : Iconsax.heart4,
-              //           color: controller.reelsData[index].userLiked == '1'
-              //               ? Colors.red
-              //               : Colors.white,
-              //           size: 20,
-              //         );
-              //       },
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(height: size.height * 0.005),
-              // if (controller.isPlaying)
-              //   MyText(
-              //     txt: reelsModel.reelsLike.toString(),
-              //   ),
               SizedBox(height: size.height * 0.01),
               Container(
                 decoration: BoxDecoration(

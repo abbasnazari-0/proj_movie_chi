@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:movie_chi/features/feature_new_notification/presentation/pages/news_page.dart';
 import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
+import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../features/feature_detail_page/data/model/video_model.dart';
 import '../../features/feature_detail_page/presentation/pages/detail_page.dart';
@@ -24,6 +27,14 @@ String pageUrl = "/v5/cinimo/";
 String packageName = "com.arianadeveloper.movie.chi";
 
 class Constants {
+  static urlLauncher(url) async {
+    // open url in external browser
+    if (await canLaunch(url)) {
+      // open in external browser'
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    }
+  }
+
   static String formatTime(int seconds) {
     int hours = (seconds / 3600).truncate();
     int minutes = ((seconds - (hours * 3600)) / 60).truncate();
@@ -325,6 +336,9 @@ class Constants {
         break;
     }
   }
+
+  static openSupportMessages() => Get.to(() => SupportPage());
+  static openNewsPage() => Get.to(() => NewsPage());
 
   static openVideoDetail({
     required String vidTag,

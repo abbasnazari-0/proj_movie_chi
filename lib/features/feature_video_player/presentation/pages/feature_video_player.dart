@@ -1,12 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_meedu_videoplayer/meedu_player.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart' as iconsax;
 
 import 'package:movie_chi/core/utils/get_storage_data.dart';
-import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/locator.dart';
 
@@ -145,12 +145,22 @@ class CustomCaption extends StatelessWidget {
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: MyText(
-            txt: string,
-            color: GetStorageData.getData("subtitleColor_") ?? Colors.white,
-            size: responsive.ip(double.parse(
-                GetStorageData.getData("subtitleTextSize") ?? "2")),
-            textAlign: TextAlign.center,
+          child: Html(
+            data: string,
+            style: {
+              "i": Style(
+                  fontSize: FontSize(
+                    responsive.ip(double.parse(
+                        GetStorageData.getData("subtitleTextSize") ?? "2")),
+                  ),
+                  color:
+                      GetStorageData.getData("subtitleColor_") ?? Colors.white,
+                  fontFamily: 'vazir'),
+            },
+            // color: GetStorageData.getData("subtitleColor_") ?? Colors.white,
+            // size: responsive.ip(double.parse(
+            //     GetStorageData.getData("subtitleTextSize") ?? "2")),
+            // textAlign: TextAlign.center,
           ),
         ),
       ],

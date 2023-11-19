@@ -6,9 +6,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movie_chi/core/utils/database_helper.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
+import 'package:movie_chi/features/feature_new_notification/presentation/controllers/news_page_controller.dart';
+import 'package:movie_chi/features/feature_support/presentation/controllers/support_page_controller.dart';
 import 'package:movie_chi/firebase_options.dart';
+import 'package:movie_chi/locator.dart';
 import 'package:platform_local_notifications/platform_local_notifications.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 
@@ -39,11 +43,27 @@ class LocalNotificationService {
     if (hasNotifData == true) {
       Map notifData = await GetStorageData.readDataWithAwaiting("notif_data");
 
-      bool hasRegestred = Get.isRegistered<DetailPageController>();
+      if (notifData['type'] == 'news') {
+        bool hasRegestred = Get.isRegistered<NewsPageController>();
+        if (hasRegestred) {
+          final controller = Get.find<NewsPageController>();
+          controller.refreshAgain();
+        }
+      }
+      if (notifData['type'] == 'support_message') {
+        bool hasRegestred = Get.isRegistered<SupportPageController>();
+        if (hasRegestred) {
+          final controller = Get.find<SupportPageController>();
+          controller.refreshAgain();
+        }
+      }
+      if (notifData['type'] == 'video') {
+        bool hasRegestred = Get.isRegistered<DetailPageController>();
 
-      if (hasRegestred) {
-        Constants.openVideoDetail(
-            vidTag: notifData['tag'], picture: "", deepLink: true);
+        if (hasRegestred) {
+          Constants.openVideoDetail(
+              vidTag: notifData['tag'], picture: "", deepLink: true);
+        }
       }
     }
   }
@@ -55,7 +75,7 @@ class LocalNotificationService {
 
     var payload = json.decode(message.data['action']);
 
-    if (payload['type'] == 'video') {
+    if (payload['type'] == 'video' || payload['type'] == 'support_message') {
       await GetStorage.init();
       // write notification click to database
       GetStorageData.writeData("has_notif", true);
@@ -114,6 +134,22 @@ class LocalNotificationService {
       // hideExpandedLargeIcon: true,
     );
 
+    var payload = json.decode(message.data['action']);
+
+    DictionaryDataBaseHelper dbHelper = locator();
+    Map newsData = (jsonDecode(payload['tag']));
+
+    await dbHelper.init();
+
+    List queryData = await dbHelper.getQuery('tbl_news_notif',
+        where: 'tag', whereValue: newsData['tag']);
+    if (queryData.isEmpty) {
+      int x = await dbHelper.addQuery(
+          '`title`, `desc`, `action`, `action_content`, `tag`, `readed`',
+          "'${newsData['title']}', '${newsData['desc']}', '${newsData['action']}', '${newsData['action_content']}', '${newsData['tag']}', 0",
+          'tbl_news_notif');
+    }
+
     await PlatformNotifier.I.showPluginNotification(
         ShowPluginNotificationModel(
           id: DateTime.now().second,
@@ -141,6 +177,7 @@ class LocalNotificationService {
 
     // // To display the notification in device
     // try {
+
     final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     Dio dio = Dio();
     final response = await dio.get(
@@ -174,26 +211,42 @@ class LocalNotificationService {
 
   static void setUpStreams() {
     PlatformNotifier.I.platformNotifierStream.listen(
-      (event) {
+      (event) async {
         if (event is PluginNotificationClickAction) {
           //handle when user click on the notification
 
-          var payload = json.decode(event.payload!);
+          var payload = json.decode(event.payload ?? "{}");
 
           if (payload['type'] == 'video') {
-            // Get.to(() => DetailPage(
-            //       vid_tag: payload['tag'],
-            //     ));
             Constants.openVideoDetail(vidTag: payload['tag'], picture: "");
+          }
+          if (payload['type'] == 'support_message') {
+            bool hasRegestred = Get.isRegistered<SupportPageController>();
+            if (hasRegestred) {
+              final controller = Get.find<SupportPageController>();
+              controller.refreshAgain();
+            } else {
+              Constants.openSupportMessages();
+            }
+          }
+
+          if (payload['type'] == 'news') {
+            bool hasRegestred = Get.isRegistered<NewsPageController>();
+            if (hasRegestred) {
+              final controller = Get.find<NewsPageController>();
+              controller.refreshAgain();
+            } else {
+              Constants.openNewsPage();
+            }
           }
         }
         if (event is PluginNotificationReplyAction) {
           //handle when user choose reply action
-          print("reply");
+          debugPrint("reply");
         }
         if (event is PluginNotificationMarkRead) {
           //handle when user submit value to reply textile
-          print("mark");
+          debugPrint("mark");
         }
       },
     );

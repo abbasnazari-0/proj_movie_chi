@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/pages/detail_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -92,6 +93,19 @@ class HomePageController extends GetxController {
     update();
   }
 
+  getNotificationNewsNew() async {
+    DictionaryDataBaseHelper dbHelper = locator();
+    List newQuery = await dbHelper.getQuery("tbl_news_notif",
+        where: "readed", whereValue: "0");
+    if (newQuery.isNotEmpty) {
+      updateBadge = true;
+      update();
+    } else {
+      updateBadge = false;
+      update();
+    }
+  }
+
   // Check Ip (ip is from not iran then show dialog that show "please turn on vpn")
   changeMutableState() {
     mute = !mute;
@@ -123,6 +137,8 @@ class HomePageController extends GetxController {
     chanegStatusBarColor();
     hasDataInLocalStorage();
     checkUseStatus();
+
+    getNotificationNewsNew();
   }
 
   checkUseStatus() async {
@@ -137,10 +153,14 @@ class HomePageController extends GetxController {
     if (hasNotif) {
       Map notifData = await GetStorageData.readDataWithAwaiting("notif_data");
 
-      await Future.delayed(const Duration(milliseconds: 500), () async {
-        await Get.to(() =>
-            DetailPage(vid_tag: notifData['tag'], pic: "", deepLinking: true));
-      });
+      if (notifData['type'] == "video") {
+        await Future.delayed(const Duration(milliseconds: 500), () async {
+          await Get.to(() => DetailPage(
+              vid_tag: notifData['tag'], pic: "", deepLinking: true));
+        });
+      } else if (notifData['type'] == "support_message") {
+        Constants.openSupportMessages();
+      }
     }
   }
 

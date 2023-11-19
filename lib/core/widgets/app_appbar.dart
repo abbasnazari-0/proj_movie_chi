@@ -1,13 +1,12 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:movie_chi/features/feature_new_notification/presentation/pages/news_page.dart';
 
 import '../../features/feature_home/presentation/controller/bottom_app_bar_controller.dart';
 import '../../features/feature_home/presentation/controller/home_page_controller.dart';
-import '../utils/constants.dart';
 import 'mytext.dart';
 
 class AppAppBar extends StatelessWidget {
@@ -97,47 +96,61 @@ class AppAppBar extends StatelessWidget {
               // homePageController.changeBottomNavIndex(3.obs);
             },
           ),
-          if (Constants.allowToShowAd())
-            IconButton(
-              icon: badges.Badge(
-                position: badges.BadgePosition.bottomStart(),
-                showBadge: homePageController.updateBadge,
-                child: Icon(
-                  BoxIcons.bx_download,
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
-                ),
-              ),
-              onPressed: () async {
-                // final homePageController = Get.find<HomePageController>();
-                if (homePageController.updateBadge) {
-                  homePageController.updatingBadge(false);
-                }
 
-                // change bottom nav index to download
-                final bottomAppBarController =
-                    Get.find<BottomAppBarController>();
-
-                bottomAppBarController.chnageItemSelected(6.obs);
-                bottomAppBarController.chnagePageViewSelected(6.obs);
-
-                // homePageController.changeBottomNavIndex(3.obs);
-              },
-            ),
           IconButton(
-            icon: Icon(
-              BoxIcons.bx_moon,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
+            icon: badges.Badge(
+              position: badges.BadgePosition.bottomStart(),
+              showBadge: homePageController.updateBadge,
+              child: Icon(
+                Icons.notifications_none_rounded,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
             ),
             onPressed: () async {
-              // if (await AdaptiveTheme.getThemeMode() ==
-              //     AdaptiveThemeMode.light) {
-              //   await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
-              // } else {
-              //   await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
-              // }
-              AdaptiveTheme.maybeOf(context)?.toggleThemeMode();
+              Get.to(() => NewsPage());
             },
           ),
+          // if (Constants.allowToShowAd())
+          //   IconButton(
+          //     icon: badges.Badge(
+          //       position: badges.BadgePosition.bottomStart(),
+          //       showBadge: homePageController.updateBadge,
+          //       child: Icon(
+          //         BoxIcons.bx_download,
+          //         color: Theme.of(context).textTheme.bodyMedium?.color,
+          //       ),
+          //     ),
+          //     onPressed: () async {
+          //       // final homePageController = Get.find<HomePageController>();
+          //       if (homePageController.updateBadge) {
+          //         homePageController.updatingBadge(false);
+          //       }
+
+          //       // change bottom nav index to download
+          //       final bottomAppBarController =
+          //           Get.find<BottomAppBarController>();
+
+          //       bottomAppBarController.chnageItemSelected(6.obs);
+          //       bottomAppBarController.chnagePageViewSelected(6.obs);
+
+          //       // homePageController.changeBottomNavIndex(3.obs);
+          //     },
+          //   ),
+          // IconButton(
+          //   icon: Icon(
+          //     BoxIcons.bx_moon,
+          //     color: Theme.of(context).textTheme.bodyMedium?.color,
+          //   ),
+          //   onPressed: () async {
+          //     // if (await AdaptiveTheme.getThemeMode() ==
+          //     //     AdaptiveThemeMode.light) {
+          //     //   await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
+          //     // } else {
+          //     //   await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
+          //     // }
+
+          //   },
+          // ),
         ],
       ),
     );

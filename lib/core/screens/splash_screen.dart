@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
 import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
 import 'package:status_bar_control/status_bar_control.dart';
@@ -32,8 +33,11 @@ class _SplashState extends State<Splash> {
   final controller = Get.put(PlanScreenController(locator(), locator()));
 
   dbInitlizer() async {
-    DictionaryDataBaseHelper dbHelper = locator();
-    await dbHelper.init();
+    if (MobileDetector.isMobile()) {
+      DictionaryDataBaseHelper dbHelper = locator();
+
+      await dbHelper.init();
+    }
   }
 
   @override
@@ -61,9 +65,7 @@ class _SplashState extends State<Splash> {
           await GetStorage.init();
 
           // write notification click to database
-          Map payload = {
-            "tag": uri.pathSegments[1],
-          };
+          Map payload = {"tag": uri.pathSegments[1]};
           GetStorageData.writeData("has_notif", true);
           GetStorageData.writeData("notif_data", payload);
           // link : https://www.cinimo.ir/video/OpAhGehWO3dYtG7

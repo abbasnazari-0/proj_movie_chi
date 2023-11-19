@@ -13,6 +13,10 @@ import 'package:movie_chi/features/feature_catagory/presentation/bloc/catagory_b
 import 'package:movie_chi/features/feature_detail_page/data/data_source/remote/getSection_data.dart';
 import 'package:movie_chi/features/feature_detail_page/domain/repositories/video_detail_repository.dart';
 import 'package:movie_chi/features/feature_detail_page/domain/usecases/video_detail_usecase.dart';
+import 'package:movie_chi/features/feature_new_notification/data/data_source/remote.dart';
+import 'package:movie_chi/features/feature_new_notification/data/repository/news_repository_impl.dart';
+import 'package:movie_chi/features/feature_new_notification/domain/repository/news_repository.dart';
+import 'package:movie_chi/features/feature_new_notification/domain/usecases/news_use_case.dart';
 import 'package:movie_chi/features/feature_plans/data/data_source/data_source.dart';
 import 'package:movie_chi/features/feature_plans/data/repositories/plan_repository_impl.dart';
 import 'package:movie_chi/features/feature_plans/domain/repositories/plan_repositry.dart';
@@ -134,6 +138,11 @@ setup() async {
       SupportRepositoryImpl(apiProvider: locator()));
   locator
       .registerSingleton<SupportUseCase>(SupportUseCase(repository: locator()));
+
+  locator.registerSingleton<NewsApiProvider>(NewsApiProvider());
+  locator.registerSingleton<NewsRepository>(
+      NewsRepostiryImpl(apiProvider: locator()));
+  locator.registerSingleton<NewsUseCase>(NewsUseCase(repository: locator()));
 
   locatConfigSecoundPage();
 /*

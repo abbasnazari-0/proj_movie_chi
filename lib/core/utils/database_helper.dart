@@ -53,6 +53,18 @@ class DictionaryDataBaseHelper {
         status INTEGER
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE tbl_news_notif(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
+        desc TEXT,
+        action TEXT,
+        action_content TEXT,
+        tag TEXT,
+        readed INTEGER 
+      )
+    ''');
   }
 
   Future<void> init() async {

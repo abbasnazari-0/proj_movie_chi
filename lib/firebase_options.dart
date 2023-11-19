@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +43,42 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCKYP0eLsi7HJPrXx_zOdBXiQ6QpYenoE8',
+    appId: '1:628256163112:web:43fe7ef60696e8f23bbc1d',
+    messagingSenderId: '628256163112',
+    projectId: 'movi-chi',
+    authDomain: 'movi-chi.firebaseapp.com',
+    storageBucket: 'movi-chi.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDxqhNIkBpmBUFOZh5WH0qB75zcY6Q2uL0',
     appId: '1:628256163112:android:9614086d6a106af83bbc1d',
     messagingSenderId: '628256163112',
     projectId: 'movi-chi',
     storageBucket: 'movi-chi.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyANyNhBChI2r679AxNMJXRynwyieAcvTsM',
+    appId: '1:628256163112:ios:2d57c357385c844a3bbc1d',
+    messagingSenderId: '628256163112',
+    projectId: 'movi-chi',
+    storageBucket: 'movi-chi.appspot.com',
+    androidClientId: '628256163112-1bvkadjk9ru9jj30b5g029f65n7qq9c3.apps.googleusercontent.com',
+    iosClientId: '628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b.apps.googleusercontent.com',
+    iosBundleId: 'com.arianadeveloper.world.movie',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyANyNhBChI2r679AxNMJXRynwyieAcvTsM',
+    appId: '1:628256163112:ios:2d57c357385c844a3bbc1d',
+    messagingSenderId: '628256163112',
+    projectId: 'movi-chi',
+    storageBucket: 'movi-chi.appspot.com',
+    androidClientId: '628256163112-1bvkadjk9ru9jj30b5g029f65n7qq9c3.apps.googleusercontent.com',
+    iosClientId: '628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b.apps.googleusercontent.com',
+    iosBundleId: 'com.arianadeveloper.world.movie',
   );
 }
