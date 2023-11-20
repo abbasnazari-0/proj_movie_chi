@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
+import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
+import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -249,14 +251,48 @@ class DetailPageContent extends StatelessWidget {
               pageController: pageController),
         if (pageController.videoDetail?.type == "video")
           MaterialButton(
-            onPressed: () {
-              if ((GetStorageData.getData("logined") ?? false)) {
-                downloadController.startNewDownload(pageController.videoDetail!,
-                    detailController: pageController);
-              } else {
-                checkUSers();
-                showSubscribtion();
+            onPressed: () async {
+              if ((GetStorageData.getData("logined") ?? false) == false) {
+                if ((GetStorageData.getData("user_logined") ?? false) ==
+                    false) {
+                  Get.to(() => LoginScreen());
+                  return;
+                } else {
+                  if (GetStorageData.getData("user_status") == "premium") {
+                    String timeOut = GetStorageData.getData("time_out_premium");
+                    DateTime expireTimeOut = (DateTime.parse(timeOut));
+                    DateTime now = (DateTime.now());
+
+                    if (expireTimeOut.millisecondsSinceEpoch <
+                        now.millisecondsSinceEpoch) {
+                      await Constants.showGeneralSnackBar(
+                          "خطا", "اشتراک شما به پایان رسیده است");
+                      Future.delayed(const Duration(milliseconds: 1000),
+                          () async {
+                        await Get.to(() => const PlanScreen());
+                      });
+                      return;
+                    }
+                  } else {
+                    await Constants.showGeneralSnackBar(
+                        "تهیه اشتراک ارزان با تخفیف",
+                        "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+                    Future.delayed(const Duration(milliseconds: 1000),
+                        () async {
+                      await Get.to(() => const PlanScreen());
+                    });
+                    return;
+                  }
+                }
               }
+              downloadController.startNewDownload(pageController.videoDetail!,
+                  detailController: pageController);
+
+              // if ((GetStorageData.getData("logined") ?? false)) {
+              // } else {
+              //   checkUSers();
+              //   showSubscribtion();
+              // }
             },
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,

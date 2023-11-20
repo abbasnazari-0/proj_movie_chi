@@ -151,6 +151,7 @@ class Constants {
         color: Colors.black,
         textAlign: TextAlign.center,
         size: 15.h,
+        fontWeight: FontWeight.bold,
       ),
       messageText: MyText(
         txt: txt,

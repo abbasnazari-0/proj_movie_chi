@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
+import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
+import 'package:movie_chi/features/feature_search/presentation/widgets/search_filter_items.dart';
 import 'package:movie_chi/features/feature_series_movies/presentations/pages/movies_page_screen.dart';
 import 'package:movie_chi/features/feature_series_movies/presentations/pages/seriase_page_screen.dart';
 import 'package:movie_chi/core/widgets/app_appbar.dart';
@@ -53,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   final bottomAppBarController = Get.put(BottomAppBarController());
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -195,30 +199,49 @@ class _HomeScreenState extends State<HomeScreen>
                       return const ReelsScreemContent();
                     case 3:
                       return // search Content
-                          NestedScrollView(
-                        floatHeaderSlivers: true,
-                        body: const SearchPage(),
-                        physics: const BouncingScrollPhysics(),
-                        headerSliverBuilder: (context, innerBoxIsScrolled) {
-                          return [
-                            SliverAppBar(
-                              automaticallyImplyLeading: false,
-                              toolbarHeight: toolbarHeoght,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.background,
-                              flexibleSpace: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  children: [
-                                    AppAppBar(height: height),
-                                    const HomeSearchBar(),
-                                  ],
+                          GetBuilder<HomeSearchBarController>(
+                              builder: (controller) {
+                        return NestedScrollView(
+                          floatHeaderSlivers: true,
+                          body: const SearchPage(),
+                          physics: const BouncingScrollPhysics(),
+                          headerSliverBuilder: (context, innerBoxIsScrolled) {
+                            return [
+                              SliverAppBar(
+                                automaticallyImplyLeading: false,
+                                toolbarHeight: controller.advancedFilter
+                                    ? toolbarHeoght + 50 + 50 + 20 + 70
+                                    : toolbarHeoght + 70,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.background,
+                                flexibleSpace: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      AppAppBar(height: height),
+                                      const HomeSearchBar(),
+
+                                      // check box filter
+                                      CheckboxListTile(
+                                        value: controller.advancedFilter,
+                                        onChanged: (val) {
+                                          controller.changeAdvancedFilter(val!);
+                                        },
+                                        title: const MyText(
+                                          txt: "فیلتر پیشرفته",
+                                        ),
+                                      ),
+                                      // SizedBox(height: 10.h),
+                                      if (controller.advancedFilter)
+                                        const SearchFilterParent(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ];
-                        },
-                      );
+                              )
+                            ];
+                          },
+                        );
+                      });
                     case 5:
                       return NestedScrollView(
                         floatHeaderSlivers: true,

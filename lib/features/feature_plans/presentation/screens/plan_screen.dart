@@ -239,9 +239,19 @@ class PlanItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    MyText(
-                      txt:
-                          "${downloadMaxToString(controller.plan.data![index].planDownMax ?? "80.0")} دانلود در ماه",
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MyText(
+                          txt:
+                              "${downloadMaxToString(controller.plan.data![index].planDownMax ?? "80.0")} دانلود در ماه",
+                        ),
+                        MyText(
+                          txt: "تماشای نامحدود فیلم و سریال و انیمیشن",
+                          size: 10.sp,
+                          color: Colors.green,
+                        ),
+                      ],
                     )
                   ],
                 ),

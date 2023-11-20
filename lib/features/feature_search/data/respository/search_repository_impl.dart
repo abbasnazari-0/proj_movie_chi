@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:movie_chi/core/models/search_video_model.dart';
+import 'package:movie_chi/core/params/search_params.dart';
 
 import 'package:movie_chi/core/resources/data_state.dart';
 
@@ -17,8 +18,8 @@ class SearchReposityImpl extends SearchRepository {
 
   @override
   Future<DataState<List<SearchVideo>>> searchQuery(
-      String query, int count) async {
-    Response res = await searchDataGetter.getData(count, query);
+      SearchParamsQuery searchParamsQuery) async {
+    Response res = await searchDataGetter.getData(searchParamsQuery);
     // print(res.data);
     if (res.statusCode == 200) {
       List<SearchVideo> searchVideoList = [];
@@ -35,7 +36,7 @@ class SearchReposityImpl extends SearchRepository {
     } else {
       if (searchRetries < 2) {
         searchRetries++;
-        return searchQuery(query, count);
+        return searchQuery(searchParamsQuery);
       }
       return DataFailed(res.statusMessage.toString());
     }

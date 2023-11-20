@@ -91,7 +91,8 @@ class DownloadPageController extends GetxController {
     }
   }
 
-  Future<String> checkQuality(Video video, {String? actionButton}) async {
+  Future<String> checkQuality(Video video,
+      {String? actionButton, bool? justQuality}) async {
     // if just have 1 quality
     List<Map<String, String?>> videosQualities = [
       {"vid": video.quality1080, "quality": "1080"},
@@ -116,14 +117,20 @@ class DownloadPageController extends GetxController {
         1) {
       // download video
       // return one quality
+
+      if ((justQuality ?? false) == true) {
+        return videosQualities
+            .where((element) => element["vid"] != null)
+            .first["quality"]!;
+      }
       return getVideoUrl(videosQualities
           .where((element) => element["vid"] != null)
           .first["vid"]!);
     } else {
       String qualitySelected = "";
       // show dialog to choose quality
-      qualitySelected =
-          await chooseQuality(videosQualities, actionButton: actionButton);
+      qualitySelected = await chooseQuality(videosQualities,
+          actionButton: actionButton, justQuality: justQuality);
       return getVideoUrl(qualitySelected);
     }
   }
@@ -178,9 +185,14 @@ class DownloadPageController extends GetxController {
   }
 
   // open url in browser
-  openUrl(String url) async {
+  openUrl(String url, String userHeaderAuth) async {
     if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: false, forceWebView: false);
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: {'extra': userHeaderAuth},
+      );
     } else {
       throw 'Could not launch $url';
     }
@@ -274,12 +286,22 @@ class DownloadPageController extends GetxController {
                     // download button
                     MaterialButton(
                       onPressed: () async {
-                        String qualityLink = await checkQuality(video);
+                        String qualityLink =
+                            await checkQuality(video, justQuality: true);
+
+                        if (qualityLink == "") return;
+
                         int downloaded =
                             (GetStorageData.getData("downloaded_item") ?? 0);
                         GetStorageData.writeData(
                             "downloaded_item", downloaded + 1);
-                        openUrl(qualityLink);
+
+                        openUrl(
+                            "${Constants.baseUrl()}${pageUrl}download.php?file=$qualityLink&user_tag=${GetStorageData.getData("user_tag")}&user_downloaded=$downloaded&video_tag=${video.tag}&quality_id=${video.qualitiesId}",
+                            jsonEncode({
+                              "user_downloaded": downloaded,
+                              "video_tag": video.tag,
+                            }));
                       },
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,

@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 
 import '../../../../core/widgets/mytext.dart';
 
-chooseQuality(List videosQualities, {String? actionButton}) async {
+chooseQuality(List videosQualities,
+    {String? actionButton, bool? justQuality}) async {
   var qualitySelected;
   await Get.dialog(
     GestureDetector(
@@ -42,6 +43,11 @@ chooseQuality(List videosQualities, {String? actionButton}) async {
                         if (item["vid"] != null)
                           InkWell(
                             onTap: () {
+                              if ((justQuality ?? false) == true) {
+                                qualitySelected = item["quality"]!;
+                                Get.back();
+                                return;
+                              }
                               // pageVideoPlayerController.controller
                               //     .setDataSource(
                               //   DataSource(

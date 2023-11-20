@@ -6,6 +6,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
+import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/utils/constants.dart';
@@ -144,29 +146,62 @@ class PlayIcon extends StatelessWidget {
         //   "data": pageController.videoDetail,
         // });
 
-        try {
-          if ((GetStorageData.getData("logined") ?? false)) {
-            String qualityLink = await downloadController
-                .checkQuality(pageController.videoDetail!, actionButton: "پخش");
-            Constants.openVideoPlayer(
-                pageController.video ?? pageController.videoDetail!,
-                path: qualityLink,
-                customLink: qualityLink);
+        if ((GetStorageData.getData("logined") ?? false) == false) {
+          if ((GetStorageData.getData("user_logined") ?? false) == false) {
+            Get.to(() => LoginScreen());
+            return;
           } else {
-            // launchUrl(Uri.parse(
-            //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-            checkUSers();
-            showSubscribtion();
-          }
-        } catch (e) {
-          if (!(GetStorageData.getData("logined") ?? false)) {
-            // launchUrl(Uri.parse(
-            //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-            checkUSers();
-            showSubscribtion();
-            // launch search in google
+            if (GetStorageData.getData("user_status") == "premium") {
+              String timeOut = GetStorageData.getData("time_out_premium");
+              DateTime expireTimeOut = (DateTime.parse(timeOut));
+              DateTime now = (DateTime.now());
+
+              if (expireTimeOut.millisecondsSinceEpoch <
+                  now.millisecondsSinceEpoch) {
+                await Constants.showGeneralSnackBar(
+                    "خطا", "اشتراک شما به پایان رسیده است");
+                Future.delayed(const Duration(milliseconds: 1000), () async {
+                  await Get.to(() => const PlanScreen());
+                });
+                return;
+              }
+            } else {
+              await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
+                  "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+              Future.delayed(const Duration(milliseconds: 1000), () async {
+                await Get.to(() => const PlanScreen());
+              });
+              return;
+            }
           }
         }
+        try {
+          // if ((GetStorageData.getData("logined") ?? false)) {
+          String? qualityLink = await downloadController
+              .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+          if (qualityLink == null) return;
+          Constants.openVideoPlayer(
+              pageController.video ?? pageController.videoDetail!,
+              path: qualityLink,
+              customLink: qualityLink);
+          // } else {
+          //   // launchUrl(Uri.parse(
+          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
+          //   checkUSers();
+          //   showSubscribtion();
+          // }
+        } catch (e) {
+          // await Constants.showGeneralSnackBar(
+          //     "تماس با پشتیبانی", "خطایی رخ دادخ $e");
+          // if (!(GetStorageData.getData("logined") ?? false)) {
+          //   // launchUrl(Uri.parse(
+          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
+          //   checkUSers();
+          //   showSubscribtion();
+          //   // launch search in google
+          // }
+        }
+
         // loading screen
 
         // Get.to(() => const VideoPlayerScreen(),

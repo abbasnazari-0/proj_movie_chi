@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/features/feature_search/presentation/widgets/empty_search_screen.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/search_shimmer.dart';
 
@@ -47,6 +48,9 @@ class _SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<SearchPageController>(
                 builder: (controller) {
+                  if (controller.searchPageStatus == PageStatus.empty) {
+                    return const EmptyPage();
+                  }
                   if (controller.searchData.isEmpty &&
                       controller.searchPageStatus == PageStatus.error) {
                     return const SearchEmptyScreen();

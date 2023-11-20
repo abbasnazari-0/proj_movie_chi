@@ -167,16 +167,19 @@ class _DropDownState extends State<DropDown> {
                   items: genderItems
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
-                            child: Text(
-                              item,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyMedium!
-                                    .color,
-                                fontSize: 14,
-                                fontFamily: 'vazir',
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                item,
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyMedium!
+                                      .color,
+                                  fontSize: 14,
+                                  fontFamily: 'vazir',
+                                ),
                               ),
                             ),
                           ))

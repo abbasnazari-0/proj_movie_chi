@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/core/params/search_params.dart';
+import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
@@ -13,7 +15,7 @@ import '../../../../core/models/search_video_model.dart';
 class SearchPageController extends GetxController {
   final SearchUseCase searchUseCase;
   RxInt itemCount = 15.obs;
-  PageStatus searchPageStatus = PageStatus.loading;
+  PageStatus searchPageStatus = PageStatus.empty;
 
   TextEditingController controller = TextEditingController();
   final bottomAppBarController =
@@ -49,6 +51,15 @@ class SearchPageController extends GetxController {
 
   onstartLoadSearch(bool withremoving,
       {withChangePage = true, RefreshController? refreshController}) async {
+    final searchBarCont =
+        Get.put<HomeSearchBarController>(HomeSearchBarController());
+
+    if (controller.text.isEmpty) {
+      searchPageStatus = PageStatus.empty;
+      update();
+      searchData = [];
+      return;
+    }
     if (withChangePage) {
       // bottomAppBarController.chnageItemSelected(2.obs);
       // bottomAppBarController.chnagePageViewSelected(2.obs);
@@ -65,8 +76,14 @@ class SearchPageController extends GetxController {
     }
     update();
 
-    DataState dataState =
-        await searchUseCase.call(controller.text, itemCount.value);
+    DataState dataState = await searchUseCase.call(SearchParamsQuery(
+        query: controller.text,
+        count: itemCount.value,
+        imdb: searchBarCont.imdbSelected,
+        type: searchBarCont.typeSelected,
+        year: searchBarCont.yearSelected,
+        zhanner: searchBarCont.zhannerSelected,
+        advancedQuery: searchBarCont.advancedFilter));
 
     if (dataState is DataSuccess) {
       searchData = dataState.data;
