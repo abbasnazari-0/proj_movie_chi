@@ -10,7 +10,7 @@ import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/locator.dart';
 
-import '../../../../core/ad/ad_controller.dart';
+// import '../../../../core/ad/ad_controller.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/database_helper.dart';
 import '../controller/video_player_controller.dart';
@@ -51,12 +51,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   final pageVideoPlayerController =
       Get.put(PageVideoPlayerController(locator()));
 
-  final adController = Get.find<AdController>();
+  // final adController = Get.find<AdController>();
 
-  showAd() async {
-    await adController.adInitilzer?.loadInterstitial();
-    await adController.adInitilzer?.showRewarded();
-  }
+  // showAd() async {
+  //   await adController.adInitilzer?.loadInterstitial();
+  //   await adController.adInitilzer?.showRewarded();
+  // }
 
   var playerCustomIcons = const CustomIcons(
     play: Icon(iconsax.Iconsax.play),

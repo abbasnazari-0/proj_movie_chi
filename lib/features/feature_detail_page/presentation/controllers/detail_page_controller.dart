@@ -18,7 +18,6 @@ import 'package:movie_chi/features/feature_detail_page/domain/usecases/video_det
 import 'package:movie_chi/core/models/search_video_model.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
 
-import '../../../../core/ad/ad_controller.dart';
 import '../../../../core/params/play_list_params.dart';
 import '../../../../core/utils/database_helper.dart';
 import '../../../../locator.dart';
@@ -51,7 +50,7 @@ class DetailPageController extends GetxController {
   bool showSuggestionView = false;
   List<SearchVideo> suggestionList = [];
   ScrollController suggestionscrollController = ScrollController();
-  final adController = Get.find<AdController>();
+  // final adController = Get.find<AdController>();
   // video bookmarked
   bool videoBookMarked = false;
 
@@ -194,7 +193,7 @@ class DetailPageController extends GetxController {
         update();
       }
     }
-    adController.adInitilzer?.loadBanner();
+    // adController.adInitilzer?.loadBanner();
   }
 
   loadPlayList() async {

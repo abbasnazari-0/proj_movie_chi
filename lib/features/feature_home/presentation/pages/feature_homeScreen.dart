@@ -21,7 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:movie_chi/features/feature_search/presentation/pages/search_page.dart';
 import 'package:movie_chi/locator.dart';
 
-import '../../../../core/ad/ad_controller.dart';
+// import '../../../../core/ad/ad_controller.dart';
 import '../../../../core/widgets/header_social.dart';
 import '../../../feature_detail_page/presentation/controllers/detail_page_controller.dart';
 import '../../../feature_search/presentation/controller/search_page_controller.dart';
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   final searchController = Get.put(SearchPageController(locator()));
   final homePageController = Get.put(HomePageController(locator(), locator()));
-  final adController = Get.put(AdController());
+  // final adController = Get.put(AdController());
   final downloadController = Get.put(DownloadPageController());
 
   final pageController =

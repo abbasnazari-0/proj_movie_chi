@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu_videoplayer/init_meedu_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:movie_chi/config/theme.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/core/utils/platoformOS.dart';
@@ -48,7 +47,6 @@ void main() async {
   await setup();
 
   if (MobileDetector.isMobile()) {
-    MobileAds.instance.initialize();
     AdmobDataGetter.init();
   }
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
