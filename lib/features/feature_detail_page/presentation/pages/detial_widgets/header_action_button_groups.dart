@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/core/utils/report_videi_bug.dart';
 import 'package:movie_chi/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -50,11 +51,21 @@ class HeaderActionButtonGroup extends StatelessWidget {
                   "  \n\n دانلود اپلیکیشن مووی چی! از لینک زیر \n https://www.cinimo.ir/");
             },
           ),
-
+          HeaderActionButtons(
+            title: "گزارش خطا",
+            icon: Icons.bug_report_outlined,
+            onTap: () {
+              VideoReporter(
+                      title: pageController.videoDetail!.title!,
+                      tag: pageController.videoDetail!.tag!)
+                  .videoReportBug(context);
+            },
+          ),
           if (pageController.videoDetail?.status == "not-released" ||
               pageController.videoDetail?.status == 'screening')
             GetBuilder<NotifyController>(
-                init: NotifyController(pageController.videoDetail?.tag ?? "", locator()),
+                init: NotifyController(
+                    pageController.videoDetail?.tag ?? "", locator()),
                 builder: (notifController) {
                   return HeaderActionButtons(
                     title: notifController.notify == false

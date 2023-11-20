@@ -23,7 +23,7 @@ class _CriticismPageState extends State<CriticismPage> {
 
     SnackBar('صبر کنید...', 'لطفا صبر کنید...');
     DataSenderCritism datasender = DataSenderCritism();
-    datasender.dataSender(critcism_text).then((response) {
+    datasender.dataSender(critcism_text.text).then((response) {
       if (response.data.startsWith('success')) {
         SnackBar('تشکر از شما ',
             'با تشکر از شما ما در سدد توسعه بهترین اپلیکیشن از شما میابشیم');

@@ -37,7 +37,7 @@ class HeaderActionButtons extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon),
+            Icon(icon, size: 25.sp),
             MyText(
               txt: title,
               color: Colors.white,
