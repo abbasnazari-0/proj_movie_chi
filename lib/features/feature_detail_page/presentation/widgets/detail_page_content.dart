@@ -365,6 +365,24 @@ class DetailPageContent extends StatelessWidget {
 
         const SizedBox(height: 10),
 
+        // GestureDetector(
+        //   onTap: () {
+        //     Share.share("${pageController.videoDetail?.title} \n"
+        //         'https://www.cinimo.ir/video/${pageController.videoDetail?.tag} '
+        //         "  \n\n دانلود اپلیکیشن مووی چی! از لینک زیر \n https://www.cinimo.ir/");
+        //   },
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        //     child: Row(
+        //       children: [
+        //         const MyText(
+        //           txt: "زیر نویس",
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         // Share Section
         GestureDetector(
           onTap: () {
