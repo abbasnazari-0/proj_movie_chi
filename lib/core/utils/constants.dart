@@ -165,8 +165,9 @@ class Constants {
       margin: const EdgeInsets.all(15.0),
       borderRadius: 10.0,
       duration: const Duration(seconds: 2),
-      animationDuration: const Duration(milliseconds: 500),
+      animationDuration: const Duration(milliseconds: 200),
       snackStyle: SnackStyle.FLOATING,
+      
     );
   }
 

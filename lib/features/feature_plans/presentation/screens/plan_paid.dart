@@ -11,7 +11,7 @@ import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
 
 class PlanPaid extends StatefulWidget {
-  PlanPaid({super.key});
+  const PlanPaid({super.key});
 
   @override
   State<PlanPaid> createState() => _PlanPaidState();

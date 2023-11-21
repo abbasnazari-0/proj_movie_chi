@@ -90,7 +90,7 @@ class PlanScreenController extends SuperController {
           if ((await GetStorageData.readDataWithAwaiting("plan_viewed") ??
                   false) ==
               true) {
-            Get.off(() => PlanPaid());
+            Get.off(() => const PlanPaid());
           }
         }
       }

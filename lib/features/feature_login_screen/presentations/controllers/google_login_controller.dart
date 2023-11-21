@@ -15,7 +15,7 @@ class GoogleLoginController extends GetxController {
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
-      Get.off(() => SignInProfileScreen(),
+      Get.off(() => const SignInProfileScreen(),
           arguments: SignInParams(
               googleSignInAccount.email,
               "",

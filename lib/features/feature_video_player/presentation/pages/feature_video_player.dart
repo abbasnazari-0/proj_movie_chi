@@ -9,7 +9,6 @@ import 'package:iconsax/iconsax.dart' as iconsax;
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/locator.dart';
-
 // import '../../../../core/ad/ad_controller.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/database_helper.dart';
@@ -99,6 +98,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               aspectRatio: 9 / 16,
               child: MeeduVideoPlayer(
                 controller: pageVideoPlayerController.controller,
+                customCaptionView: (context, controller, responsive, text) {
+                  return CustomCaption(string: text, responsive: responsive);
+                },
                 videoOverlay: (context, controller, responsive) {
                   // add watermark in bottom righ
                   return VideoOverlyWidget(responsive: responsive);
@@ -134,6 +136,7 @@ class CustomCaption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
@@ -145,22 +148,14 @@ class CustomCaption extends StatelessWidget {
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Html(
-            data: string,
-            style: {
-              "i": Style(
-                  fontSize: FontSize(
-                    responsive.ip(double.parse(
-                        GetStorageData.getData("subtitleTextSize") ?? "2")),
-                  ),
-                  color:
-                      GetStorageData.getData("subtitleColor_") ?? Colors.white,
-                  fontFamily: 'vazir'),
-            },
-            // color: GetStorageData.getData("subtitleColor_") ?? Colors.white,
-            // size: responsive.ip(double.parse(
-            //     GetStorageData.getData("subtitleTextSize") ?? "2")),
-            // textAlign: TextAlign.center,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Html(data: string, shrinkWrap: true, style: {
+              "html": Style(
+                  textAlign: TextAlign.center,
+                  color: GetStorageData.getData("subtitleColor_") ??
+                      Colors.white.withAlpha(180))
+            }),
           ),
         ),
       ],

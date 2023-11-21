@@ -204,7 +204,7 @@ class DetailPageContent extends StatelessWidget {
                       pageController.videoDetail?.desc ?? "",
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        color: Theme.of(context).textTheme.bodyLarge!.color,
                         fontSize: 14.sp,
                       ),
                       // change color of thumb and selection

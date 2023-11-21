@@ -54,8 +54,8 @@ class AndroidWebWrapper {
                       // en_badge_web_generic.png
                       GestureDetector(
                         onTap: () {
-                          mlaunchUrl(Uri.parse(
-                              "https://play.google.com/store/apps/details?id=com.arianadeveloper.movie.chi"));
+                          mlaunchUrl(
+                              ("https://play.google.com/store/apps/details?id=com.arianadeveloper.movie.chi"));
                         },
                         child: Image.asset(
                           'assets/images/en_badge_web_generic.png',

@@ -10,11 +10,17 @@
 <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"></uses-permission>
 
 
-
 <queries>
+        <!-- to opens https URLs -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+<!-- <queries>
    <package android:name="com.mxtech.videoplayer.pro"/>
    <package android:name="com.mxtech.videoplayer.ad"/>
-</queries>
+</queries> -->
 
    <application
         android:label="مووی چی!!"
@@ -85,5 +91,6 @@
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher_notif" />
   
+      
     </application>
 </manifest>
