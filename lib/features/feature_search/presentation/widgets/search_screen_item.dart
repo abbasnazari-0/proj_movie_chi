@@ -53,7 +53,7 @@ class SearchItem extends StatelessWidget {
                   colorBlendMode: BlendMode.srcOver,
                   color: item.type == "video"
                       ? Colors.black.withAlpha(50)
-                      : Colors.white.withAlpha(50),
+                      : Colors.black.withAlpha(190),
                   imageUrl: Constants.imageFiller(item.thumbnail1x.toString()),
 
                   // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
@@ -79,13 +79,13 @@ class SearchItem extends StatelessWidget {
                 ),
                 if (item.type != "video")
                   Positioned(
-                    top: 4,
+                    top: 8,
                     bottom: 0,
                     left: 0,
                     right: 0,
                     child: CachedNetworkImage(
                       colorBlendMode: BlendMode.srcOver,
-                      color: Colors.white.withAlpha(100),
+                      color: Colors.black.withAlpha(160),
                       imageUrl:
                           Constants.imageFiller(item.thumbnail1x.toString()),
 
@@ -114,7 +114,7 @@ class SearchItem extends StatelessWidget {
                   ),
                 if (item.type != "video")
                   Positioned(
-                    top: 8,
+                    top: 16,
                     bottom: 0,
                     left: 0,
                     right: 0,
@@ -147,14 +147,14 @@ class SearchItem extends StatelessWidget {
                           const Icon(Icons.error),
                     ),
                   ),
-                Positioned.fill(
-                  child: ClipPath(
-                    clipper: MyCustomClipper(),
-                    child: Container(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
+                // Positioned.fill(
+                //   child: ClipPath(
+                //     clipper: MyCustomClipper(),
+                //     child: Container(
+                //       color: Colors.red,
+                //     ),
+                //   ),
+                // ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -175,7 +175,7 @@ class SearchItem extends StatelessWidget {
                   ],
                 ),
                 Positioned(
-                  top: 10.h,
+                  top: (item.type != "video") ? 18.h : 10.h,
                   left: 10.w,
                   right: 10,
                   height: 25.h,

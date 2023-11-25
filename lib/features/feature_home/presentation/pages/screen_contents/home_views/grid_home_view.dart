@@ -1,18 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:movie_chi/core/models/search_video_model.dart';
+import 'package:movie_chi/features/feature_search/presentation/widgets/search_screen_item.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/widgets/mytext.dart';
-import '../../../../../../core/widgets/video_item_header.dart';
 import '../../../../../feature_play_list/presentation/pages/feature_play_list.dart';
 import '../../../../data/model/home_catagory_model.dart';
-import '../../../controller/home_page_controller.dart';
 import '../../../controller/home_views_controller/grid_home_controller.dart';
 
 class GridHomeView extends StatefulWidget {
@@ -92,87 +90,15 @@ class _GridHomeViewState extends State<GridHomeView> {
                   itemBuilder: (context, index) {
                     HomeItemData itemData =
                         widget.homeCatagoryItem.data![index];
+
+                    // convert homeItemData to SearchVideo
+                    SearchVideo video = SearchVideo.fromJson(itemData.toJson());
+
                     return SizedBox(
-                      width:
-                          double.tryParse(widget.homeCatagoryItem.viewWidth!)!
-                              .w,
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              Constants.openHomeItem(widget.homeCatagoryItem,
-                                  index, itemData.thumbnail1x!);
-                              final homePageController =
-                                  Get.find<HomePageController>();
-                              homePageController.returnScreen();
-                            },
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    width: double.tryParse(
-                                            widget.homeCatagoryItem.viewWidth!)!
-                                        .w,
-                                    // height: 180,
-                                    margin: const EdgeInsets.only(right: 10),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: Constants.imageFiller(
-                                            itemData.thumbnail1x!),
-                                        fit: BoxFit.cover,
-                                        httpHeaders: const {
-                                          'Referer': 'https://www.cinimo.ir/'
-                                        },
-                                        // handle error
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                        placeholder: (context, url) =>
-                                            Shimmer.fromColors(
-                                          baseColor: Colors.white10,
-                                          highlightColor: Colors.black12,
-                                          child: Container(
-                                            color: Colors.grey[300],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 5.h),
-                                MyText(
-                                  txt: itemData.title!,
-                                  length: 13,
-                                  color: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyMedium!
-                                      .color,
-                                  fontWeight: FontWeight.bold,
-                                  maxLine: 2,
-                                  size: 10.sp,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: VideoItemHeader(
-                                isDubbed: itemData.dubble != null,
-                                hasSubtitle: itemData.subtitle != null,
-                                imdb: itemData.imdb!,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                        width: double.tryParse(
+                                widget.homeCatagoryItem.viewWidth!)! +
+                            10,
+                        child: SearchItem(item: video, chainrouter: true));
                   }),
             ),
           ),
