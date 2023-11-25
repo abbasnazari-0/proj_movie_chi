@@ -6,8 +6,6 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <flutter_meedu_videoplayer/flutter_meedu_videoplayer_plugin.h>
-#include <fvp/fvp_plugin.h>
 #include <local_notifier/local_notifier_plugin.h>
 #include <media_kit_libs_linux/media_kit_libs_linux_plugin.h>
 #include <media_kit_video/media_kit_video_plugin.h>
@@ -18,12 +16,6 @@
 #include <window_manager/window_manager_plugin.h>
 
 void fl_register_plugins(FlPluginRegistry* registry) {
-  g_autoptr(FlPluginRegistrar) flutter_meedu_videoplayer_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterMeeduVideoplayerPlugin");
-  flutter_meedu_videoplayer_plugin_register_with_registrar(flutter_meedu_videoplayer_registrar);
-  g_autoptr(FlPluginRegistrar) fvp_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "FvpPlugin");
-  fvp_plugin_register_with_registrar(fvp_registrar);
   g_autoptr(FlPluginRegistrar) local_notifier_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "LocalNotifierPlugin");
   local_notifier_plugin_register_with_registrar(local_notifier_registrar);

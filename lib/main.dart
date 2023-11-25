@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu_videoplayer/init_meedu_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:media_kit/media_kit.dart';
@@ -45,7 +44,6 @@ void main() async {
     }
   }
 
-  await initMeeduPlayer();
   await setup();
 
   if (MobileDetector.isMobile()) {

@@ -54,12 +54,12 @@ class SearchPageController extends GetxController {
     final searchBarCont =
         Get.put<HomeSearchBarController>(HomeSearchBarController());
 
-    if (controller.text.isEmpty) {
-      searchPageStatus = PageStatus.empty;
-      update();
-      searchData = [];
-      return;
-    }
+    // if (controller.text.isEmpty) {
+    //   searchPageStatus = PageStatus.empty;
+    //   update();
+    //   searchData = [];
+    //   return;
+    // }
     if (withChangePage) {
       // bottomAppBarController.chnageItemSelected(2.obs);
       // bottomAppBarController.chnagePageViewSelected(2.obs);

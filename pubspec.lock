@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  auto_orientation:
-    dependency: transitive
-    description:
-      name: auto_orientation
-      sha256: cd56bb59b36fa54cc28ee254bc600524f022a4862f31d5ab20abd7bb1c54e678
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
   badges:
     dependency: "direct main"
     description:
@@ -670,23 +662,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0+1"
-  flutter_meedu:
-    dependency: transitive
-    description:
-      name: flutter_meedu
-      sha256: "7be568c2df5036cd050358b589f2b3de3318562710f9a64ea364da5fd7eeafe7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.3.1"
-  flutter_meedu_videoplayer:
-    dependency: "direct main"
-    description:
-      path: package
-      ref: "368702e0298089e714164fe0c3ba9b45463965ed"
-      resolved-ref: "368702e0298089e714164fe0c3ba9b45463965ed"
-      url: "https://github.com/zezo357/flutter_meedu_videoplayer.git"
-    source: git
-    version: "4.3.1"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -695,14 +670,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.8.4"
-  flutter_spinkit:
-    dependency: transitive
-    description:
-      name: flutter_spinkit
-      sha256: b39c753e909d4796906c5696a14daf33639a76e017136c8d82bf3e620ce5bb8e
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0"
   flutter_statusbarcolor_ns:
     dependency: "direct main"
     description:
@@ -777,22 +744,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  fullscreen_window:
-    dependency: transitive
-    description:
-      name: fullscreen_window
-      sha256: fe3014f91bff16a82d142ba9d834980b8a84b4bb03347a92588d389ad92bd1d3
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  fvp:
-    dependency: transitive
-    description:
-      name: fvp
-      sha256: "27c4ab8e63817b73e3e01555077a3714f02d85f35c4cf31ae42c9ee581ee84a0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   get:
     dependency: "direct main"
     description:
@@ -1129,14 +1080,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.4"
-  meedu:
-    dependency: transitive
-    description:
-      name: meedu
-      sha256: "2cac0971ea211b1a18e3c4f038369f8ac57401760342da16d9e4e9d043f7de38"
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.0.2"
   meta:
     dependency: transitive
     description:

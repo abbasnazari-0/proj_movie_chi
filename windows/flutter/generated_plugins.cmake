@@ -5,9 +5,6 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   firebase_auth
   firebase_core
-  flutter_meedu_videoplayer
-  fullscreen_window
-  fvp
   local_notifier
   media_kit_libs_windows_video
   media_kit_video

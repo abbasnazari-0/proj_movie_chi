@@ -8,9 +8,6 @@
 
 #include <firebase_auth/firebase_auth_plugin_c_api.h>
 #include <firebase_core/firebase_core_plugin_c_api.h>
-#include <flutter_meedu_videoplayer/flutter_meedu_videoplayer_plugin_c_api.h>
-#include <fullscreen_window/fullscreen_window_plugin_c_api.h>
-#include <fvp/fvp_plugin_c_api.h>
 #include <local_notifier/local_notifier_plugin.h>
 #include <media_kit_libs_windows_video/media_kit_libs_windows_video_plugin_c_api.h>
 #include <media_kit_video/media_kit_video_plugin_c_api.h>
@@ -28,12 +25,6 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FirebaseAuthPluginCApi"));
   FirebaseCorePluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
-  FlutterMeeduVideoplayerPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FlutterMeeduVideoplayerPluginCApi"));
-  FullscreenWindowPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FullscreenWindowPluginCApi"));
-  FvpPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FvpPluginCApi"));
   LocalNotifierPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("LocalNotifierPlugin"));
   MediaKitLibsWindowsVideoPluginCApiRegisterWithRegistrar(

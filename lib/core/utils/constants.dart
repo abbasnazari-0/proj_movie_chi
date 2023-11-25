@@ -18,7 +18,6 @@ import '../../features/feature_home/data/model/cinimo_config_model.dart';
 import '../../features/feature_home/data/model/home_catagory_model.dart';
 import '../../features/feature_home/presentation/widgets/home_drawer.dart';
 import '../../features/feature_play_list/presentation/pages/feature_play_list.dart';
-import '../../features/feature_video_player/presentation/pages/feature_video_player.dart';
 import '../widgets/mytext.dart';
 
 String bbaseUrl = "https://api.cinimo.ir";
