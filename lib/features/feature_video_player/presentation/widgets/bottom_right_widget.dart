@@ -4,9 +4,9 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
+import 'package:movie_chi/features/feature_video_player/presentation/controller/new_video_player_controller.dart';
 
 import '../controller/setting_controller.dart';
-import '../controller/video_player_controller.dart';
 
 // ignore: library_prefixes
 import 'package:iconsax/iconsax.dart' as iconSax;
@@ -17,7 +17,7 @@ class BottomRightWidget extends StatelessWidget {
     required this.pageVideoPlayerController,
   });
 
-  final PageVideoPlayerController pageVideoPlayerController;
+  final NewPageVideoPlayerController pageVideoPlayerController;
 
   @override
   Widget build(BuildContext context) {

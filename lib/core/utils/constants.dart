@@ -8,6 +8,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/features/feature_new_notification/presentation/pages/news_page.dart';
 import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
 import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
+import 'package:movie_chi/features/feature_video_player/presentation/pages/feature_new_video_player.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -167,7 +168,6 @@ class Constants {
       duration: const Duration(seconds: 2),
       animationDuration: const Duration(milliseconds: 200),
       snackStyle: SnackStyle.FLOATING,
-      
     );
   }
 
@@ -180,15 +180,16 @@ class Constants {
     int? episoidIndex,
     String? additionTitle,
   }) {
-    Get.to(() => VideoPlayerScreen(isLocaled: isLocal ?? false), arguments: {
-      "data": video,
-      "isLocal": isLocal ?? false,
-      "path": path ?? "",
-      "custom_link": customLink,
-      "episoids": episoidList ?? [],
-      "edpisoid_index": episoidIndex ?? 0,
-      "addition_title": additionTitle ?? "",
-    });
+    Get.to(() => FeatureNewVideoPlayer(isLocaled: isLocal ?? false),
+        arguments: {
+          "data": video,
+          "isLocal": isLocal ?? false,
+          "path": path ?? "",
+          "custom_link": customLink,
+          "episoids": episoidList ?? [],
+          "edpisoid_index": episoidIndex ?? 0,
+          "addition_title": additionTitle ?? "",
+        });
     // show dialog to choose player
     // Get.dialog(
     //   AlertDialog(

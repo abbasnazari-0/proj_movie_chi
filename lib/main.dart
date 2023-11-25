@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu_videoplayer/init_meedu_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:movie_chi/config/theme.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/core/utils/platoformOS.dart';
@@ -23,6 +24,7 @@ import 'notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
 
   if (!kIsWeb) {
     if (Platform.isWindows) {

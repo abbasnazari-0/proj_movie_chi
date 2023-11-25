@@ -3,18 +3,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_archive/flutter_archive.dart';
-import 'package:flutter_meedu_videoplayer/meedu_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/random_string.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_video_player/data/model/video_subtitle_model.dart';
-import 'package:movie_chi/features/feature_video_player/presentation/controller/video_player_controller.dart';
+import 'package:movie_chi/features/feature_video_player/presentation/controller/new_video_player_controller.dart';
+// import 'package:movie_chi/features/feature_video_player/presentation/controller/new_video_player_controller.dart';
 
 import '../../../feature_home/data/model/cinimo_config_model.dart';
 import '../../../feature_home/presentation/widgets/home_drawer.dart';
@@ -23,7 +25,7 @@ import '../../domain/usecases/video_player_usecase.dart';
 class VideoPlayerViewController extends GetxController {
   final VideoPlayerUseCase videoPlayerUseCase;
   bool showWaterMark = true;
-  MeeduPlayerController? videoController;
+  VideoController? videoController;
   VideoPlayerViewController(this.videoPlayerUseCase);
   bool showSubtitleValue = true;
 
@@ -41,12 +43,10 @@ class VideoPlayerViewController extends GetxController {
   }
 
   nextVideo() {
-    print("ddddd");
     return false;
   }
 
   prevVideo() {
-    print("ddddd");
     // return;
   }
 
@@ -97,7 +97,7 @@ class VideoPlayerViewController extends GetxController {
   }
 
   subtitleClicked(int index, VideoSubtitle videoSubtitle) async {
-    final pagePlayerController = Get.find<PageVideoPlayerController>();
+    final pagePlayerController = Get.find<NewPageVideoPlayerController>();
     pagePlayerController.videoUrl = pagePlayerController.videoUrl;
 
     if (videoSubtitle.data?.isEmpty ?? true) return;
@@ -128,6 +128,13 @@ class VideoPlayerViewController extends GetxController {
             // read file
             String subtitle = await file.readAsString();
             pagePlayerController.caption = subtitle;
+            pagePlayerController.controller.player.setSubtitleTrack(
+              SubtitleTrack.data(
+                subtitle,
+                language: "per",
+                title: (videoSubtitle.data?[index].title),
+              ),
+            );
           } catch (e) {
             Constants.showGeneralSnackBar("خطا", "خطر در دریافت زیرنویس");
             return;
@@ -148,29 +155,31 @@ class VideoPlayerViewController extends GetxController {
         // if (!isUTF8(subtitle)) {
         //   subtitle = utf8.decode(subtitle.runes.toList(), allowMalformed: true);
         // }
-        pagePlayerController.caption = subtitle;
+        // pagePlayerController.caption = subtitle;
+        pagePlayerController.controller.player.setSubtitleTrack(
+            SubtitleTrack.data(subtitle,
+                language: "per", title: (videoSubtitle.data![index].title)));
       }
     } else {
       pagePlayerController.caption = (videoSubtitle.data![index].caption ?? "");
     }
 
-    pagePlayerController.changeDataSource(
-        true, pagePlayerController.controller.position.value.inSeconds);
+    //     true, pagePlayerController.controller.position.value.inSeconds);
 
-    pagePlayerController.controller.onClosedCaptionEnabled(false);
-    pagePlayerController.controller.onClosedCaptionEnabled(true);
+    // pagePlayerController.controller.onClosedCaptionEnabled(false);
+    // pagePlayerController.controller.onClosedCaptionEnabled(true);
   }
 
   showSubtitle(
     qualityID,
     context,
-    MeeduPlayerController videocontroller,
+    VideoController videocontroller,
   ) async {
     if (qualityID == 0) {
       Constants.showGeneralSnackBar("خطا", "خطر در دریافت زیرنویس");
       return;
     }
-    await videocontroller.pause();
+    await videocontroller.player.pause();
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
@@ -281,33 +290,40 @@ class VideoPlayerViewController extends GetxController {
                                         },
                                       ),
                                     ),
-                                  SizedBox(
-                                    width: 0.5.sw,
-                                    child: SwitchListTile(
-                                        value: showSubtitleValue,
-                                        subtitle: MyText(
-                                          txt:
-                                              "با غیرفعال کردن دیگر زیرنویس نمایش داده نمیشود",
-                                          color: Colors.white70,
-                                          size: 14.sp,
-                                        ),
-                                        onChanged: (v) {
-                                          chnageSubtitleStatus(v);
-                                        },
-                                        thumbColor: MaterialStateProperty.all(
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                        inactiveThumbColor: Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                            .withAlpha(100),
-                                        title: MyText(
-                                          txt: "فعال کردن زیرنویس",
-                                          size: 18.sp,
-                                          color: Colors.white,
-                                        )),
-                                  )
+                                  // SizedBox(
+                                  //   width: 0.5.sw,
+                                  //   child: SwitchListTile(
+                                  //       value: showSubtitleValue,
+                                  //       subtitle: MyText(
+                                  //         txt:
+                                  //             "با غیرفعال کردن دیگر زیرنویس نمایش داده نمیشود",
+                                  //         color: Colors.white70,
+                                  //         size: 14.sp,
+                                  //       ),
+                                  //       onChanged: (v) {
+                                  //         if (v == false) {
+                                  //           final pagePlayerController = Get.find<
+                                  //               NewPageVideoPlayerController>();
+                                  //           pagePlayerController
+                                  //               .controller.player
+                                  //               .setSubtitleTrack(
+                                  //                   SubtitleTrack.no());
+                                  //         }
+                                  //       },
+                                  //       thumbColor: MaterialStateProperty.all(
+                                  //           Theme.of(context)
+                                  //               .colorScheme
+                                  //               .secondary),
+                                  //       inactiveThumbColor: Theme.of(context)
+                                  //           .colorScheme
+                                  //           .secondary
+                                  //           .withAlpha(100),
+                                  //       title: MyText(
+                                  //         txt: "فعال کردن زیرنویس",
+                                  //         size: 18.sp,
+                                  //         color: Colors.white,
+                                  //       )),
+                                  // )
                                 ],
                               ),
                             ),
@@ -320,17 +336,5 @@ class VideoPlayerViewController extends GetxController {
         );
       },
     );
-  }
-
-  chnageSubtitleStatus(bool val) {
-    final pagePlayerController = Get.find<PageVideoPlayerController>();
-    showSubtitleValue = val;
-    update(['subtitle']);
-
-    if (val == false) {
-      pagePlayerController.controller.onClosedCaptionEnabled(false);
-    } else {
-      pagePlayerController.controller.onClosedCaptionEnabled(true);
-    }
   }
 }
