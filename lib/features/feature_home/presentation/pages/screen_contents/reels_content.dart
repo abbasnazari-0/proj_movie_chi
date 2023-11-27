@@ -37,7 +37,7 @@ class ReelsScreemContent extends StatelessWidget {
                 itemCount: controller.reelsData.length,
                 scrollDirection: Axis.vertical,
                 pageSnapping: true,
-                preloadPagesCount: 2,
+                preloadPagesCount: 4,
                 controller:
                     PreloadPageController(initialPage: 0, keepPage: true),
                 itemBuilder: (BuildContext context, int index) {

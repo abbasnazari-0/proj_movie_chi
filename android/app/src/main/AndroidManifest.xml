@@ -2,12 +2,12 @@
     package="com.arianadeveloper.world.movie">
     <uses-permission android:name="android.permission.INTERNET" />
 <!-- Required only if your app targets Android 13 or higher. -->
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"></uses-permission>
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="30"></uses-permission>
+<!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"></uses-permission>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="30"></uses-permission> -->
 <uses-permission android:name="com.google.android.gms.permission.AD_ID"></uses-permission>
-<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"></uses-permission>
+<!-- <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"></uses-permission>
 <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"></uses-permission>
-<uses-permission android:name="android.permission.READ_MEDIA_AUDIO"></uses-permission>
+<uses-permission android:name="android.permission.READ_MEDIA_AUDIO"></uses-permission> -->
 
 
 <queries>

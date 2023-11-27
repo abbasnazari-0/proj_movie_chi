@@ -566,14 +566,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
-  flutter_html:
-    dependency: "direct main"
-    description:
-      name: flutter_html
-      sha256: "02ad69e813ecfc0728a455e4bf892b9379983e050722b1dce00192ee2e41d1ee"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0-beta.2"
   flutter_image_slideshow:
     dependency: "direct main"
     description:
@@ -896,14 +888,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.17"
-  image_gallery_saver:
-    dependency: "direct main"
-    description:
-      name: image_gallery_saver
-      sha256: "467de169167b5c4e1ddde65395e4653c336a82f760b6700ea295085b7f2dd248"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   io:
     dependency: transitive
     description:
@@ -936,14 +920,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  list_counter:
-    dependency: transitive
-    description:
-      name: list_counter
-      sha256: c447ae3dfcd1c55f0152867090e67e219d42fe6d4f2807db4bbe8b8d69912237
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   list_diff:
     dependency: transitive
     description:
@@ -1814,7 +1790,7 @@ packages:
     source: hosted
     version: "0.3.1"
   universal_html:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: universal_html
       sha256: a5cc5a84188e5d3e58f3ed77fe3dd4575dc1f68aa7c89e51b5b4105b9aab3b9d

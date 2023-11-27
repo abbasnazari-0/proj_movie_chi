@@ -34,8 +34,8 @@ class VideoTrackHelper {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Select Video Track"),
-            content: Container(
+            title: const Text("Select Video Track"),
+            content: SizedBox(
               width: double.maxFinite,
               height: 200,
               child: ListView.builder(
