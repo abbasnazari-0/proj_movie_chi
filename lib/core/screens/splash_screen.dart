@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,16 +69,7 @@ class _SplashState extends State<Splash> {
           Map payload = {"tag": uri.pathSegments[1]};
           GetStorageData.writeData("has_notif", true);
           GetStorageData.writeData("notif_data", payload);
-          // link : https://www.cinimo.ir/video/OpAhGehWO3dYtG7
-          // if (uri.pathSegments[0] == 'video') {
-          // Get.off(() => DetailPage(
-          //       vid_tag: uri.pathSegments[1],
-          //       deepLinking: true,
-          //     ));
 
-          // await Constants.openVideoDetail(
-          //     vidTag: uri.pathSegments[1], picture: "", deepLink: true);
-          // } else {
           openScreenWithPeriodic();
           // }
         } else {
@@ -90,32 +82,43 @@ class _SplashState extends State<Splash> {
   }
 
   openScreenWithPeriodic() async {
+    if (!MobileDetector.isMobile()) {
+      startNewActivity();
+      return;
+    }
+
     await dbInitlizer();
     await locatConfigSecoundPage();
     Timer.periodic(
       const Duration(seconds: 3),
       (timer) async {
-        //Check if User come with first time
-        if ((GetStorageData.getData('isNotFirestTime')) ?? true) {
-          Get.off(() => ObBoardingScreen());
-        } else {
-          Get.off(() => const HomeScreen());
-        }
-
+        startNewActivity();
         timer.cancel();
       },
     );
   }
 
+  startNewActivity() {
+// Check if User come with first time
+    if ((GetStorageData.getData('isNotFirestTime')) ?? true) {
+      Get.off(() => ObBoardingScreen());
+    } else {
+      Get.off(() => const HomeScreen());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Image.asset(
-        'assets/images/splash.png',
-        fit: BoxFit.cover,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-      ),
+      body: MobileDetector.getPlatformSize(MediaQuery.of(context).size) ==
+              PltformSize.mobile
+          ? Image.asset(
+              'assets/images/splash.png',
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            )
+          : const SizedBox(),
     );
   }
 }

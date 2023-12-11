@@ -22,4 +22,18 @@ class MobileDetector {
     if (size.width < 900) return PltformSize.tablet;
     return PltformSize.desktop;
   }
+
+  static sizeHelper(size,
+      {double? mobileSize, double? tabletSize, double? desktopSize}) {
+    if (getPlatformSize(size) == PltformSize.mobile) return mobileSize;
+    if (getPlatformSize(size) == PltformSize.tablet) return tabletSize;
+    return desktopSize;
+  }
+
+  static widgetHelper<T>(size,
+      {T? mobileWidget, T? tabletWidget, T? desktopWidget}) {
+    if (getPlatformSize(size) == PltformSize.mobile) return mobileWidget;
+    if (getPlatformSize(size) == PltformSize.tablet) return tabletWidget;
+    return desktopWidget;
+  }
 }

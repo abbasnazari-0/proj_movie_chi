@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/utils/constants.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
+import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 
 import '../../../../core/utils/database_helper.dart';
 import '../../../../core/utils/get_storage_data.dart';
@@ -111,14 +112,82 @@ class _SessionItemState extends State<SessionItem> {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
             checkUSers();
-            showSubscribtion();
+            if (!(GetStorageData.getData("logined") ?? false)) {
+              // launchUrl(Uri.parse(
+              //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
+              checkUSers();
+              if ((GetStorageData.getData("logined") ?? false) == false) {
+                if ((GetStorageData.getData("user_logined") ?? false) ==
+                    false) {
+                  Get.to(() => LoginScreen());
+                  return;
+                } else {
+                  if (GetStorageData.getData("user_status") == "premium") {
+                    String timeOut = GetStorageData.getData("time_out_premium");
+                    DateTime expireTimeOut = (DateTime.parse(timeOut));
+                    DateTime now = (DateTime.now());
+
+                    if (expireTimeOut.millisecondsSinceEpoch <
+                        now.millisecondsSinceEpoch) {
+                      await Constants.showGeneralSnackBar(
+                          "خطا", "اشتراک شما به پایان رسیده است");
+                      Future.delayed(const Duration(milliseconds: 1000),
+                          () async {
+                        await Get.to(() => const PlanScreen());
+                      });
+                      return;
+                    }
+                  } else {
+                    await Constants.showGeneralSnackBar(
+                        "تهیه اشتراک ارزان با تخفیف",
+                        "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+                    Future.delayed(const Duration(milliseconds: 1000),
+                        () async {
+                      await Get.to(() => const PlanScreen());
+                    });
+                    return;
+                  }
+                }
+              }
+              // launch search in google
+            }
           }
         } catch (e) {
           if (!(GetStorageData.getData("logined") ?? false)) {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
             checkUSers();
-            showSubscribtion();
+            if ((GetStorageData.getData("logined") ?? false) == false) {
+              if ((GetStorageData.getData("user_logined") ?? false) == false) {
+                Get.to(() => LoginScreen());
+                return;
+              } else {
+                if (GetStorageData.getData("user_status") == "premium") {
+                  String timeOut = GetStorageData.getData("time_out_premium");
+                  DateTime expireTimeOut = (DateTime.parse(timeOut));
+                  DateTime now = (DateTime.now());
+
+                  if (expireTimeOut.millisecondsSinceEpoch <
+                      now.millisecondsSinceEpoch) {
+                    await Constants.showGeneralSnackBar(
+                        "خطا", "اشتراک شما به پایان رسیده است");
+                    Future.delayed(const Duration(milliseconds: 1000),
+                        () async {
+                      await Get.to(() => const PlanScreen());
+                    });
+                    return;
+                  }
+                } else {
+                  await Constants.showGeneralSnackBar(
+                      "تهیه اشتراک ارزان با تخفیف",
+                      "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+                  Future.delayed(const Duration(milliseconds: 1000), () async {
+                    await Get.to(() => const PlanScreen());
+                  });
+                  return;
+                }
+              }
+            }
             // launch search in google
           }
         }
@@ -188,7 +257,42 @@ class _SessionItemState extends State<SessionItem> {
                     // launchUrl(Uri.parse(
                     //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
                     checkUSers();
-                    showSubscribtion();
+                    if ((GetStorageData.getData("logined") ?? false) == false) {
+                      if ((GetStorageData.getData("user_logined") ?? false) ==
+                          false) {
+                        Get.to(() => LoginScreen());
+                        return;
+                      } else {
+                        if (GetStorageData.getData("user_status") ==
+                            "premium") {
+                          String timeOut =
+                              GetStorageData.getData("time_out_premium");
+                          DateTime expireTimeOut = (DateTime.parse(timeOut));
+                          DateTime now = (DateTime.now());
+
+                          if (expireTimeOut.millisecondsSinceEpoch <
+                              now.millisecondsSinceEpoch) {
+                            await Constants.showGeneralSnackBar(
+                                "خطا", "اشتراک شما به پایان رسیده است");
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () async {
+                              await Get.to(() => const PlanScreen());
+                            });
+                            return;
+                          }
+                        } else {
+                          await Constants.showGeneralSnackBar(
+                              "تهیه اشتراک ارزان با تخفیف",
+                              "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () async {
+                            await Get.to(() => const PlanScreen());
+                          });
+                          return;
+                        }
+                      }
+                    }
+                    // launch search in google
                   }
                 },
                 icon: const Icon(Icons.cloud_download_rounded)),
@@ -196,53 +300,5 @@ class _SessionItemState extends State<SessionItem> {
         ],
       ),
     );
-  }
-
-  showSubscribtion() {
-    Get.defaultDialog(
-        title: "اشتراک ویژه",
-        content: Column(
-          children: [
-            MyText(
-              txt: "برای دیدن این ویدیو باید اشتراک ویژه داشته باشید",
-              color: Get.theme.textTheme.bodyLarge!.color,
-              size: 16,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      launchUrl(Uri.parse("https://cinimo.ir"),
-                          mode: LaunchMode.externalApplication);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Get.theme.colorScheme.secondary,
-                    ),
-                    child: const MyText(
-                      txt: "سایت سینیمو",
-                      size: 16,
-                    )),
-                ElevatedButton(
-                    onPressed: () {
-                      // open url in external browser
-                      launchUrl(
-                          Uri.parse(
-                            "https://payment.cinimo.ir/user/login",
-                          ),
-                          mode: LaunchMode.externalApplication);
-                    },
-                    child: MyText(
-                      txt: "خرید اشتراک",
-                      color: Get.theme.colorScheme.secondary,
-                      size: 16,
-                    )),
-              ],
-            )
-          ],
-        ));
   }
 }

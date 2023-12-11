@@ -16,7 +16,7 @@ import 'package:movie_chi/features/feature_plans/domain/usecase/plan_usecase.dar
 
 import '../screens/plan_paid.dart';
 
-class PlanScreenController extends SuperController {
+class PlanScreenController extends GetxController {
   final PlanUseCase planUseCase;
   PageStatus pageStatus = PageStatus.loading;
   PageStatus paidPageStatus = PageStatus.loading;
@@ -156,26 +156,5 @@ class PlanScreenController extends SuperController {
     }
     path.close();
     return path;
-  }
-
-  @override
-  void onDetached() {
-    // TODO: implement onDetached
-  }
-
-  @override
-  void onInactive() {
-    // TODO: implement onInactive
-  }
-
-  @override
-  void onPaused() {
-    // TODO: implement onPaused
-  }
-
-  @override
-  void onResumed() {
-    // TODO: implement onResumed
-    print("dddddddddd");
   }
 }

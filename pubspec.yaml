@@ -79,7 +79,7 @@ dependencies:
   appcheck: ^1.0.6
   preload_page_view: ^0.2.0
   firebase_auth: ^4.11.0
-  google_sign_in: ^6.1.5
+  google_sign_in: ^6.1.6
   easy_loading_button: ^0.3.2
   confetti: ^0.7.0
   media_kit: ^1.1.10                             # Primary package.

@@ -37,20 +37,15 @@ void main() async {
       AndroidWebWrapper.show();
       return;
     }
-
-    if (webOS == "web") {
-      WebWrapper.show();
-      return;
-    }
   }
 
   await setup();
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   if (MobileDetector.isMobile()) {
     AdmobDataGetter.init();
+    LocalNotificationService().initialize();
   }
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  LocalNotificationService().initialize();
 
   runApp(
     ScreenUtilInit(
