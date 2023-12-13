@@ -119,6 +119,12 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
           );
         },
         onSuggestionSelected: (Object? suggestion) {
+          if (searchController.suggestionList.isNotEmpty) {
+            if (suggestion == "حذف تاریخچه") {
+              searchController.removeSearchHisotry(context);
+              return;
+            }
+          }
           searchController.controller.setText(suggestion.toString());
           onChange();
         },

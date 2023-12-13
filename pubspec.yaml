@@ -16,7 +16,7 @@ dependencies:
   expandable: ^5.0.1
   cupertino_icons: ^1.0.2
   get_storage: ^2.0.3
-  font_awesome_flutter: ^10.1.0
+  font_awesome_flutter: ^10.6.0
   flutter_image_slideshow: ^0.1.2
   cached_network_image: ^3.2.1
   flutter_cached_video_player: ^2.0.5
@@ -85,6 +85,7 @@ dependencies:
   media_kit: ^1.1.10                             # Primary package.
   media_kit_video: ^1.2.4                        # For video rendering.
   media_kit_libs_video: ^1.0.4                   # Native video dependencies.          # Native video dependencies.
+  gap: ^3.0.1
 
   
 dev_dependencies:

@@ -29,12 +29,67 @@ class VideoDetailDataGetter {
   }
 
   // get video comments
-  Future<Response> getVideoComments(videoTags) async {
+  Future<Response> getVideoComments(videoTags, page) async {
     var res = dio
         .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
       "video_tags": videoTags,
       "version": await Constants.versionApplication(),
+      'user_tag': GetStorageData.getData("user_tag"),
       "type": "get",
+      'page': page
+    });
+    return res;
+  }
+
+  Future<Response> reportCommentSpoiler(String commentId) async {
+    var res = dio
+        .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
+      "comment_id": commentId,
+      "user_tag": GetStorageData.getData("user_tag"),
+      "type": "reportSpoiler",
+    });
+    return res;
+  }
+
+  Future<Response> likeComment(int commentId) async {
+    var res = dio
+        .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
+      "comment_id": commentId,
+      "user_tag": GetStorageData.getData("user_tag"),
+      "type": "submitLike",
+    });
+    return res;
+  }
+
+  Future<Response> unikeComment(int commentId) async {
+    var res = dio
+        .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
+      "comment_id": commentId,
+      "user_tag": GetStorageData.getData("user_tag"),
+      "type": "submitDislike",
+    });
+    return res;
+  }
+
+  //  get video comment replies
+  Future<Response> getVideoCommentReplies(commentId) async {
+    var res = dio
+        .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
+      "comment_id": commentId,
+      "user_tag": GetStorageData.getData("user_tag"),
+      "type": "getReply",
+    });
+    return res;
+  }
+
+  // submit comment reply
+  Future<Response> submitCommentReply(commentId, reply) async {
+    var res = dio
+        .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
+      "comment_id": commentId,
+      "reply_text": reply,
+      "user_tag": GetStorageData.getData("user_tag"),
+      "type": "submitReply",
     });
     return res;
   }

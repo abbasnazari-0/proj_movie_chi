@@ -8,6 +8,12 @@ ThemeData buildDarkTheme() {
     primaryColor: const Color(0xFF242529),
     backgroundColor: const Color(0xFF17191A),
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      backgroundColor:
+          MaterialStateProperty.all<Color>(const Color(0xFF242529)),
+    )),
     primaryTextTheme: const TextTheme(
         bodyMedium: TextStyle(
           color: Colors.white,

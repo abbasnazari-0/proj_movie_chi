@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/params/search_params.dart';
+import 'package:movie_chi/core/utils/constants.dart';
+import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
@@ -31,9 +33,31 @@ class SearchPageController extends GetxController {
   getSearchHisotry() {
     suggestionList = GetStorageData.getData("hisstory") ?? [];
     suggestionList = List.from(suggestionList.reversed);
-
+    if (suggestionList.isNotEmpty) {
+      suggestionList.insert(0, 'حذف تاریخچه');
+    }
     // suggestionList = ["hello", "how", "are", "you"];
     update();
+  }
+
+  removeSearchHisotry(context) {
+    Get.defaultDialog(
+      title: 'حذف تاریخچه جستجو',
+      content: const MyText(
+        txt: 'آیا از حذف تاریخچه خود مطمئن هستید؟',
+      ),
+      cancel: OutlinedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const MyText(txt: 'خیر')),
+      confirm: FilledButton(
+          onPressed: () {
+            GetStorageData.writeData("hisstory", []);
+            Navigator.pop(context);
+            Constants.showGeneralSnackBar(
+                'تاریخچه حذف شد', "با موفقیت تاریخچه جستجو حذف شد");
+          },
+          child: const MyText(txt: 'بله')),
+    );
   }
 
   @override

@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:movie_chi/core/params/notification_subscribe.dart';
 import 'package:movie_chi/core/utils/json_checker.dart';
+import 'package:movie_chi/features/feature_detail_page/data/model/comment_like_model.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/comment_model.dart';
+import 'package:movie_chi/features/feature_detail_page/data/model/comment_repies_model.dart';
+import 'package:movie_chi/features/feature_detail_page/data/model/general_response_model.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/features/feature_detail_page/domain/repositories/video_detail_repository.dart';
@@ -50,8 +53,9 @@ class VideoDetailRepositoryImpl extends VideoDetailRepository {
 
   @override
   Future<DataState<List<CommentDataModel>>> getVideoComments(
-      String videoTags) async {
-    Response res = await videoDetailDataGetter.getVideoComments(videoTags);
+      String videoTags, int page) async {
+    Response res =
+        await videoDetailDataGetter.getVideoComments(videoTags, page);
 
     if (res.statusCode == 200) {
       // check if json or not
@@ -175,6 +179,88 @@ class VideoDetailRepositoryImpl extends VideoDetailRepository {
         }
       } else {
         return DataFailed("unknown error");
+      }
+    } catch (e) {
+      return DataFailed("error on internet connection $e");
+    }
+  }
+
+  @override
+  Future<DataState<CommentSpoilReport>> reportCommentSpoiler(
+      String commentId) async {
+    try {
+      Response res =
+          await videoDetailDataGetter.reportCommentSpoiler(commentId);
+
+      if (res.statusCode == 200) {
+        return DataSuccess(CommentSpoilReport.fromJson(json.decode(res.data)));
+      } else {
+        return DataFailed("unknown error");
+      }
+    } catch (e) {
+      return DataFailed("error on internet connection $e");
+    }
+  }
+
+  @override
+  Future<DataState<CommentLikesData>> submitCommentDislike(
+      int commentID) async {
+    try {
+      Response res = await videoDetailDataGetter.unikeComment(commentID);
+      if (res.statusCode == 200) {
+        return DataSuccess(CommentLikesData.fromJson(json.decode(res.data)));
+      } else {
+        return DataFailed("unknown error");
+      }
+    } catch (e) {
+      return DataFailed("error on internet connection $e");
+    }
+  }
+
+  @override
+  Future<DataState<CommentLikesData>> submitCommentLike(int commentID) async {
+    try {
+      Response res = await videoDetailDataGetter.likeComment(commentID);
+      if (res.statusCode == 200) {
+        return DataSuccess(CommentLikesData.fromJson(json.decode(res.data)));
+      } else {
+        return DataFailed("unknown error");
+      }
+    } catch (e) {
+      return DataFailed("error on internet connection $e");
+    }
+  }
+
+  @override
+  Future<DataState<CommentReplies>> getCommentVideoReplies(
+      int commentID) async {
+    try {
+      Response res =
+          await videoDetailDataGetter.getVideoCommentReplies(commentID);
+
+      if (res.statusCode == 200) {
+        // check if json or not
+
+        return DataSuccess(CommentReplies.fromJson(json.decode(res.data)));
+      } else {
+        return DataFailed(res.data);
+      }
+    } catch (e) {
+      return DataFailed("error on internet connection $e");
+    }
+  }
+
+  @override
+  Future<DataState<CommentReplies>> addCommentVideoReplies(
+      int commentID, String reply) async {
+    try {
+      Response res =
+          await videoDetailDataGetter.submitCommentReply(commentID, reply);
+
+      if (res.statusCode == 200) {
+        return DataSuccess(CommentReplies.fromJson(json.decode(res.data)));
+      } else {
+        return DataFailed(res.data);
       }
     } catch (e) {
       return DataFailed("error on internet connection $e");

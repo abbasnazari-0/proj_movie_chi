@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/core/utils/constants.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:movie_chi/core/resources/data_state.dart';
@@ -125,6 +126,7 @@ class DetailPageController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    commentList = [];
     super.onInit();
     sessionId = 0;
     playListModel = null;
@@ -158,8 +160,9 @@ class DetailPageController extends GetxController {
           // get gallery
           getVideoGallery(videoDetail!.galleryId!);
 
+          commentPage = 1;
           // get comments
-          getVideoComments(vidTag!);
+          getVideoComments(videoDetail!.tag!);
 
           // get suggestions
           getVideoSuggestions(
@@ -290,16 +293,35 @@ class DetailPageController extends GetxController {
     update();
   }
 
-//  get comment list
-  getVideoComments(String videoTags) async {
-    commentList = [];
-    DataState dataState = await videoDetailUseCase.getVideoComments(videoTags);
-    if (dataState is DataSuccess) {
-      commentList = dataState.data;
+  int commentPage = 1;
+  bool loadingCommentMore = false;
+  loadMoreComment() {
+    loadingCommentMore = true;
+    update();
+    commentPage += 1;
+    getVideoComments(videoDetail!.tag!, isMoreLoad: true);
+  }
 
+//  get comment list
+  getVideoComments(String videoTags, {bool? isMoreLoad}) async {
+    DataState dataState =
+        await videoDetailUseCase.getVideoComments(videoTags, commentPage);
+    if (dataState is DataSuccess) {
+      if (commentList.isEmpty) {
+        commentList = dataState.data;
+      } else {
+        commentList.addAll(dataState.data);
+      }
+      loadingCommentMore = false;
       update();
     }
     if (dataState is DataFailed) {
+      if ((isMoreLoad ?? false) == true) {
+        Constants.showGeneralSnackBar(
+            'یافت نشد', 'بیشتر از این کامنت یافت نشد');
+      }
+      loadingCommentMore = false;
+      update();
       // return dataState.error;
     }
   }
