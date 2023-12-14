@@ -54,8 +54,10 @@ class _FeatureNewVideoPlayerState extends State<FeatureNewVideoPlayer> {
 
           child: MaterialVideoControlsTheme(
             normal: MaterialVideoControlsThemeData(
-                seekBarMargin: const EdgeInsets.only(bottom: 30),
-                bottomButtonBarMargin: const EdgeInsets.only(bottom: 40),
+                seekBarMargin:
+                    const EdgeInsets.only(bottom: 30, left: 20, right: 20),
+                bottomButtonBarMargin:
+                    const EdgeInsets.only(bottom: 40, left: 20, right: 20),
                 brightnessGesture: true,
                 volumeGesture: true,
                 topButtonBar: TopButtonBar().topButtonBar(
