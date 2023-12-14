@@ -15,13 +15,17 @@ class ImdbSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       SizedBox(width: width * 0.05),
-      Icon(Iconsax.star1, color: Theme.of(context).colorScheme.secondary),
+      const Icon(Iconsax.star1, color: Colors.amber),
       SizedBox(width: width * 0.01),
-      const MyText(txt: ("امتیاز IMDb : ")),
+      const MyText(txt: ("امتیاز IMDb : "), color: Colors.amber),
 
       SizedBox(width: 4.w),
       // Catagory Section
-      MyText(txt: double.parse(vid.imdb.toString()).toStringAsFixed(1)),
+      MyText(
+          txt: double.parse(vid.imdb.toString()).toStringAsFixed(1),
+          size: 22,
+          fontWeight: FontWeight.bold,
+          color: Colors.amber),
     ]);
   }
 }

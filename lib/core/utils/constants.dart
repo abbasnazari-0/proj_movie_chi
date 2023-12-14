@@ -386,6 +386,8 @@ bool isLink(String text) {
   return regExp.hasMatch(text);
 }
 
+// create function to remove new lines that have not any
+
 void LogPrint(Object object) async {
   int defaultPrintLength = 1020;
   if (object.toString().length <= defaultPrintLength) {

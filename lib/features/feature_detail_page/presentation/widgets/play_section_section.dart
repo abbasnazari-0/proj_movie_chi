@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -57,51 +56,93 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
     loadLastView();
   }
 
+  final pageController = Get.find<DetailPageController>();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Column(
-              children: [
-                CachedNetworkImage(
-                    height: widget.width * 0.5,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    color: Colors.black.withAlpha(100),
-                    colorBlendMode: BlendMode.darken,
-                    httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
-                    // handle error
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    imageUrl: widget.pageController.galleryImageSelected != ""
-                        ? Constants.imageFiller(
-                            widget.pageController.galleryImageSelected)
-                        : widget.pageController.videoDetail?.thumbnail2x !=
-                                    null &&
-                                widget.pageController.videoDetail!
-                                        .thumbnail2x !=
-                                    ""
-                            ? Constants.imageFiller(
-                                widget.pageController.videoDetail!.thumbnail2x!)
-                            : Constants.imageFiller(widget
-                                .pageController.videoDetail!.thumbnail1x!)),
-                LinearProgressIndicator(
-                    value: lastViewMap.isNotEmpty
-                        ? (lastViewMap['vid_time'] /
-                            lastViewMap['vid_duration'])
-                        : 0.0,
+    return InkWell(
+      onTap: () async {
+        // check from persian country or not
+        final downloadController = Get.find<DownloadPageController>();
+        // check from persian country or not
 
-                    // value: 0.5,
-                    color: Colors.red),
-              ],
-            ),
-          ),
-          Positioned.fill(child: PlayIcon()),
-        ],
+        // try {
+        // if (GetStorageData.getData("logined")) {
+        // Get.to(() => const VideoPlayerScreen(), arguments: {
+        //   "data": pageController.videoDetail,
+        // });
+
+        if ((GetStorageData.getData("logined") ?? false) == false) {
+          if ((GetStorageData.getData("user_logined") ?? false) == false) {
+            Get.to(() => LoginScreen());
+            return;
+          } else {
+            if (GetStorageData.getData("user_status") == "premium") {
+              String timeOut = GetStorageData.getData("time_out_premium");
+              DateTime expireTimeOut = (DateTime.parse(timeOut));
+              DateTime now = (DateTime.now());
+
+              if (expireTimeOut.millisecondsSinceEpoch <
+                  now.millisecondsSinceEpoch) {
+                await Constants.showGeneralSnackBar(
+                    "خطا", "اشتراک شما به پایان رسیده است");
+                Future.delayed(const Duration(milliseconds: 1000), () async {
+                  await Get.to(() => const PlanScreen());
+                });
+                return;
+              }
+            } else {
+              await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
+                  "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+              Future.delayed(const Duration(milliseconds: 1000), () async {
+                await Get.to(() => const PlanScreen());
+              });
+              return;
+            }
+          }
+        }
+        try {
+          // if ((GetStorageData.getData("logined") ?? false)) {
+          String? qualityLink = await downloadController
+              .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+          if (qualityLink == null) return;
+          Constants.openVideoPlayer(
+              pageController.video ?? pageController.videoDetail!,
+              path: qualityLink,
+              customLink: qualityLink);
+          // } else {
+          //   // launchUrl(Uri.parse(
+          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
+          //   checkUSers();
+          //   showSubscribtion();
+          // }
+        } catch (e) {
+          // await Constants.showGeneralSnackBar(
+          //     "تماس با پشتیبانی", "خطایی رخ دادخ $e");
+          // if (!(GetStorageData.getData("logined") ?? false)) {
+          //   // launchUrl(Uri.parse(
+          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
+          //   checkUSers();
+          //   showSubscribtion();
+          //   // launch search in google
+          // }
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.redAccent,
+          borderRadius: BorderRadius.circular(50 / 4),
+        ),
+        height: 50,
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        child:
+            const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Icon(Icons.play_arrow_rounded),
+          MyText(
+            txt: "پخش فیلم",
+          )
+        ]),
       ),
     );
   }
@@ -201,7 +242,6 @@ class PlayIcon extends StatelessWidget {
           //   // launch search in google
           // }
         }
-
         // loading screen
 
         // Get.to(() => const VideoPlayerScreen(),

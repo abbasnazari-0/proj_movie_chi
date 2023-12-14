@@ -26,7 +26,6 @@ import '../../../feature_home/presentation/widgets/home_drawer.dart';
 import '../../data/model/video_model.dart';
 import '../controllers/detail_page_controller.dart';
 import '../controllers/download_page_controller.dart';
-import '../pages/detial_widgets/dubble_o_subtitle.dart';
 import '../pages/detial_widgets/header_action_button_groups.dart';
 import '../pages/detial_widgets/imdb.dart';
 import '../pages/detial_widgets/title_a_qualaties.dart';
@@ -126,7 +125,50 @@ class DetailPageContent extends StatelessWidget {
             YearATags(width: width, vid: controller.videoDetail ?? Video()),
             SizedBox(height: 5.h),
 
-            ImdbSection(width: width, vid: controller.videoDetail ?? Video()),
+            SingleChildScrollView(
+              child: Row(
+                children: [
+                  ImdbSection(
+                      width: width, vid: controller.videoDetail ?? Video()),
+                  const VerticalDivider(
+                    color: Colors.white,
+                    width: 10,
+                    thickness: 10,
+                  ),
+                  if ((pageController.videoDetail?.dubble ?? "0") == "1")
+                    ((pageController.videoDetail?.dubble ?? "0") == "1")
+                        ? const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Iconsax.microphone,
+                                color: Colors.amber,
+                              ),
+                              MyText(txt: "دوبله فارسی", color: Colors.amber)
+                            ],
+                          )
+                        : Container(),
+                  const VerticalDivider(
+                    color: Colors.white,
+                    width: 10,
+                    thickness: 10,
+                  ),
+                  if ((pageController.videoDetail?.subtitle ?? "0") == "1")
+                    ((pageController.videoDetail?.subtitle ?? "0") == "1")
+                        ? const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Iconsax.subtitle),
+                              MyText(
+                                txt: "زیرنویس فارسی",
+                                color: Colors.white,
+                              )
+                            ],
+                          )
+                        : Container(),
+                ],
+              ),
+            ),
             SizedBox(height: 20.h),
             HeaderActionButtonGroup(),
 
@@ -143,9 +185,10 @@ class DetailPageContent extends StatelessWidget {
                       expanableController.toggle();
                     },
                     child: SizedBox(
-                        height: 140,
+                        // height: 140,
                         width: double.infinity,
                         child: Container(
+                          padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.all(10),
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -177,7 +220,7 @@ class DetailPageContent extends StatelessWidget {
                                   size: 13.sp,
                                 ),
                               ),
-                              const Spacer(),
+                              // const Spacer(),
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: MyText(
@@ -206,8 +249,9 @@ class DetailPageContent extends StatelessWidget {
                                 },
                                 icon: const Icon(Icons.close))),
                         SelectableText(
-                          pageController.videoDetail?.desc ?? "",
+                          (pageController.videoDetail?.desc ?? ""),
                           textAlign: TextAlign.right,
+
                           style: TextStyle(
                             color: Theme.of(context).textTheme.bodyLarge!.color,
                             fontSize: 14.sp,
@@ -226,9 +270,6 @@ class DetailPageContent extends StatelessWidget {
               }),
             const SizedBox(height: 10),
             // add dubble
-            if ((pageController.videoDetail?.dubble ?? "0") == "1" ||
-                (pageController.videoDetail?.subtitle ?? "0") == "1")
-              DubbleOSubtitle(pageController: pageController),
 
             // Film Crew Section
             // const SizedBox(height: 10),
@@ -255,8 +296,8 @@ class DetailPageContent extends StatelessWidget {
                   itemCount: itemCount,
                   pageController: pageController),
             if (pageController.videoDetail?.type == "video")
-              MaterialButton(
-                onPressed: () async {
+              InkWell(
+                onTap: () async {
                   if ((GetStorageData.getData("logined") ?? false) == false) {
                     if ((GetStorageData.getData("user_logined") ?? false) ==
                         false) {
@@ -305,30 +346,16 @@ class DetailPageContent extends StatelessWidget {
                 splashColor: Colors.transparent,
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40 / 4),
-                    gradient: LinearGradient(
-                      colors: [
-                        Theme.of(context).colorScheme.onSecondary,
-                        Theme.of(context).colorScheme.secondary.withAlpha(50),
-                      ],
-                      end: Alignment.topLeft,
-                      begin: Alignment.bottomRight,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(50 / 4),
+                      color: Theme.of(context).primaryColor),
                   width: width,
                   height: 50,
-                  margin: const EdgeInsets.symmetric(horizontal: 7),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      MyText(
-                        txt: pageController.isVideoDownloaded
-                            ? 'پخش دانلود شده'
-                            : pageController.isDownloading == true &&
-                                    pageController.videoDetail?.tag ==
-                                        downloadController.video?.tag
-                                ? 'لغو دانلود'
-                                : "دانلود  فیلم",
+                      const MyText(
+                        txt: "دانلود  فیلم",
                         color: Colors.white,
                       ),
                       const SizedBox(width: 10),
@@ -349,13 +376,15 @@ class DetailPageContent extends StatelessWidget {
                   ),
                 ),
               ),
-            const SizedBox(height: 10),
+
+            const Gap(10),
+
             // Play Section
-            if (pageController.videoDetail?.thumbnail1x != null ||
-                pageController.videoDetail?.thumbnail2x != null)
-              if (pageController.videoDetail?.type == "video")
-                PlaySectionDetailPage(
-                    width: width, pageController: pageController),
+            // if (pageController.videoDetail?.thumbnail1x != null ||
+            //     pageController.videoDetail?.thumbnail2x != null)
+            if (pageController.videoDetail?.type == "video")
+              PlaySectionDetailPage(
+                  width: width, pageController: pageController),
 
             if (pageController.videoDetail?.type != "video")
               pageController.serialStatus == PageStatus.loading

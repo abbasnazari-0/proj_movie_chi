@@ -252,15 +252,19 @@ class _CommenItemState extends State<CommenItem> {
                     ),
                     width: 40,
                     height: 40,
-                    child: const Center(
+                    child: Center(
                       child: Icon(Iconsax.user,
-                          color: Color.fromRGBO(255, 255, 255, 1)),
+                          color: e.userTag!.startsWith("admin")
+                              ? Colors.amber
+                              : const Color.fromRGBO(255, 255, 255, 1)),
                     ),
                   ),
                   title: MyText(
                       txt: e.fullName ?? "کاربر بی نام",
                       size: 14,
-                      color: Colors.grey),
+                      color: e.userTag!.startsWith("admin")
+                          ? Colors.amber
+                          : Colors.grey),
                   subtitle: MyText(
                     txt: e.replyText ?? "",
                     size: 18,
