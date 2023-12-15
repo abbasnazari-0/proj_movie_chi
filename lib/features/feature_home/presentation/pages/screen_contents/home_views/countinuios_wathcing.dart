@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 import '../../../../../../core/utils/constants.dart';
@@ -48,11 +49,17 @@ class CountinuisWatching extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: controller.historyList.length,
+                itemCount: controller.historyList.length > 10
+                    ? 10
+                    : controller.historyList.length,
                 itemBuilder: (context, index) {
                   List playView =
                       (json.decode(controller.historyList[index]['data']));
                   Map item = playView[playView.length - 1];
+                  double val = (double.parse(item['vid_time'].toString()) /
+                      double.parse(item['vid_duration'].toString()));
+
+                  if (val.isInfinite) val = 0;
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 10.0),
@@ -62,9 +69,6 @@ class CountinuisWatching extends StatelessWidget {
                           onTap: () {
                             Video vid = Video.fromJson((json.decode(controller
                                 .historyList[index]['video_detail'])));
-
-                            // Get.to(
-                            //     () => DetailPage(vid_tag: item['tag']));
 
                             if (vid.type == "session") {
                               Constants.openVideoDetail(
@@ -120,16 +124,18 @@ class CountinuisWatching extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 10.h),
-                                LinearProgressIndicator(
-                                  value:
-                                      item['vid_time'] / item['vid_duration'],
-                                  color: Colors.red,
+                                Directionality(
+                                  textDirection: TextDirection.ltr,
+                                  child: LinearProgressIndicator(
+                                    value: val,
+                                    color: Colors.red,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        const Gap(10),
                         MyText(
                           txt: item['title'],
                           color: Theme.of(context)

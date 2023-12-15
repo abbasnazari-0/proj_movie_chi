@@ -342,14 +342,13 @@ class Constants {
   static openSupportMessages() => Get.to(() => SupportPage());
   static openNewsPage() => Get.to(() => NewsPage());
 
-  static openVideoDetail({
-    required String vidTag,
-    String? commonTag,
-    String? type,
-    bool deepLink = false,
-    required String picture,
-  }) async {
-    await Get.to(() => DetailPage(
+  static openVideoDetail(
+      {required String vidTag,
+      String? commonTag,
+      String? type,
+      bool deepLink = false,
+      required String picture}) {
+    Get.to(() => DetailPage(
           vid_tag: vidTag,
           pic: picture,
         ));

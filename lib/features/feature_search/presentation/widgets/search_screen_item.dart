@@ -25,15 +25,16 @@ class SearchItem extends StatelessWidget {
     Key? key,
     required this.item,
     this.chainrouter = true,
+    this.onTap,
   }) : super(key: key);
   final SearchVideo item;
   final bool chainrouter;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Goto Video Detail Page
-        // Get.to(() => DetailPage(vid_tag: item.tag.toString()));
+        if (onTap != null) onTap!();
         Constants.openVideoDetail(
             vidTag: item.tag.toString(),
             type: item.type,
@@ -44,12 +45,13 @@ class SearchItem extends StatelessWidget {
         padding: const EdgeInsets.all(3.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5.0),
-          child: SizedBox(
-            // color: Colors.white,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CachedNetworkImage(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned(
+                left: item.type != "video" ? 10 : 0,
+                right: item.type != "video" ? 10 : 0,
+                child: CachedNetworkImage(
                   colorBlendMode: BlendMode.srcOver,
                   color: item.type == "video"
                       ? Colors.black.withAlpha(50)
@@ -77,116 +79,116 @@ class SearchItem extends StatelessWidget {
                   // handle error
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                if (item.type != "video")
-                  Positioned(
-                    top: 8,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: CachedNetworkImage(
-                      colorBlendMode: BlendMode.srcOver,
-                      color: Colors.black.withAlpha(160),
-                      imageUrl:
-                          Constants.imageFiller(item.thumbnail1x.toString()),
-
-                      // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
-                      // handle error
-                      height: 250,
-                      filterQuality: FilterQuality.low,
-                      fit: BoxFit.cover,
-                      // color: Colors.black.withOpacity(0.2),
-                      placeholder: (context, url) => Center(
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.white,
-                          highlightColor: Colors.black12,
-                          child: Container(
-                            // height: 250,
-                            width: double.infinity,
-                            color: Colors.black26.withAlpha(20),
-                          ),
-                        ),
-                      ),
-
-                      // handle error
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                if (item.type != "video")
-                  Positioned(
-                    top: 16,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: CachedNetworkImage(
-                      colorBlendMode: BlendMode.srcOver,
-                      color: Colors.black.withAlpha(50),
-                      imageUrl:
-                          Constants.imageFiller(item.thumbnail1x.toString()),
-
-                      // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
-                      // handle error
-                      height: 250,
-                      filterQuality: FilterQuality.low,
-                      fit: BoxFit.cover,
-                      // color: Colors.black.withOpacity(0.2),
-                      placeholder: (context, url) => Center(
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.white,
-                          highlightColor: Colors.black12,
-                          child: Container(
-                            // height: 250,
-                            width: double.infinity,
-                            color: Colors.black26.withAlpha(20),
-                          ),
-                        ),
-                      ),
-
-                      // handle error
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                // Positioned.fill(
-                //   child: ClipPath(
-                //     clipper: MyCustomClipper(),
-                //     child: Container(
-                //       color: Colors.red,
-                //     ),
-                //   ),
-                // ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      height: 40.h,
-                      alignment: Alignment.center,
-                      color: Colors.black.withAlpha(150),
-                      child: MyText(
-                        txt: item.title.toString().replaceAll("فیلم", ""),
-                        color: Colors.white,
-                        maxLine: 2,
-                        fontWeight: FontWeight.bold,
-                        size: 16.0,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
+              ),
+              if (item.type != "video")
                 Positioned(
-                  top: (item.type != "video") ? 18.h : 10.h,
-                  left: 10.w,
-                  right: 10,
-                  height: 25.h,
-                  child: VideoItemHeader(
-                    imdb: item.imdb.toString(),
-                    isDubbed: item.dubble != null,
-                    hasSubtitle: item.subtitle != null,
+                  top: 8,
+                  bottom: 0,
+                  left: 5,
+                  right: 5,
+                  child: CachedNetworkImage(
+                    colorBlendMode: BlendMode.srcOver,
+                    color: Colors.black.withAlpha(160),
+                    imageUrl:
+                        Constants.imageFiller(item.thumbnail1x.toString()),
+
+                    // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
+                    // handle error
+                    height: 250,
+                    filterQuality: FilterQuality.low,
+                    fit: BoxFit.cover,
+                    // color: Colors.black.withOpacity(0.2),
+                    placeholder: (context, url) => Center(
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.white,
+                        highlightColor: Colors.black12,
+                        child: Container(
+                          // height: 250,
+                          width: double.infinity,
+                          color: Colors.black26.withAlpha(20),
+                        ),
+                      ),
+                    ),
+
+                    // handle error
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-                )
-              ],
-            ),
+                ),
+              if (item.type != "video")
+                Positioned(
+                  top: 16,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: CachedNetworkImage(
+                    colorBlendMode: BlendMode.srcOver,
+                    color: Colors.black.withAlpha(50),
+                    imageUrl:
+                        Constants.imageFiller(item.thumbnail1x.toString()),
+
+                    // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
+                    // handle error
+                    height: 250,
+                    filterQuality: FilterQuality.low,
+                    fit: BoxFit.cover,
+                    // color: Colors.black.withOpacity(0.2),
+                    placeholder: (context, url) => Center(
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.white,
+                        highlightColor: Colors.black12,
+                        child: Container(
+                          // height: 250,
+                          width: double.infinity,
+                          color: Colors.black26.withAlpha(20),
+                        ),
+                      ),
+                    ),
+
+                    // handle error
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
+                ),
+              // Positioned.fill(
+              //   child: ClipPath(
+              //     clipper: MyCustomClipper(),
+              //     child: Container(
+              //       color: Colors.red,
+              //     ),
+              //   ),
+              // ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 40.h,
+                    alignment: Alignment.center,
+                    color: Colors.black.withAlpha(150),
+                    child: MyText(
+                      txt: item.title.toString().replaceAll("فیلم", ""),
+                      color: Colors.white,
+                      maxLine: 2,
+                      fontWeight: FontWeight.bold,
+                      size: 16.0,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                top: (item.type != "video") ? 18.h : 10.h,
+                left: 10.w,
+                right: 10,
+                height: 25.h,
+                child: VideoItemHeader(
+                  imdb: item.imdb.toString(),
+                  isDubbed: item.dubble != null,
+                  hasSubtitle: item.subtitle != null,
+                ),
+              )
+            ],
           ),
         ),
       ),
