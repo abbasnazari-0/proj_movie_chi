@@ -82,6 +82,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
               searchController.onSearchBoxFocusing(false);
               searchController.suggestionsBoxController.suggestionsBox?.open();
             }
+            onChange();
           },
           style: faTextTheme(context),
           decoration: InputDecoration(

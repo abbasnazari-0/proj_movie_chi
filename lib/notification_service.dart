@@ -98,6 +98,23 @@ class LocalNotificationService {
     GetStorageData.writeData("notif_accepted", isAccepted);
 
     var messaging = FirebaseMessaging.instance;
+
+    await FirebaseMessaging.instance.subscribeToTopic('all');
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    messaging.setAutoInitEnabled(true);
+    messaging.requestPermission(
+        announcement: true,
+        carPlay: true,
+        criticalAlert: true,
+        provisional: true,
+        sound: true);
+
     var token = await messaging.getToken();
     GetStorageData.writeData("user_noti", token);
     debugPrint("user token is $token");
