@@ -63,6 +63,12 @@ class DetailPageContent extends StatelessWidget {
     }
   }
 
+  String cleanText(String text) {
+    List<String> lines = text.split('\n');
+    lines.removeWhere((line) => line.trim().isEmpty);
+    return lines.join('\n');
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -210,9 +216,8 @@ class DetailPageContent extends StatelessWidget {
                               Align(
                                 alignment: Alignment.center,
                                 child: MyText(
-                                  txt: pageController.videoDetail!.desc
-                                      .toString()
-                                      .replaceAll("\n", "\t"),
+                                  txt: cleanText(
+                                      pageController.videoDetail!.desc ?? ""),
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
                                   // length: 20,
@@ -249,7 +254,7 @@ class DetailPageContent extends StatelessWidget {
                                 },
                                 icon: const Icon(Icons.close))),
                         SelectableText(
-                          (pageController.videoDetail?.desc ?? ""),
+                          (cleanText(pageController.videoDetail?.desc ?? "")),
                           textAlign: TextAlign.right,
 
                           style: TextStyle(

@@ -16,7 +16,7 @@ import '../../../../core/models/search_video_model.dart';
 
 class SearchPageController extends GetxController {
   final SearchUseCase searchUseCase;
-  RxInt itemCount = 15.obs;
+  RxInt page = 1.obs;
   PageStatus searchPageStatus = PageStatus.empty;
 
   TextEditingController controller = TextEditingController();
@@ -91,9 +91,9 @@ class SearchPageController extends GetxController {
 
     if (withremoving) {
       searchData.clear();
-      itemCount = 15.obs;
+      page = 1.obs;
     } else {
-      itemCount = itemCount + 15;
+      page++;
     }
     if (withChangePage) {
       searchPageStatus = PageStatus.loading;
@@ -102,7 +102,7 @@ class SearchPageController extends GetxController {
 
     DataState dataState = await searchUseCase.call(SearchParamsQuery(
         query: controller.text,
-        count: itemCount.value,
+        count: page.value,
         imdb: searchBarCont.imdbSelected,
         type: searchBarCont.typeSelected,
         year: searchBarCont.yearSelected,
@@ -110,7 +110,11 @@ class SearchPageController extends GetxController {
         advancedQuery: searchBarCont.advancedFilter));
 
     if (dataState is DataSuccess) {
-      searchData = dataState.data;
+      if (withremoving) {
+        searchData = dataState.data;
+      } else {
+        searchData.addAll(dataState.data);
+      }
       refreshController?.loadComplete();
 
       searchPageStatus = PageStatus.success;

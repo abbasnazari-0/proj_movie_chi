@@ -139,11 +139,21 @@ class HomePageController extends GetxController {
     checkUseStatus();
 
     getNotificationNewsNew();
+    checkVideoStatus();
   }
 
   checkUseStatus() async {
     final controllerss = Get.find<PlanScreenController>();
+    // GetStorageData.writeData("plan_viewed", true);
     controllerss.checkAndGo();
+  }
+
+  checkVideoStatus() async {
+    String? videoOpen = await GetStorageData.getData("video_open");
+    if (videoOpen != null) {
+      Constants.openVideoDetail(vidTag: videoOpen, picture: "");
+      GetStorageData.writeData("video_open", null);
+    }
   }
 
   checkClicedOnNotification() async {
@@ -178,6 +188,7 @@ class HomePageController extends GetxController {
     // get config from network and save to shared prefrence
     // if (GetStorageData.getData("config") == null) {
     DataState dataState = await homeCatagoryUseCase.getAppConfig();
+
     if (dataState is DataSuccess) {
       // CinimoConfig cinimoConfig =
       //     CinimoConfig.fromJson(json.decode(dataState.data));

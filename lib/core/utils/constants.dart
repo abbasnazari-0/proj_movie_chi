@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -20,9 +21,9 @@ import '../../features/feature_home/presentation/widgets/home_drawer.dart';
 import '../../features/feature_play_list/presentation/pages/feature_play_list.dart';
 import '../widgets/mytext.dart';
 
-String bbaseUrl = "https://api.cinimo.ir";
+String bbaseUrl = dotenv.env['CONST_URL'] ?? "";
 String bfileBaseUrl = "https://files.cinimo.ir";
-String pageUrl = "/v5/cinimo/";
+String pageUrl = "/v7/cinimo/";
 
 String packageName = "com.arianadeveloper.movie.chi";
 
@@ -54,6 +55,18 @@ class Constants {
   static const String telegramUrl = "https://t.me/cinimo_offcial";
   static const String instagramUrl = "https://instagram.com/moviechi.reels";
 
+  static Future<int> pingWithPort(String address, String port) async {
+    final stopwatch = Stopwatch()..start();
+
+    try {
+      await Socket.connect(address, int.parse(port),
+          timeout: const Duration(seconds: 3));
+      return stopwatch.elapsedMilliseconds;
+    } catch (e) {
+      return -1;
+    }
+  }
+
   static bool allowToShowAd() {
     if (kIsWeb) {
       return false;
@@ -69,11 +82,9 @@ class Constants {
   static String baseUrl() {
     CinimoConfig config = configDataGetter();
 
-    if (config.config?.baseUrl != null) {
-      return config.config!.baseUrl!;
-    } else {
-      return bbaseUrl;
-    }
+    String base = config.config?.baseUrl ?? bbaseUrl;
+    print(base);
+    return base;
   }
 
   static String fileBaseUrl() {

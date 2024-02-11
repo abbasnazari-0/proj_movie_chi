@@ -32,24 +32,25 @@ class Config {
   bool? viewShow;
   bool? enableSubtitle;
   int? downloadFreeMaxium;
+  bool? freeUserPaidVideo;
 
-  Config({
-    this.baseUrl,
-    this.fileUrl,
-    this.telegram,
-    this.instgram,
-    this.iranDonateGetWay,
-    this.irPicGetway,
-    this.dollorDonateGetWay,
-    this.dollorPicGateway,
-    this.showBanner,
-    this.bannerPictureUrl,
-    this.bannerActionType,
-    this.bannerActionData,
-    this.viewShow,
-    this.enableSubtitle,
-    this.downloadFreeMaxium,
-  });
+  Config(
+      {this.baseUrl,
+      this.fileUrl,
+      this.telegram,
+      this.instgram,
+      this.iranDonateGetWay,
+      this.irPicGetway,
+      this.dollorDonateGetWay,
+      this.dollorPicGateway,
+      this.showBanner,
+      this.bannerPictureUrl,
+      this.bannerActionType,
+      this.bannerActionData,
+      this.viewShow,
+      this.enableSubtitle,
+      this.downloadFreeMaxium,
+      this.freeUserPaidVideo});
 
   Config.fromJson(Map<String, dynamic> json) {
     baseUrl = json['baseUrl'];
@@ -67,6 +68,7 @@ class Config {
     viewShow = json['viewShow'];
     enableSubtitle = json['enableSubtitle'];
     downloadFreeMaxium = json['download_free_maximum'];
+    freeUserPaidVideo = json['free_to_users_paid_videos'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,6 +88,7 @@ class Config {
     data['viewShow'] = viewShow;
     data['enableSubtitle'] = enableSubtitle;
     data['downloadFreeMaxium'] = downloadFreeMaxium;
+    data['free_to_users_paid_videos'] = freeUserPaidVideo;
     return data;
   }
 }

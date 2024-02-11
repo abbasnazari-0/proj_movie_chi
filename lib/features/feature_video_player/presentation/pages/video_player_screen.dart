@@ -66,7 +66,7 @@
 //   initVideoPlayer() async {
 //     await player.setSubtitleTrack(
 //       SubtitleTrack.uri(
-//         'https://api.cinimo.ir/Pirates.Of.The.Caribbean.The.Curse.Of.The.Black.Pearl.Farsi_Persian-WWW.MY-SUBS.CO.srt',
+//       
 //         title: 'persian',
 //         language: 'fa',
 //       ),

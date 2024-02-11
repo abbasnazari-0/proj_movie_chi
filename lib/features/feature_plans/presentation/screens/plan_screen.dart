@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -147,8 +148,8 @@ class PlanItem extends StatelessWidget {
       splashColor: Colors.transparent,
       overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: () {
-        mlaunchUrl(
-            "https://api.cinimo.ir/v5/payment/request.php?type=${controller.plan.data![index].id}&token=${GetStorageData.getData("user_tag")}");
+        mlaunchUrl(dotenv.env['CONST_URL'] ??
+            "" "/v5/payment/request.php?type=${controller.plan.data![index].id}&token=${GetStorageData.getData("user_tag")}");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

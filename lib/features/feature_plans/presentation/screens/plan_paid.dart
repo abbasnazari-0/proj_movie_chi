@@ -109,7 +109,7 @@ class _PlanPaidState extends State<PlanPaid> {
                       const Spacer(),
                       InkWell(
                         onTap: () {
-                          Get.back();
+                          Navigator.pop(context);
                         },
                         child: Container(
                           margin: const EdgeInsets.symmetric(

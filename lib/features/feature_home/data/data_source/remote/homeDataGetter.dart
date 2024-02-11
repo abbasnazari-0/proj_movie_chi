@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 
 import '../../../../../core/params/home_request_params.dart';
@@ -125,8 +126,9 @@ class HomeDataGetter {
 
   Future<Response> getAppConfig() async {
     var res = await dio.get(
-      'https://raw.githubusercontent.com/mosbahsofttechnology/cinimo/main/config.txt',
+      dotenv.env['GITHUB_URL'] ?? "",
     );
+
     return res;
   }
 

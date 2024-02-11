@@ -56,7 +56,7 @@ class PlanScreenController extends GetxController {
     update();
   }
 
-  checkAndGo() async {
+  Future<bool> checkAndGo() async {
     DataState dataState = await authService.loginUser(UserLoginParams(
         "",
         GetStorageData.getData("user_auth") ?? "",
@@ -76,7 +76,7 @@ class PlanScreenController extends GetxController {
         if (expireTimeOut.millisecondsSinceEpoch < now.millisecondsSinceEpoch) {
           Constants.showGeneralSnackBar("خطا", "اشتراک شما به پایان رسیده است");
 
-          return;
+          return false;
         } else {
           // check download count
           int downloadMax = int.parse(model.downloadMax ?? "0");
@@ -84,18 +84,34 @@ class PlanScreenController extends GetxController {
           int userDownloaded = (GetStorageData.getData("downloaded_item") ?? 0);
 
           if (userDownloaded >= downloadMax && downloadMax != -1) {
-            return;
+            return false;
           }
 
-          if ((await GetStorageData.readDataWithAwaiting("plan_viewed") ??
-                  false) ==
-              true) {
+          if ((GetStorageData.getData("is_premium") ?? false) != true) {
+            Get.to(() => const PlanPaid());
+
+            return true;
+          }
+
+          if ((await GetStorageData.getData("plan_viewed") ?? false) == true) {
             Get.off(() => const PlanPaid());
+            return true;
           }
         }
+      } else {
+        // UserLoginModel model = (dataState.data);
+        GetStorageData.writeData("user_tag", model.userTag);
+        GetStorageData.writeData("user_status", model.userStatus);
+        GetStorageData.writeData("fullName", model.fullName);
+
+        GetStorageData.writeData("time_out_premium", model.timeOutPremium);
+        GetStorageData.writeData("download_max", model.downloadMax);
+
+        GetStorageData.writeData("is_premium", false);
       }
       GetStorageData.writeData("plan_viewed", false);
     }
+    return false;
   }
   //on update
 
@@ -122,6 +138,8 @@ class PlanScreenController extends GetxController {
 
         GetStorageData.writeData("time_out_premium", model.timeOutPremium);
         GetStorageData.writeData("download_max", model.downloadMax);
+
+        GetStorageData.writeData("is_premium", true);
       } else {
         isPremium = false;
       }

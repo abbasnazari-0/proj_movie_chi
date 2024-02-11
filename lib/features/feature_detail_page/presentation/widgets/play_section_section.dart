@@ -5,6 +5,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
+import 'package:movie_chi/features/feature_home/data/model/cinimo_config_model.dart';
+import 'package:movie_chi/features/feature_home/presentation/widgets/home_drawer.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,6 +40,7 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
   List lastView = [];
 
   Map lastViewMap = {};
+  CinimoConfig config = configDataGetter();
 
   loadLastView() async {
     List l = await dbHelper.getQuery("tbl_history",
@@ -61,97 +65,136 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        // check from persian country or not
-        final downloadController = Get.find<DownloadPageController>();
-        // check from persian country or not
-
-        // try {
-        // if (GetStorageData.getData("logined")) {
-        // Get.to(() => const VideoPlayerScreen(), arguments: {
-        //   "data": pageController.videoDetail,
-        // });
-
-        if ((GetStorageData.getData("logined") ?? false) == false) {
-          if ((GetStorageData.getData("user_logined") ?? false) == false) {
-            Get.to(() => LoginScreen());
-            return;
-          } else {
-            if (GetStorageData.getData("user_status") == "premium") {
-              String timeOut = GetStorageData.getData("time_out_premium");
-              DateTime expireTimeOut = (DateTime.parse(timeOut));
-              DateTime now = (DateTime.now());
-
-              if (expireTimeOut.millisecondsSinceEpoch <
-                  now.millisecondsSinceEpoch) {
-                await Constants.showGeneralSnackBar(
-                    "خطا", "اشتراک شما به پایان رسیده است");
-                Future.delayed(const Duration(milliseconds: 1000), () async {
-                  await Get.to(() => const PlanScreen());
-                });
-                return;
-              }
-            } else {
-              await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
-                  "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
-              Future.delayed(const Duration(milliseconds: 1000), () async {
-                await Get.to(() => const PlanScreen());
-              });
-              return;
-            }
-          }
-        }
-        try {
-          // if ((GetStorageData.getData("logined") ?? false)) {
-          String? qualityLink = await downloadController
-              .checkQuality(pageController.videoDetail!, actionButton: "پخش");
-          if (qualityLink == null) return;
-          Constants.openVideoPlayer(
-              pageController.video ?? pageController.videoDetail!,
-              path: qualityLink,
-              customLink: qualityLink);
-          // } else {
-          //   // launchUrl(Uri.parse(
-          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-          //   checkUSers();
-          //   showSubscribtion();
-          // }
-        } catch (e) {
-          // await Constants.showGeneralSnackBar(
-          //     "تماس با پشتیبانی", "خطایی رخ دادخ $e");
-          // if (!(GetStorageData.getData("logined") ?? false)) {
-          //   // launchUrl(Uri.parse(
-          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-          //   checkUSers();
-          //   showSubscribtion();
-          //   // launch search in google
-          // }
-        }
-      },
+      onTap: playerIcons,
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.redAccent,
-          borderRadius: BorderRadius.circular(50 / 4),
-        ),
-        height: 50,
-        width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 10),
-        child:
-            const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(Icons.play_arrow_rounded),
-          MyText(
-            txt: "پخش فیلم",
-          )
-        ]),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50 / 4),
+          color: Colors.blueGrey,
+        ),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: pageController.videoDetail?.videoType?.type ==
+                          VideoTypeEnum.free
+                      ? Colors.redAccent
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(50 / 4),
+                  gradient: const LinearGradient(
+                      colors: [Color(0xFF667eea), Color(0xFF764ba2)])),
+              height: pageController.videoDetail?.videoType?.type ==
+                      VideoTypeEnum.free
+                  ? 50
+                  : 80,
+              width: double.infinity,
+              // margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.play_arrow_rounded),
+                    MyText(
+                      txt: "پخش فیلم",
+                      fontWeight: FontWeight.bold,
+                    )
+                  ]),
+            ),
+            if (pageController.videoDetail?.videoType?.type !=
+                VideoTypeEnum.free)
+              Positioned(
+                left: 0,
+                top: 0,
+                child: RotationTransition(
+                    turns: const AlwaysStoppedAnimation(315 / 360),
+                    child: Image.asset("assets/images/crown.png", height: 32)),
+              ),
+            if (pageController.videoDetail?.videoType?.type !=
+                VideoTypeEnum.free)
+              const Positioned(
+                left: 32,
+                top: 10,
+                child: MyText(
+                  txt: 'مخصوص اشتراک ویژه',
+                ),
+              )
+          ],
+        ),
       ),
     );
   }
 }
 
+playerIcons() async {
+  final pageController = Get.find<DetailPageController>();
+  CinimoConfig config = configDataGetter();
+  // // check from persian country or not
+  final downloadController = Get.find<DownloadPageController>();
+  if ((GetStorageData.getData("user_logined") ?? false) == false) {
+    Get.to(() => LoginScreen());
+    return;
+  }
+
+  if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
+      (config.config?.freeUserPaidVideo ?? false) == true) {
+    try {
+      String? qualityLink = await downloadController
+          .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+      if (qualityLink == null) return;
+      Constants.openVideoPlayer(
+          pageController.video ?? pageController.videoDetail!,
+          path: qualityLink,
+          customLink: qualityLink);
+
+      // }
+    } catch (e) {
+      debugPrint("");
+    }
+  } else {
+    if (GetStorageData.getData("user_status") == "premium") {
+      String timeOut = GetStorageData.getData("time_out_premium");
+      DateTime expireTimeOut = (DateTime.parse(timeOut));
+      DateTime now = (DateTime.now());
+
+      if (expireTimeOut.millisecondsSinceEpoch < now.millisecondsSinceEpoch) {
+        await Constants.showGeneralSnackBar(
+            "خطا", "اشتراک شما به پایان رسیده است");
+        Future.delayed(const Duration(milliseconds: 1000), () async {
+          await Get.to(() => const PlanScreen());
+        });
+        return;
+      }
+
+      try {
+        // if ((GetStorageData.getData("logined") ?? false)) {
+        String? qualityLink = await downloadController
+            .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+        if (qualityLink == null) return;
+        Constants.openVideoPlayer(
+            pageController.video ?? pageController.videoDetail!,
+            path: qualityLink,
+            customLink: qualityLink);
+
+        // }
+      } catch (e) {
+        debugPrint("");
+      }
+    } else {
+      await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
+          "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+      Future.delayed(const Duration(milliseconds: 1000), () async {
+        await Get.to(() => const PlanScreen());
+      });
+      return;
+    }
+  }
+}
+
+// ignore: must_be_immutable
 class PlayIcon extends StatelessWidget {
   PlayIcon({super.key});
 
   final pageController = Get.find<DetailPageController>();
+
   checkUSers() async {
     bool canSeeVide = await pageController.isallowToPlay();
 
@@ -176,77 +219,7 @@ class PlayIcon extends StatelessWidget {
     return IconButton(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      onPressed: () async {
-        // check from persian country or not
-        final downloadController = Get.find<DownloadPageController>();
-        // check from persian country or not
-
-        // try {
-        // if (GetStorageData.getData("logined")) {
-        // Get.to(() => const VideoPlayerScreen(), arguments: {
-        //   "data": pageController.videoDetail,
-        // });
-
-        if ((GetStorageData.getData("logined") ?? false) == false) {
-          if ((GetStorageData.getData("user_logined") ?? false) == false) {
-            Get.to(() => LoginScreen());
-            return;
-          } else {
-            if (GetStorageData.getData("user_status") == "premium") {
-              String timeOut = GetStorageData.getData("time_out_premium");
-              DateTime expireTimeOut = (DateTime.parse(timeOut));
-              DateTime now = (DateTime.now());
-
-              if (expireTimeOut.millisecondsSinceEpoch <
-                  now.millisecondsSinceEpoch) {
-                await Constants.showGeneralSnackBar(
-                    "خطا", "اشتراک شما به پایان رسیده است");
-                Future.delayed(const Duration(milliseconds: 1000), () async {
-                  await Get.to(() => const PlanScreen());
-                });
-                return;
-              }
-            } else {
-              await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
-                  "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
-              Future.delayed(const Duration(milliseconds: 1000), () async {
-                await Get.to(() => const PlanScreen());
-              });
-              return;
-            }
-          }
-        }
-        try {
-          // if ((GetStorageData.getData("logined") ?? false)) {
-          String? qualityLink = await downloadController
-              .checkQuality(pageController.videoDetail!, actionButton: "پخش");
-          if (qualityLink == null) return;
-          Constants.openVideoPlayer(
-              pageController.video ?? pageController.videoDetail!,
-              path: qualityLink,
-              customLink: qualityLink);
-          // } else {
-          //   // launchUrl(Uri.parse(
-          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-          //   checkUSers();
-          //   showSubscribtion();
-          // }
-        } catch (e) {
-          // await Constants.showGeneralSnackBar(
-          //     "تماس با پشتیبانی", "خطایی رخ دادخ $e");
-          // if (!(GetStorageData.getData("logined") ?? false)) {
-          //   // launchUrl(Uri.parse(
-          //   //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-          //   checkUSers();
-          //   showSubscribtion();
-          //   // launch search in google
-          // }
-        }
-        // loading screen
-
-        // Get.to(() => const VideoPlayerScreen(),
-        //     arguments: {"data": pageController.videoDetail});
-      },
+      onPressed: playerIcons,
       icon: Icon(
         Iconsax.play_circle5,
         color: Get.theme.colorScheme.secondary,

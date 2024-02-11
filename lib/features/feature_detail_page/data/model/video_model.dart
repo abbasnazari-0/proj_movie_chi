@@ -30,40 +30,41 @@ class Video {
   String? year;
   String? duration;
   List<TrailerSources>? trailerSources;
+  VideoType? videoType;
 
-  Video({
-    this.id,
-    this.title,
-    this.imdb,
-    this.tag,
-    this.desc,
-    this.thumbnail1x,
-    this.thumbnail2x,
-    this.qualitiesId,
-    this.galleryId,
-    this.quality1080,
-    this.quality1440,
-    this.quality2160,
-    this.quality240,
-    this.quality360,
-    this.quality4320,
-    this.quality480,
-    this.quality720,
-    this.view,
-    this.userLiked,
-    this.userBookmarked,
-    this.tagData,
-    this.artistData,
-    this.lastSessionTime,
-    this.type,
-    this.commonTag,
-    this.subtitle,
-    this.dubble,
-    this.status,
-    this.year,
-    this.duration,
-    this.trailerSources,
-  });
+  Video(
+      {this.id,
+      this.title,
+      this.imdb,
+      this.tag,
+      this.desc,
+      this.thumbnail1x,
+      this.thumbnail2x,
+      this.qualitiesId,
+      this.galleryId,
+      this.quality1080,
+      this.quality1440,
+      this.quality2160,
+      this.quality240,
+      this.quality360,
+      this.quality4320,
+      this.quality480,
+      this.quality720,
+      this.view,
+      this.userLiked,
+      this.userBookmarked,
+      this.tagData,
+      this.artistData,
+      this.lastSessionTime,
+      this.type,
+      this.commonTag,
+      this.subtitle,
+      this.dubble,
+      this.status,
+      this.year,
+      this.duration,
+      this.trailerSources,
+      this.videoType});
 
   Video.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -109,6 +110,10 @@ class Video {
       });
     }
     duration = json['duration'];
+
+    if (json['video_type'] != null) {
+      videoType = VideoType.fromJson(json);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -148,6 +153,10 @@ class Video {
       data['trailer_sources'] = trailerSources!.map((v) => v.toJson()).toList();
     }
     data['duration'] = duration;
+
+    if (videoType != null) {
+      data['video_type'] = videoType?.toJson();
+    }
 
     return data;
   }
@@ -199,6 +208,36 @@ class TrailerSources {
     data['path'] = path;
     data['tag'] = tag;
     data['title'] = title;
+    return data;
+  }
+}
+
+enum VideoTypeEnum { free, premium, paid }
+
+class VideoType {
+  VideoTypeEnum? type;
+  VideoType({
+    this.type,
+  });
+
+  VideoType.fromJson(Map<String, dynamic> json) {
+    String type = json['video_type'];
+    switch (type) {
+      case 'free':
+        this.type = VideoTypeEnum.free;
+        break;
+      case 'subscribe':
+        this.type = VideoTypeEnum.premium;
+        break;
+      case 'monetary':
+        this.type = VideoTypeEnum.paid;
+        break;
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = type?.index;
     return data;
   }
 }

@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 
 import '../models/admob-models.dart';
 
 class AdmobDataGetter {
-  static const String sheetUrl =
-      "https://raw.githubusercontent.com/mosbahsofttechnology/cinimo-ad/main/ad.php";
+  static String sheetUrl = dotenv.env['GITHUB_AD'] ?? "";
 
   static void init() async {
     // RequestConfiguration configuration = RequestConfiguration(

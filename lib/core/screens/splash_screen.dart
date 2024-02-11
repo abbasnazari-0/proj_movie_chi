@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
 import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
@@ -56,6 +59,20 @@ class _SplashState extends State<Splash> {
         openScreenWithPeriodic();
       } else {
         var uri = Uri.parse(initialLink.toString());
+        if (uri.scheme == "app") {
+          String query = uri.queryParameters['query'] ?? "";
+
+          if (uri.queryParameters['type'] == "gateway") {
+            // final controllerss = Get.find<PlanScreenController>();
+            GetStorageData.writeData("plan_viewed", true);
+            GetStorageData.writeData("is_premium", false);
+            openScreenWithPeriodic();
+          }
+          if (uri.queryParameters['type'] == "player") {
+            GetStorageData.writeData("video_open", query);
+          }
+        }
+
         if (uri.pathSegments.isNotEmpty) {
           if (uri.pathSegments[0] == "payment") {
             openScreenWithPeriodic();
@@ -87,13 +104,41 @@ class _SplashState extends State<Splash> {
 
     await dbInitlizer();
     await locatConfigSecoundPage();
-    Timer.periodic(
-      const Duration(seconds: 3),
-      (timer) async {
+
+    if (await Constants.pingWithPort(dotenv.env['CONST_URL'] ?? "", "443") ==
+        -1) {
+      Dio dio = Dio();
+      var res = await dio.get(
+        dotenv.env['GITHUB_URL'] ?? "",
+      );
+      if (res.statusCode == 200) {
+        GetStorageData.writeData("config", res.data);
         startNewActivity();
-        timer.cancel();
-      },
-    );
+      } else {
+        startNewActivity();
+      }
+    } else {
+      startNewActivity();
+    }
+    // try {
+    //   var res = (await dio.head("",
+    //       options: Options(
+    //           receiveTimeout: Duration(milliseconds: 3000),
+    //           sendTimeout: Duration(milliseconds: 3000))));
+    //   if (res.statusCode == 200) {
+    //     startNewActivity();
+    //   } else {
+    //     print("not ok");
+    //   }
+    // } catch (e) {}
+    // final ping = Ping('pornhub.com', count: 1);
+
+    // // Begin ping process and listen for output
+    // ping.stream.listen((event) {
+    //   if (event.error == null) {
+    //     startNewActivity();
+    //   }
+    // });
   }
 
   startNewActivity() {
@@ -110,11 +155,20 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: MobileDetector.getPlatformSize(MediaQuery.of(context).size) ==
               PltformSize.mobile
-          ? Image.asset(
-              'assets/images/splash.png',
-              fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
+          ? Column(
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    'assets/images/splash.png',
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                ),
+                LinearProgressIndicator(
+                  minHeight: 2,
+                )
+              ],
             )
           : const SizedBox(),
     );
