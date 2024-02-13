@@ -197,6 +197,7 @@ class DetailPageController extends GetxController {
       }
     }
     // adController.adInitilzer?.loadBanner();
+    checkUSers();
   }
 
   loadPlayList() async {

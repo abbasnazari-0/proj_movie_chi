@@ -127,11 +127,21 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
 playerIcons() async {
   final pageController = Get.find<DetailPageController>();
   CinimoConfig config = configDataGetter();
-  // // check from persian country or not
   final downloadController = Get.find<DownloadPageController>();
-  if ((GetStorageData.getData("user_logined") ?? false) == false) {
-    Get.to(() => LoginScreen());
-    return;
+  if ((GetStorageData.getData("logined") ?? false) == false) {
+    // // check from persian country or not
+    if ((GetStorageData.getData("user_logined") ?? false) == false) {
+      Get.to(() => LoginScreen());
+      return;
+    }
+    if (GetStorageData.getData("user_status") != "premium") {
+      await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
+          "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+      Future.delayed(const Duration(milliseconds: 1000), () async {
+        await Get.to(() => const PlanScreen());
+      });
+      return;
+    }
   }
 
   if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
