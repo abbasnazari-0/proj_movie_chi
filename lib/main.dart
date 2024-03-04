@@ -62,7 +62,6 @@ void main() async {
         darkTheme: buildDarkTheme(),
         themeMode: ThemeMode.dark,
         debugShowCheckedModeBanner: false,
-
         home: const Splash(),
       ),
     ),

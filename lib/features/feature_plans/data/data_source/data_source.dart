@@ -5,7 +5,10 @@ class PlanApiProvider {
   final Dio _dio = Dio();
 
   getPlan() async {
-    Response res = await _dio.get("${Constants.baseUrl()}${pageUrl}plan.php");
+    String appVersion = await Constants.versionApplication();
+    print({"version": appVersion});
+    Response res = await _dio.get("${Constants.baseUrl()}${pageUrl}plan.php",
+        queryParameters: {"version": appVersion});
     return res;
   }
 }

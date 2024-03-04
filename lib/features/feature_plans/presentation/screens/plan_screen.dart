@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -34,6 +35,7 @@ class _PlanScreenState extends State<PlanScreen> {
     super.initState();
     controller.getPlans();
     controller.checkAndGo();
+    controller.monthly = false;
   }
 
   @override
@@ -93,7 +95,23 @@ class _PlanScreenState extends State<PlanScreen> {
                   ),
                   DividerWithText(
                       horizontalPadding: size.width * 0.2, text: "پلن ها"),
-                  SizedBox(height: size.height * 0.02),
+                  Gap(size.height * 0.02),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const MyText(
+                      txt: "ماهانه",
+                    ),
+                    const Gap(10),
+                    Switch(
+                      onChanged: (bool montlyMode) {
+                        controller.changeMonthlyStatus(montlyMode);
+                      },
+                      value: controller.monthly,
+                    ),
+                    const Gap(10),
+                    const MyText(
+                      txt: "سه ماهه",
+                    ),
+                  ]),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -148,9 +166,8 @@ class PlanItem extends StatelessWidget {
       splashColor: Colors.transparent,
       overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: () {
-        mlaunchUrl(
-          (dotenv.env['CONST_URL'] ?? "")
-           +  "/v7/payment/request.php?type=${controller.plan.data![index].id}&token=${GetStorageData.getData("user_tag")}");
+        mlaunchUrl((dotenv.env['CONST_URL'] ?? "") +
+            "/v7/payment/request.php?type=${controller.plan.data![index].id}&token=${GetStorageData.getData("user_tag")}");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -246,7 +263,7 @@ class PlanItem extends StatelessWidget {
                       children: [
                         MyText(
                           txt:
-                              "${downloadMaxToString(controller.plan.data![index].planDownMax ?? "80.0")} دانلود در ماه",
+                              "${downloadMaxToString(controller.plan.data![index].planDownMax ?? "80.0")} ${controller.monthly ? "دانلود در سه ماه" : "دانلود در ماه"}",
                         ),
                         MyText(
                           txt: "تماشای نامحدود فیلم و سریال و انیمیشن",

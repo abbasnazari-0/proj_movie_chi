@@ -28,6 +28,22 @@ class PlanScreenController extends GetxController {
   late final bool loadPlan;
 
   PlanModel plan = PlanModel();
+  bool monthly = false;
+
+  List<PlanData> monthlyPlan = [];
+  List<PlanData> monthy3Plan = [];
+
+  changeMonthlyStatus(bool monthlyMode) {
+    monthly = monthlyMode;
+
+    if (monthly == false) {
+      plan.data = monthlyPlan;
+    }
+    if (monthly != false) {
+      plan.data = monthy3Plan;
+    }
+    update();
+  }
 
   @override
   void dispose() {
@@ -44,9 +60,26 @@ class PlanScreenController extends GetxController {
 
   getPlans() async {
     pageStatus = PageStatus.loading;
+    monthlyPlan.clear();
+    monthy3Plan.clear();
     DataState dataState = await planUseCase.getPlans();
+
     if (dataState is DataSuccess) {
       plan = dataState.data as PlanModel;
+
+      for (var item in plan.data!) {
+        if (item.planTimeDay == "30") {
+          monthlyPlan.add(item);
+        }
+        if (item.planTimeDay == "90") {
+          monthy3Plan.add(item);
+        }
+      }
+
+      // if (monthly) {
+      plan.data = monthlyPlan;
+      update();
+      // }
       pageStatus = PageStatus.success;
     }
     if (dataState is DataFailed) {
@@ -119,7 +152,7 @@ class PlanScreenController extends GetxController {
     paidPageStatus = PageStatus.loading;
     DataState dataState = await authService.loginUser(UserLoginParams(
         "",
-        GetStorageData.getData("user_auth"),
+        GetStorageData.getData("user_auth") ?? "",
         "",
         "",
         "",

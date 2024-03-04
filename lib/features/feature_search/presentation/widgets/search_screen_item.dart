@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -34,6 +35,7 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+
         if (onTap != null) onTap!();
         Constants.openVideoDetail(
             vidTag: item.tag.toString(),
@@ -191,7 +193,7 @@ class SearchItem extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ).animate( delay: 200.ms ).moveY ( duration: 2000.ms , delay: 200.ms,     ),
     );
   }
 }
