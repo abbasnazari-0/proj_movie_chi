@@ -35,7 +35,6 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
         if (onTap != null) onTap!();
         Constants.openVideoDetail(
             vidTag: item.tag.toString(),
@@ -193,7 +192,12 @@ class SearchItem extends StatelessWidget {
             ],
           ),
         ),
-      ).animate( delay: 200.ms ).moveY ( duration: 2000.ms , delay: 200.ms,     ),
+      ).animate(delay: 200.ms).moveY(
+            begin: 0,
+            end: -15,
+            duration: 200.ms,
+            delay: 200.ms,
+          ),
     );
   }
 }
