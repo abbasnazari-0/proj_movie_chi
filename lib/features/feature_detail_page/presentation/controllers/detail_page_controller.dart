@@ -464,6 +464,7 @@ class DetailPageController extends GetxController {
 
     if (data is DataSuccess) {
       LocationModel locationModel = data.data;
+
       if (locationModel.country == null) return false;
 
       if (locationModel.country?.toLowerCase() == "ir") {
@@ -479,7 +480,7 @@ class DetailPageController extends GetxController {
 
   checkUSers() async {
     bool canSeeVide = await isallowToPlay();
-
+    print(canSeeVide);
     if (canSeeVide) {
       //launch mx
 

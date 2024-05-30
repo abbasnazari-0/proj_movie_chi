@@ -91,7 +91,28 @@ class _SessionItemState extends State<SessionItem> {
 
     return InkWell(
       onTap: () async {
+        print("video");
+        String qualityLink = await downloadController.checkQuality(widget.video,
+            actionButton: "پخش");
+
+        print(qualityLink);
+        // Constants.openVideoPlayer(
+        //   widget.video,
+        //   path: qualityLink,
+        //   customLink: qualityLink,
+        //   episoidList: pageController
+        //           .playListModel?.data?[pageController.sessionId].episoids ??
+        //       [],
+        //   episoidIndex: widget.index,
+        //   additionTitle: pageController.videoDetail?.type != "video"
+        //       ? pageController.videoDetail?.title ?? ""
+        //       : "",
+        // );
+        // LogPrint(widget.video.toJson());
+        // print(widget.video.toJson());
         try {
+          print(GetStorageData.getData("logined"));
+          print('ddd1');
           if ((GetStorageData.getData("logined") ?? false)) {
             String qualityLink = await downloadController
                 .checkQuality(widget.video, actionButton: "پخش");
@@ -138,6 +159,7 @@ class _SessionItemState extends State<SessionItem> {
                       return;
                     }
                   } else {
+                    print('ddd');
                     await Constants.showGeneralSnackBar(
                         "تهیه اشتراک ارزان با تخفیف",
                         "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
@@ -153,6 +175,7 @@ class _SessionItemState extends State<SessionItem> {
             }
           }
         } catch (e) {
+          print('eeee');
           if (!(GetStorageData.getData("logined") ?? false)) {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));

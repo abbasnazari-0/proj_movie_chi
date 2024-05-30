@@ -7,7 +7,7 @@ class HomeSearchBarController extends GetxController {
   String yearSelected = 0.toString();
   // list year from 2023 to 1960
   List<String> yearItems =
-      List<String>.generate(2023 - 1960, (index) => (2023 - index).toString());
+      List<String>.generate(2024 - 1960, (index) => (2023 - index).toString());
 
   /// imdb
   String imdbSelected = "";

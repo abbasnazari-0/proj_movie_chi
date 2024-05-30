@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:movie_chi/core/screens/splash_screen.dart';
@@ -13,6 +14,7 @@ import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/random_string.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/drawer_controller.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
+import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -71,28 +73,124 @@ class _HomeDrawerState extends State<HomeDrawer> {
     });
   }
 
+  String userStatusLabel() {
+    int downloadMax = int.parse(GetStorageData.getData("download_max"));
+    DateTime dateTime =
+        DateTime.parse(GetStorageData.getData("time_out_premium"));
+    String userStatus = (GetStorageData.getData("user_status"));
+
+    int userDownloaded = (GetStorageData.getData("downloaded_item") ?? 0);
+
+    if (userStatus == "free_user") {
+      return "وضعیت اشتراک: غیرفعال";
+    } else {
+      if (DateTime.now().isAfter(dateTime)) {
+        return "وضعیت اشتراک: غیرفعال";
+      } else {
+        return "وضعیت اشتراک: فعال \nروزی های مانده : ${dateTime.difference(DateTime.now()).inDays} روز \nدانلود های باقی مانده: ${downloadMax - userDownloaded}";
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool prem = (GetStorageData.getData("user_status") == "premium");
+
+    String name = (GetStorageData.getData("fullName") ?? "");
+
+    String email = (GetStorageData.getData("user_auth") ?? "");
+    DateTime dateTime = DateTime.parse(
+        GetStorageData.getData("time_out_premium") ??
+            DateTime.now().toString());
+    int distance = dateTime.difference(DateTime.now()).inDays;
+
+    if (distance < 0) {
+      GetStorageData.writeData("user_status", "free_user");
+      prem = false;
+    }
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.background,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: MyText(
-                txt: 'حساب',
-                color: Theme.of(context).colorScheme.onSurface.withAlpha(200),
-                size: 12,
-                textAlign: TextAlign.right,
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            //   child: MyText(
+            //     txt: 'حساب',
+            //     color: Theme.of(context).colorScheme.onSurface.withAlpha(200),
+            //     size: 12,
+            //     textAlign: TextAlign.right,
+            //   ),
+            // ),
             GetBuilder<HomeDrawerController>(
                 init: HomeDrawerController(),
                 builder: (controller) {
                   return Column(
                     children: [
+                      if ((GetStorageData.getData("user_logined") ?? false) !=
+                          false)
+                        Container(
+                          // color: prem ? Colors.transparent : Colors.red,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: prem
+                                      ? [
+                                          const Color(0xFFFF512F),
+                                          const Color(0xFFDD2476)
+                                        ]
+                                      : [
+                                          const Color(0xFF11998E),
+                                          const Color(0xFF38EF7D)
+                                        ])),
+                          child: Row(
+                            children: [
+                              const Gap(40),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Gap(30),
+                                  const CircleAvatar(
+                                    radius: 40,
+                                    child: Icon(
+                                      Icons.account_circle_rounded,
+                                      size: 40,
+                                    ),
+                                  ),
+                                  const Gap(10),
+                                  MyText(
+                                    txt: name,
+                                    fontWeight: FontWeight.w900,
+                                    size: 20,
+                                  ),
+                                  // Ga§p(10),
+                                  MyText(
+                                    txt: email,
+                                    fontWeight: FontWeight.w200,
+                                  ),
+
+                                  MyText(
+                                    txt: userStatusLabel(),
+                                    fontWeight: FontWeight.w200,
+                                  ),
+
+                                  if (!prem)
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(() => const PlanScreen());
+                                      },
+                                      child: const MyText(
+                                        txt: "خرید اشتراک ارزان",
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.deepPurple,
+                                      ),
+                                    ),
+                                  const Gap(20),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       if ((GetStorageData.getData("user_logined") ?? false) ==
                           false)
                         ListTile(

@@ -16,7 +16,7 @@ import '../../../../core/models/search_video_model.dart';
 
 class SearchPageController extends GetxController {
   final SearchUseCase searchUseCase;
-  RxInt page = 1.obs;
+  RxInt page = 0.obs;
   PageStatus searchPageStatus = PageStatus.empty;
 
   TextEditingController controller = TextEditingController();

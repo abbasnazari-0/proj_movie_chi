@@ -22,10 +22,21 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GIDClientID</key>
-	<string>[YOUR IOS CLIENT ID]</string>
+	<string>628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -47,25 +58,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>GIDClientID</key>
-    <!-- TODO Replace this value: -->
-    <!-- Copied from GoogleService-Info.plist key CLIENT_ID -->
-    <string>628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b.apps.googleusercontent.com</string>
-    <!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
-    <!-- Google Sign-in Section -->
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <!-- TODO Replace this value: -->
-                <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-                <string>com.googleusercontent.apps.628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b</string>
-            </array>
-        </dict>
-    </array>
-<!-- End of the Google Sign-in Section -->
 </dict>
 </plist>

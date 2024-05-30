@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element, deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,7 +15,6 @@ import 'package:movie_chi/features/feature_home/presentation/pages/screen_conten
 import 'package:movie_chi/features/feature_zhanner/presentation/pages/zhanner_content.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_bottom_app_bar.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_search_bar.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:movie_chi/features/feature_search/presentation/pages/search_page.dart';
 import 'package:movie_chi/locator.dart';
 
@@ -51,9 +48,6 @@ class _HomeScreenState extends State<HomeScreen>
       Get.put(DetailPageController(locator(), null, locator()));
 
   //Method that to run url with url_launcher
-  void _launchUrl(String url) async {
-    if (!await launch(url)) throw 'Could not launch $url';
-  }
 
   final bottomAppBarController = Get.put(BottomAppBarController());
 

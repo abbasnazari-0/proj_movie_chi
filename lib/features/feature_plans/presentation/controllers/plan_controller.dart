@@ -105,10 +105,13 @@ class PlanScreenController extends GetxController {
         String timeOut = model.timeOutPremium ?? "0";
         DateTime expireTimeOut = (DateTime.parse(timeOut));
         DateTime now = (DateTime.now());
-
+        GetStorageData.writeData("time_out_premium", model.timeOutPremium);
+        GetStorageData.writeData("download_max", model.downloadMax);
         if (expireTimeOut.millisecondsSinceEpoch < now.millisecondsSinceEpoch) {
           Constants.showGeneralSnackBar("خطا", "اشتراک شما به پایان رسیده است");
-
+          GetStorageData.writeData("time_out_premium", model.timeOutPremium);
+          GetStorageData.writeData("download_max", model.downloadMax);
+          GetStorageData.writeData("is_premium", false);
           return false;
         } else {
           // check download count
@@ -131,6 +134,14 @@ class PlanScreenController extends GetxController {
             return true;
           }
         }
+        // GetStorageData.writeData("user_tag", model.userTag);
+        // GetStorageData.writeData("user_status", model.userStatus);
+        // GetStorageData.writeData("fullName", model.fullName);
+
+        GetStorageData.writeData("time_out_premium", model.timeOutPremium);
+        GetStorageData.writeData("download_max", model.downloadMax);
+
+        // GetStorageData.writeData("is_premium", false);
       } else {
         // UserLoginModel model = (dataState.data);
         GetStorageData.writeData("user_tag", model.userTag);

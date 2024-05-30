@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:movie_chi/config/theme.dart';
+
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/core/utils/platoformOS.dart';
 import 'package:movie_chi/core/wrappers/android_web_wrapper.dart';

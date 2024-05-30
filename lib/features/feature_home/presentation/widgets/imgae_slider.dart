@@ -8,9 +8,11 @@ import '../../../../core/utils/constants.dart';
 class ImageSlider extends StatelessWidget {
   ImageSlider({
     Key? key,
+    // ignore: non_constant_identifier_names
     required this.item_data,
   }) : super(key: key);
 
+  // ignore: non_constant_identifier_names
   List item_data;
   @override
   Widget build(BuildContext context) {
