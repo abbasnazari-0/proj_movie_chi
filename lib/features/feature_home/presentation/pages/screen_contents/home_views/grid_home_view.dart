@@ -74,6 +74,7 @@ class _GridHomeViewState extends State<GridHomeView> {
               controller: refreshController,
               scrollDirection: Axis.horizontal,
               enablePullUp: true,
+              enablePullDown: false,
               footer: const GridLoadingEnded(),
               onLoading: () async {
                 await refreshController.requestLoading();
@@ -97,7 +98,8 @@ class _GridHomeViewState extends State<GridHomeView> {
                     return SizedBox(
                         width: double.tryParse(
                                 widget.homeCatagoryItem.viewWidth!)! +
-                            10,
+                            30,
+                        // height: 100,
                         child: SearchItem(item: video, chainrouter: true));
                   }),
             ),

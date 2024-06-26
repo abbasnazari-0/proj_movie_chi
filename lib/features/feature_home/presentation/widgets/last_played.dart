@@ -63,7 +63,7 @@ class _LastPlayerScreenState extends State<LastPlayerScreen> {
                       children: [
                         Lottie.asset('assets/lotties/empty.json',
                             width: size.width * 0.4),
-                        const Text('فیلم ذخیره شده ای ندارید'),
+                        const Text('شما فیلمی مشاهده نکرده اید'),
                       ],
                     ),
                   )

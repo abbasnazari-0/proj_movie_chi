@@ -600,7 +600,7 @@ class DetailPageContent extends StatelessWidget {
                       backgroundColor: Get.theme.colorScheme.secondary,
                     ),
                     child: const MyText(
-                      txt: "سایت سینیمو",
+                      txt: "سایت مووی چی",
                       size: 16,
                     )),
                 ElevatedButton(

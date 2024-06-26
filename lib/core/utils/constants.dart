@@ -23,7 +23,7 @@ import '../widgets/mytext.dart';
 
 String bbaseUrl = dotenv.env['CONST_URL'] ?? "";
 String bfileBaseUrl = "https://files.cinimo.ir";
-String pageUrl = "/v7/cinimo/";
+String pageUrl = "/v8/cinimo/";
 
 String packageName = "com.arianadeveloper.movie.chi";
 
@@ -319,6 +319,7 @@ class Constants {
   static openHomeItem(
       HomeCatagoryItemModel homeCatagoryItem, int index, String pic,
       {String type = "custom"}) {
+    // if (homeCatagoryItem.)
     switch (homeCatagoryItem.valueType) {
       case "video":
         // Get.to(() => DetailPage(vid_tag: homeCatagoryItem.data![index].tag!));

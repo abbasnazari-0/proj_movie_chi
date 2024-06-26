@@ -21,9 +21,16 @@ class HomeBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BottomAppBarController>(builder: (controller) {
+      // for prevent show bottom navigation  in search page
+      if (controller.itemSected == 4.obs) {
+        return const SizedBox(
+          width: 0,
+          height: 0,
+        );
+      }
       return Container(
         height:
-            controller.cinimoconfig?.config?.showBanner == "true" ? 172 : 72,
+            controller.cinimoconfig?.config?.showBanner == "true" ? 172 : 100,
         color: Theme.of(context).primaryColor,
         child: Column(
           children: [
@@ -55,7 +62,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
               thickness: 1.5,
             ),
             SizedBox(
-              height: 70,
+              // height: 90,
               child: GetBuilder<BottomAppBarController>(builder: (controller) {
                 return SalomonBottomBar(
                   currentIndex: bottomAppBarController.itemSected.toInt(),
@@ -76,10 +83,10 @@ class HomeBottomNavigationBar extends StatelessWidget {
                       icon: const Icon(Icons.video_library),
                       title: const MyText(txt: 'سریال'),
                     ),
-                    SalomonBottomBarItem(
-                      icon: const Icon(iconSax.Iconsax.search_normal4),
-                      title: const MyText(txt: 'جستجو'),
-                    ),
+                    // SalomonBottomBarItem(
+                    //   icon: const Icon(iconSax.Iconsax.search_normal4),
+                    //   title: const MyText(txt: 'جستجو'),
+                    // ),
                     SalomonBottomBarItem(
                       icon: const Icon(Icons.slow_motion_video_rounded),
                       title: const MyText(txt: 'ریلیزو'),

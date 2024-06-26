@@ -6,7 +6,7 @@ ThemeData buildDarkTheme() {
   return ThemeData(
     useMaterial3: true,
     primaryColor: const Color(0xFF242529),
-    backgroundColor: const Color(0xFF17191A),
+    // backgroundColor: const Color(0xFF17191A),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
@@ -47,7 +47,7 @@ ThemeData buildLightTheme() {
   return ThemeData(
     useMaterial3: true,
     primaryColor: const Color(0xFFF9FBFC),
-    backgroundColor: const Color(0xFFFfffff),
+    // backgroundColor: const Color(0xFFFfffff),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     fontFamily: 'vazir',
     primaryTextTheme: const TextTheme(

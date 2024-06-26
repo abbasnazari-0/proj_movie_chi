@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
-import 'package:movie_chi/features/feature_search/presentation/widgets/drop_down_filter.dart';
 
 class SearchFilterParent extends StatefulWidget {
   const SearchFilterParent({
@@ -25,26 +24,26 @@ class _SearchFilterParentState extends State<SearchFilterParent> {
             height: 50,
             child: Row(
               children: [
-                SearchFilterWidget(
-                    child: DropDownFilter(
-                  list: cont.typeList,
-                  title: "نوع",
-                  onSelected: (value) {
-                    if (value == null) return;
-                    cont.typeSelected = value;
-                  },
-                )),
-                const SizedBox(width: 10),
-                SearchFilterWidget(
-                    child: DropDownFilter(
-                  list: cont.zhannerList,
-                  title: "ژانر",
-                  onSelected: (value) {
-                    print(value);
-                    // if (value == null) return;
-                    cont.zhannerSelected = value!;
-                  },
-                )),
+                // SearchFilterWidget(
+                //     child: DropDownFilter(
+                //   list: cont.typeList,
+                //   title: "نوع",
+                //   onSelected: (value) {
+                //     if (value == null) return;
+                //     cont.typeSelected = value;
+                //   },
+                // )),
+                // const SizedBox(width: 10),
+                // SearchFilterWidget(
+                //     child: DropDownFilter(
+                //   list: cont.zhannerList,
+                //   title: "ژانر",
+                //   onSelected: (value) {
+                //     print(value);
+                //     // if (value == null) return;
+                //     cont.zhannerSelected = value!;
+                //   },
+                // )),
               ],
             ),
           ),
@@ -56,25 +55,25 @@ class _SearchFilterParentState extends State<SearchFilterParent> {
             height: 50,
             child: Row(
               children: [
-                SearchFilterWidget(
-                    child: DropDownFilter(
-                  list: cont.imdbItems,
-                  title: "امتیاز IMDB",
-                  onSelected: (value) {
-                    // if (value == null) return;
-                    cont.imdbSelected = value!;
-                  },
-                )),
-                const SizedBox(width: 10),
-                SearchFilterWidget(
-                    child: DropDownFilter(
-                  list: cont.yearItems,
-                  title: "سال ساخت",
-                  onSelected: (value) {
-                    if (value == null) return;
-                    cont.yearSelected = value;
-                  },
-                ))
+                // SearchFilterWidget(
+                //     child: DropDownFilter(
+                //   list: cont.imdbItems,
+                //   title: "امتیاز IMDB",
+                //   onSelected: (value) {
+                //     // if (value == null) return;
+                //     cont.imdbSelected = value!;
+                //   },
+                // )),
+                // const SizedBox(width: 10),
+                // SearchFilterWidget(
+                //     child: DropDownFilter(
+                //   list: cont.yearItems,
+                //   title: "سال ساخت",
+                //   onSelected: (value) {
+                //     if (value == null) return;
+                //     cont.yearSelected = value;
+                //   },
+                // ))
               ],
             ),
           ),

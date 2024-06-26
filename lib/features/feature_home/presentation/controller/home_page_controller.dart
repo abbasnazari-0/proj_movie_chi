@@ -289,7 +289,50 @@ class HomePageController extends GetxController {
         homeCatagory = dataState.data;
       } else {
         HomeCatagory newHomeCatagory = dataState.data;
+
         homeCatagory?.data?.data?.addAll(newHomeCatagory.data!.data!);
+      }
+
+      // remove previous banner and add new banner
+      homeCatagory?.data?.data
+          ?.removeWhere((element) => element.viewName == "banner");
+
+      List<HomeCatagoryItemModel> homeCatagoryData =
+          List.from(homeCatagory!.data!.data!);
+
+      List<HomeItemData> courselSlider = [];
+
+      for (var element in homeCatagoryData) {
+        if (element.viewName == "carousel_slider") {
+          courselSlider = List.from(element.data!);
+          break;
+        }
+      }
+
+      int insertIndex = 2;
+
+      for (var i = 0; i < courselSlider.length; i++) {
+        homeCatagory?.data?.data?.insert(
+            insertIndex,
+            HomeCatagoryItemModel(
+                viewName: "banner",
+                title: "banner",
+                valueType: 'video',
+                data: [courselSlider[i]],
+                id: '00'));
+
+        insertIndex = insertIndex +
+            2; // Add 2 instead of 1 to insert the element in the middle
+
+        if (insertIndex >= homeCatagory!.data!.data!.length) {
+          homeCatagory?.data?.data?.add(
+            HomeCatagoryItemModel(
+              viewName: "banner",
+              title: "banner",
+              data: [courselSlider[i]],
+            ),
+          );
+        }
       }
 
       if (homeCatagory?.code == "200") {

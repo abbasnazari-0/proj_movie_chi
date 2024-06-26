@@ -12,7 +12,7 @@ import 'package:platform_device_id/platform_device_id.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
-import 'package:movie_chi/features/feature_home/presentation/pages/feature_homeScreen.dart';
+import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
 
 import '../../../../core/utils/random_string.dart';
 

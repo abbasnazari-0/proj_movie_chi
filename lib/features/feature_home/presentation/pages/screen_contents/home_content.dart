@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/resources/home_view_exported.dart';
+import 'package:movie_chi/features/feature_artists/presentation/pages/artist_list.dart';
+import 'package:movie_chi/features/feature_home/presentation/pages/screen_contents/home_views/countinuios_wathcing.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
@@ -8,9 +10,7 @@ import 'package:movie_chi/features/feature_home/presentation/widgets/home_shimme
 import '../../../data/model/home_catagory_item_model.dart';
 import '../../../data/model/home_catagory_model.dart';
 
-import '../../widgets/home_artist_widgets.dart';
 import '../../widgets/home_zhanner_view.dart';
-import 'home_views/countinuios_wathcing.dart';
 
 // ignore: must_be_immutable
 class HomeScreenContent extends StatelessWidget {
@@ -35,7 +35,7 @@ class HomeScreenContent extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return GetBuilder<HomePageController>(builder: (controller) {
       return SmartRefresher(
-        enablePullDown: true,
+        enablePullDown: false,
         enablePullUp: true,
         onRefresh: () async {
           await controller.getHomeCatagoryData(false);
@@ -45,21 +45,15 @@ class HomeScreenContent extends StatelessWidget {
           await controller.getHomeCatagoryData(true);
           controller.refreshController.loadComplete();
         },
-        //     // header: WaterDropMaterialHeader(
-        //     //   backgroundColor: Theme.of(context).colorScheme.secondary,
-        //     //   color: Theme.of(context).colorScheme.background,
-        //     // ),
         controller: controller.refreshController,
         child: (controller.homepageStatus == PageStatus.loading)
             ? HomeShimmerContent(height: height, width: width)
             : SingleChildScrollView(
                 child: Column(
                   children: [
-// contact detial
-                    const Column(),
-
-                    if (controller.artistData.isNotEmpty) ArtistHomeWidget(),
-
+                    if (controller.zhannerList.isNotEmpty)
+                      HomeZhannerView(width: width),
+                    // ArtistList(),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -73,7 +67,6 @@ class HomeScreenContent extends StatelessWidget {
                           case "carousel_slider":
                             return HomeGalleryVideos(
                                 itemGalleryData: homeCatagoryItem);
-
                           case "extended_slider":
                             return ExtendedSliderHomeView(
                                 homeCatagoryItem: homeCatagoryItem);
@@ -101,8 +94,6 @@ class HomeScreenContent extends StatelessWidget {
                         }
                       },
                     ),
-                    if (controller.zhannerList.isNotEmpty)
-                      HomeZhannerView(width: width),
                   ],
                 ),
               ),

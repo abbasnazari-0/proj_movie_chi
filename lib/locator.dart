@@ -21,6 +21,10 @@ import 'package:movie_chi/features/feature_plans/data/data_source/data_source.da
 import 'package:movie_chi/features/feature_plans/data/repositories/plan_repository_impl.dart';
 import 'package:movie_chi/features/feature_plans/domain/repositories/plan_repositry.dart';
 import 'package:movie_chi/features/feature_plans/domain/usecase/plan_usecase.dart';
+import 'package:movie_chi/features/feature_profile/data/data_sources/api_provider.dart';
+import 'package:movie_chi/features/feature_profile/data/repositories/profile_repository_impl.dart';
+import 'package:movie_chi/features/feature_profile/domain/repositories/profile_repository.dart';
+import 'package:movie_chi/features/feature_profile/domain/usecases/profile_usecase.dart';
 import 'package:movie_chi/features/feature_series_movies/data/data_sources/remote/data_sources.dart';
 import 'package:movie_chi/features/feature_support/data/data_source/remote.dart';
 import 'package:movie_chi/features/feature_support/data/repository/support_repository_impl.dart';
@@ -145,6 +149,11 @@ setup() async {
   locator.registerSingleton<NewsUseCase>(NewsUseCase(repository: locator()));
 
   locatConfigSecoundPage();
+
+  locator.registerSingleton(ProfileApiProvider());
+  locator
+      .registerSingleton<ProfileRepository>(ProfileRepositoryImpl(locator()));
+  locator.registerSingleton<ProfileUsecase>(ProfileUsecase(locator()));
 /*
   //Init Firebase Remot Config
   locator

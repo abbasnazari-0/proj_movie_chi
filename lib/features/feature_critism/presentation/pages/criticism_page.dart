@@ -1,4 +1,4 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
+// import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -129,75 +129,75 @@ class _DropDownState extends State<DropDown> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                DropdownButtonFormField2(
-                  decoration: InputDecoration(
-                    //Add isDense true and zero Padding.
-                    //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                    isDense: false,
-                    contentPadding: EdgeInsets.zero,
-                    fillColor:
-                        Theme.of(context).primaryTextTheme.bodyMedium!.color,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    //Add more decoration as you want here
-                    //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                  ),
-                  isExpanded: true,
-                  hint: Text(
-                    'نوع نظر',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'vazir',
-                      color:
-                          Theme.of(context).primaryTextTheme.bodyMedium!.color,
-                    ),
-                  ),
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Theme.of(context).primaryTextTheme.bodyMedium!.color,
-                  ),
-                  iconSize: 30,
-                  buttonHeight: 60,
-                  buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-                  dropdownDecoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: genderItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Text(
-                                item,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyMedium!
-                                      .color,
-                                  fontSize: 14,
-                                  fontFamily: 'vazir',
-                                ),
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return 'نوع نظر';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    selectedValue = "$value";
-                    setState(() {});
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                ),
+                // DropdownButtonFormField2(
+                //   decoration: InputDecoration(
+                //     //Add isDense true and zero Padding.
+                //     //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+                //     isDense: false,
+                //     contentPadding: EdgeInsets.zero,
+                //     fillColor:
+                //         Theme.of(context).primaryTextTheme.bodyMedium!.color,
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(15),
+                //     ),
+                //     //Add more decoration as you want here
+                //     //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                //   ),
+                //   isExpanded: true,
+                //   hint: Text(
+                //     'نوع نظر',
+                //     style: TextStyle(
+                //       fontSize: 14,
+                //       fontFamily: 'vazir',
+                //       color:
+                //           Theme.of(context).primaryTextTheme.bodyMedium!.color,
+                //     ),
+                //   ),
+                //   icon: Icon(
+                //     Icons.arrow_drop_down,
+                //     color: Theme.of(context).primaryTextTheme.bodyMedium!.color,
+                //   ),
+                //   iconSize: 30,
+                //   buttonHeight: 60,
+                //   buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                //   dropdownDecoration: BoxDecoration(
+                //     color: Theme.of(context).primaryColor,
+                //     borderRadius: BorderRadius.circular(15),
+                //   ),
+                //   items: genderItems
+                //       .map((item) => DropdownMenuItem<String>(
+                //             value: item,
+                //             child: Directionality(
+                //               textDirection: TextDirection.rtl,
+                //               child: Text(
+                //                 item,
+                //                 textAlign: TextAlign.right,
+                //                 style: TextStyle(
+                //                   color: Theme.of(context)
+                //                       .primaryTextTheme
+                //                       .bodyMedium!
+                //                       .color,
+                //                   fontSize: 14,
+                //                   fontFamily: 'vazir',
+                //                 ),
+                //               ),
+                //             ),
+                //           ))
+                //       .toList(),
+                //   validator: (value) {
+                //     if (value == null) {
+                //       return 'نوع نظر';
+                //     }
+                //     return null;
+                //   },
+                //   onChanged: (value) {
+                //     selectedValue = "$value";
+                //     setState(() {});
+                //   },
+                //   onSaved: (value) {
+                //     selectedValue = value.toString();
+                //   },
+                // ),
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: widget.critcism_text,

@@ -29,7 +29,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.all(10.0),
+      // margin: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Theme.of(context).primaryColor,

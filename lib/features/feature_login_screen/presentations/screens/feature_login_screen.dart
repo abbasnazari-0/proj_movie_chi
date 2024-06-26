@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/core/widgets/divider_with_text.dart';
+import 'package:movie_chi/core/widgets/my_button.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/controllers/google_login_controller.dart';
 import 'package:pinput/pinput.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -136,12 +138,17 @@ class LoginScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     color: Colors.red),
                 SizedBox(height: height * 0.03),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: SizedBox(
-                    width: width * 0.8,
-                    height: height * 0.06,
-                    child: ElevatedButton(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyButton(
+                      loading: authControlle.otpSenderOTP == PageStatus.loading,
+                      color: Colors.red,
+                      text: authControlle.pageNumber == 1
+                          ? "تایید"
+                          : 'ارسال کد تایید',
+                      textColor: Colors.white,
+                      icon: Icons.arrow_forward,
+                      // loading: ,
                       onPressed: () {
                         if (authControlle.pageNumber == 1) {
                           authControlle.verifyOTPCode(
@@ -150,22 +157,39 @@ class LoginScreen extends StatelessWidget {
                         if (authControlle.pageNumber == 0) {
                           authControlle.sendCode(numbercontroller);
                         }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                      ),
-                      child: MyText(
-                        txt: authControlle.pageNumber == 1
-                            ? "تایید"
-                            : 'ارسال کد تایید',
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                      }),
                 ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(20),
+                //   child: SizedBox(
+                //     width: width * 0.8,
+                //     height: height * 0.06,
+                //     child: ElevatedButton(
+                //       onPressed: () {
+                //         if (authControlle.pageNumber == 1) {
+                //           authControlle.verifyOTPCode(
+                //               codecontroller.text, numbercontroller.text);
+                //         }
+                //         if (authControlle.pageNumber == 0) {
+                //           authControlle.sendCode(numbercontroller);
+                //         }
+                //       },
+                //       style: ElevatedButton.styleFrom(
+                //         backgroundColor: Colors.red,
+                //       ),
+                //       child: MyText(
+                //         txt: authControlle.pageNumber == 1
+                //             ? "تایید"
+                //             : 'ارسال کد تایید',
+                //         color: Colors.white,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 20),
-                const DividerWithText(horizontalPadding: 100, text: "یا ورود با"),
+                const DividerWithText(
+                    horizontalPadding: 100, text: "یا ورود با"),
                 IconButton(
                   onPressed: () {
                     googleLoginController.login();

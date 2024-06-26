@@ -35,7 +35,7 @@ class MyText extends StatelessWidget {
     return Text(
       overFlosLenth(txt, length),
       style: TextStyle(
-          fontFamily: 'vazir',
+          fontFamily: 'peyda',
           color: color ?? Theme.of(context).primaryTextTheme.bodyMedium!.color,
           fontSize: size,
           fontWeight: fontWeight),

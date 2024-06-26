@@ -10,7 +10,7 @@ import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
 import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
 import 'package:status_bar_control/status_bar_control.dart';
-import 'package:movie_chi/features/feature_home/presentation/pages/feature_homeScreen.dart';
+import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
 import 'package:movie_chi/features/feature_onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:movie_chi/locator.dart';
 import 'package:uni_links/uni_links.dart';

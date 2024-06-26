@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -73,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       mainAxisExtent:
                                           MediaQuery.of(context).size.height *
-                                              0.25,
+                                              0.27,
                                       crossAxisCount: 3),
                               itemCount: controller.searchData.length,
                               itemBuilder: (BuildContext context, int index) {
