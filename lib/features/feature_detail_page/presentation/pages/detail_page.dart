@@ -17,12 +17,14 @@ class DetailPage extends StatefulWidget {
       {Key? key,
       required this.vid_tag,
       this.deepLinking = false,
+      this.heroTag,
       required this.pic})
       : super(key: key);
 
   final String vid_tag;
   final bool deepLinking;
   final String pic;
+  final String? heroTag;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -36,7 +38,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    pageController.placeholder = widget.pic;
+    // pageController.placeholder = widget.pic;
     pageController.setVideoTag(widget.vid_tag);
 
     pageController.checkUSers();
@@ -59,9 +61,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final hieght = MediaQuery.of(context).size.height;
-    // printInfo(info: widget.map_data.toString());
-    // final pageController =
-    //     Get.put(DetailPageController(locator(), widget.vid_tag));
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -84,12 +84,11 @@ class _DetailPageState extends State<DetailPage> {
               physics: const BouncingScrollPhysics(),
               child: GetBuilder<DetailPageController>(builder: (controller) {
                 if (controller.detailPageStatus == PageStatus.loading) {
-                  return Hero(
-                    tag: controller.placeholder ?? "",
-                    child: DetailPageLoadingView(
-                        hieght: hieght,
-                        width: width,
-                        img: controller.placeholder),
+                  return DetailPageLoadingView(
+                    hieght: hieght,
+                    width: width,
+                    img: widget.pic,
+                    heroTag: widget.heroTag,
                   );
                 }
                 if (controller.detailPageStatus == PageStatus.error) {
@@ -112,9 +111,11 @@ class _DetailPageState extends State<DetailPage> {
                     ],
                   ));
                 }
+                // return Container();
 
                 return DetailPageContent(
                   deepLinking: widget.deepLinking,
+                  heroTag: widget.heroTag,
                 );
               }),
             ),

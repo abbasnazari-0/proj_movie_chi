@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/resources/home_view_exported.dart';
-import 'package:movie_chi/features/feature_artists/presentation/pages/artist_list.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/screen_contents/home_views/countinuios_wathcing.dart';
+import 'package:movie_chi/features/feature_home/presentation/widgets/home_artist_widgets.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
@@ -51,9 +52,9 @@ class HomeScreenContent extends StatelessWidget {
             : SingleChildScrollView(
                 child: Column(
                   children: [
-                    if (controller.zhannerList.isNotEmpty)
-                      HomeZhannerView(width: width),
-                    // ArtistList(),
+                    // const ArtistList(),
+                    const Gap(20),
+
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -65,8 +66,15 @@ class HomeScreenContent extends StatelessWidget {
 
                         switch (homeCatagoryItem.viewName) {
                           case "carousel_slider":
-                            return HomeGalleryVideos(
-                                itemGalleryData: homeCatagoryItem);
+                            return Column(
+                              children: [
+                                HomeGalleryVideos(
+                                    itemGalleryData: homeCatagoryItem),
+                                HomeZhannerView(width: width),
+                                const Gap(10),
+                                ArtistHomeWidget()
+                              ],
+                            );
                           case "extended_slider":
                             return ExtendedSliderHomeView(
                                 homeCatagoryItem: homeCatagoryItem);
@@ -94,6 +102,7 @@ class HomeScreenContent extends StatelessWidget {
                         }
                       },
                     ),
+                    HomeZhannerView(width: width),
                   ],
                 ),
               ),

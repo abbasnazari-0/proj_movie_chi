@@ -359,10 +359,12 @@ class Constants {
       String? commonTag,
       String? type,
       bool deepLink = false,
+      String? hero = "",
       required String picture}) {
     Get.to(() => DetailPage(
           vid_tag: vidTag,
           pic: picture,
+          heroTag: hero,
         ));
   }
 

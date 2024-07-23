@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/screens/splash_screen.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
+import 'package:movie_chi/core/utils/photo_viewer_screen.dart';
 import 'package:movie_chi/core/utils/utils.dart';
 import 'package:movie_chi/core/widgets/general_dialog.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -92,12 +93,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       children: [
                         const Gap(10),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: Utils().getProfileData().pic != null
-                              ? NetworkImage(Utils().getProfileData().pic ?? "")
-                              : const AssetImage('assets/images/icon.png')
-                                  as ImageProvider,
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => PhotoViewer(
+                                  heroTag: Utils().getProfileData().pic ?? "",
+                                  photoUrl: Utils().getProfileData().pic ?? '',
+                                ));
+                          },
+                          child: Hero(
+                            tag: Utils().getProfileData().pic ?? "",
+                            child: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: Utils().getProfileData().pic !=
+                                      null
+                                  ? NetworkImage(
+                                      Utils().getProfileData().pic ?? "")
+                                  : const AssetImage('assets/images/icon.png')
+                                      as ImageProvider,
+                            ),
+                          ),
                         ),
                         const Gap(10),
                         Column(

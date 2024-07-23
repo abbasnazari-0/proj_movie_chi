@@ -17,7 +17,7 @@ class HomeGalleryVideos extends StatelessWidget {
   });
 
   final HomeCatagoryItemModel itemGalleryData;
-  // final homePageController = Get.find<HomePageController>();
+  final homePageController = Get.find<HomePageController>();
 
   int currentGalleryIndex = 0;
 
@@ -26,6 +26,8 @@ class HomeGalleryVideos extends StatelessWidget {
     return Container(
       color: Constants.hexToColor(itemGalleryData.viewColor!)
           .withAlpha(int.parse(itemGalleryData.colorAlpha ?? "255")),
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.50,
       child: GetBuilder<GalleryController>(
           init: GalleryController(),
           builder: (galleryController) {
@@ -35,6 +37,7 @@ class HomeGalleryVideos extends StatelessWidget {
                 width: double.infinity,
                 height: Get.size.height * 0.50,
                 child: Stack(
+                  fit: StackFit.expand,
                   children: [
                     PageView.builder(
                       controller: galleryController.pageController,
@@ -44,52 +47,56 @@ class HomeGalleryVideos extends StatelessWidget {
                       itemCount: itemGalleryData.data!.length > 6
                           ? 6
                           : itemGalleryData.data!.length,
+                      scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         final i = itemGalleryData.data![index];
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                // margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: ClipRRect(
-                                  // borderRadius: BorderRadius.circular(width * 0.9 / 10),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      // await Get.to(() => DetailPage(
-                                      //       vid_tag: i.tag!,
-                                      //     ));
-                                      await Constants.openVideoDetail(
-                                          vidTag: i.tag!,
-                                          type: i.type,
-                                          commonTag: i.commonTag,
-                                          picture: i.thumbnail1x!);
-                                      final homePageController =
-                                          Get.find<HomePageController>();
-                                      homePageController.returnScreen();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: CachedNetworkImage(
-                                        imageUrl: Constants.imageFiller(
-                                            i.thumbnail1x!),
-                                        color: Colors.black26,
-                                        colorBlendMode: BlendMode.darken,
-                                        fit: BoxFit.cover,
-                                        httpHeaders: const {
-                                          'Referer': 'https://www.cinimo.ir/'
-                                        },
-                                        // handle error
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                      ),
+                        return SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            // margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: ClipRRect(
+                              // borderRadius: BorderRadius.circular(width * 0.9 / 10),
+                              child: InkWell(
+                                onTap: () async {
+                                  // await Get.to(() => DetailPage(
+                                  //       vid_tag: i.tag!,
+                                  //     ));
+
+                                  await Constants.openVideoDetail(
+                                    vidTag: i.tag!,
+                                    type: i.type,
+                                    commonTag: i.commonTag,
+                                    picture: (i.thumbnail1x!),
+                                    // hero: "${i.thumbnail1x ?? ""}_slider",
+                                  );
+                                  final homePageController =
+                                      Get.find<HomePageController>();
+                                  homePageController.returnScreen();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Hero(
+                                    tag: Constants.imageFiller(
+                                            i.thumbnail1x ?? "") +
+                                        UniqueKey().toString(),
+                                    child: CachedNetworkImage(
+                                      imageUrl: i.thumbnail1x ?? "",
+                                      color:
+                                          const Color.fromARGB(66, 27, 18, 18),
+                                      colorBlendMode: BlendMode.darken,
+                                      fit: BoxFit.cover,
+                                      httpHeaders: const {
+                                        'Referer': 'https://www.cinimo.ir/'
+                                      },
+                                      // handle error
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
                                   ),
-                                ));
-                          },
-                        );
+                                ),
+                              ),
+                            ));
                       },
                     ),
 
@@ -115,36 +122,42 @@ class HomeGalleryVideos extends StatelessWidget {
                         child: Column(
                           children: [
                             const Gap(20),
-                            Row(
-                              children: [
-                                MyButton(
-                                  onPressed: () {
-                                    Constants.openVideoDetail(
-                                        vidTag: itemGalleryData
-                                            .data![
-                                                galleryController.galleryIndex]
-                                            .tag!,
-                                        type: itemGalleryData
-                                            .data![
-                                                galleryController.galleryIndex]
-                                            .type,
-                                        commonTag: itemGalleryData
-                                            .data![
-                                                galleryController.galleryIndex]
-                                            .commonTag,
-                                        picture: itemGalleryData
-                                            .data![
-                                                galleryController.galleryIndex]
-                                            .thumbnail1x!);
-                                    final homePageController =
-                                        Get.find<HomePageController>();
-                                    homePageController.returnScreen();
-                                  },
-                                  text: 'تماشا',
-                                  color: Colors.red,
-                                  icon: Icons.play_arrow,
-                                ),
-                              ],
+                            SizedBox(
+                              width: 100,
+                              height: 50,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: MyButton(
+                                      onPressed: () {
+                                        Constants.openVideoDetail(
+                                            vidTag: itemGalleryData
+                                                .data![galleryController
+                                                    .galleryIndex]
+                                                .tag!,
+                                            type: itemGalleryData
+                                                .data![galleryController
+                                                    .galleryIndex]
+                                                .type,
+                                            commonTag: itemGalleryData
+                                                .data![galleryController
+                                                    .galleryIndex]
+                                                .commonTag,
+                                            picture: itemGalleryData
+                                                .data![galleryController
+                                                    .galleryIndex]
+                                                .thumbnail1x!);
+                                        final homePageController =
+                                            Get.find<HomePageController>();
+                                        homePageController.returnScreen();
+                                      },
+                                      text: 'تماشا',
+                                      color: Colors.red,
+                                      icon: Icons.play_arrow,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             const Gap(20),
                             Row(

@@ -37,8 +37,9 @@ import 'gallery_section_listview.dart';
 
 // ignore: must_be_immutable
 class DetailPageContent extends StatelessWidget {
-  DetailPageContent({super.key, required this.deepLinking});
+  DetailPageContent({super.key, required this.deepLinking, this.heroTag});
   final bool deepLinking;
+  final String? heroTag;
   final pageController = Get.find<DetailPageController>();
   final controller = Get.find<DetailPageController>();
   final downloadController = Get.find<DownloadPageController>();
@@ -93,17 +94,13 @@ class DetailPageContent extends StatelessWidget {
                     child: SizedBox(
                       height: hieght * 0.6,
                       width: width,
-                      child: Hero(
-                        tag: Constants.imageFiller(
-                            pageController.videoDetail!.thumbnail1x!),
-                        child: CachedNetworkImage(
-                          imageUrl: Constants.imageFiller(
-                            pageController.videoDetail!.thumbnail1x!,
-                          ),
-                          color: Colors.black.withOpacity(0.4),
-                          colorBlendMode: BlendMode.darken,
-                          fit: BoxFit.cover,
+                      child: CachedNetworkImage(
+                        imageUrl: Constants.imageFiller(
+                          pageController.videoDetail!.thumbnail1x!,
                         ),
+                        color: Colors.black.withOpacity(0.4),
+                        colorBlendMode: BlendMode.darken,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

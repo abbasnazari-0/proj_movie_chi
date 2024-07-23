@@ -19,8 +19,8 @@ class GalleryController extends GetxController {
       } else {
         galleryIndex = 0;
       }
-      pageController.animateToPage(galleryIndex,
-          duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+      // pageController.animateToPage(galleryIndex,
+      //     duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
     });
   }
 

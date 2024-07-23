@@ -12,11 +12,13 @@ class DetailPageLoadingView extends StatelessWidget {
     required this.hieght,
     required this.width,
     this.img,
+    this.heroTag,
   });
 
   final double hieght;
   final double width;
   final String? img;
+  final String? heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,15 @@ class DetailPageLoadingView extends StatelessWidget {
                   Get.to(() =>
                       PhotoViewer(photoUrl: Constants.imageFiller(img ?? "")));
                 },
-                child: CachedNetworkImage(
-                  imageUrl: Constants.imageFiller(img ?? ""),
-                  fit: BoxFit.cover,
-                  height: hieght * 0.6,
-                  width: width,
+                child: Hero(
+                  tag:
+                      Constants.imageFiller(img ?? "") + UniqueKey().toString(),
+                  child: CachedNetworkImage(
+                    imageUrl: Constants.imageFiller(img ?? ""),
+                    fit: BoxFit.cover,
+                    height: hieght * 0.6,
+                    width: width,
+                  ),
                 ),
               ),
             LoadingAnimationWidget.flickr(

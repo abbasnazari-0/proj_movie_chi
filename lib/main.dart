@@ -14,7 +14,6 @@ import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/core/utils/platoformOS.dart';
 import 'package:movie_chi/core/wrappers/android_web_wrapper.dart';
 import 'package:movie_chi/core/wrappers/web_wrapper.dart';
-import 'core/params/admob-ids-getter.dart';
 import 'core/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'locator.dart';
@@ -46,7 +45,7 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   if (MobileDetector.isMobile()) {
-    AdmobDataGetter.init();
+    // AdmobDataGetter.init();
     LocalNotificationService().initialize();
   }
 
