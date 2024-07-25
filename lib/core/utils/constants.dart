@@ -362,7 +362,7 @@ class Constants {
       String? hero = "",
       required String picture}) {
     Get.to(() => DetailPage(
-          vid_tag: vidTag,
+          vidTag: vidTag,
           pic: picture,
           heroTag: hero,
         ));

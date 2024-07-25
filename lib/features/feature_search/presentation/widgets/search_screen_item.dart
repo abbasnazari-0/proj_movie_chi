@@ -52,7 +52,7 @@ class SearchItem extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Positioned(
-                    top: 20,
+                    top: 15,
                     bottom: 0,
                     left: item.type != "video" ? 10 : 0,
                     right: item.type != "video" ? 10 : 0,
@@ -99,41 +99,44 @@ class SearchItem extends StatelessWidget {
                   ),
                   if (item.type != "video")
                     Positioned(
-                      top: 8,
+                      top: 20,
                       bottom: 0,
                       left: 5,
                       right: 5,
-                      child: CachedNetworkImage(
-                        colorBlendMode: BlendMode.srcOver,
-                        color: Colors.black.withAlpha(170),
-                        imageUrl:
-                            Constants.imageFiller(item.thumbnail1x.toString()),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          colorBlendMode: BlendMode.srcOver,
+                          color: Colors.black.withAlpha(100),
+                          imageUrl: Constants.imageFiller(
+                              item.thumbnail1x.toString()),
 
-                        // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
-                        // handle error
-                        height: 250,
-                        filterQuality: FilterQuality.low,
-                        fit: BoxFit.cover,
-                        // color: Colors.black.withOpacity(0.2),
-                        placeholder: (context, url) => Center(
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.white,
-                            highlightColor: Colors.black12,
-                            child: Container(
-                              // height: 250,
-                              width: double.infinity,
-                              color: Colors.black26.withAlpha(20),
+                          // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
+                          // handle error
+                          height: 250,
+                          filterQuality: FilterQuality.low,
+                          fit: BoxFit.cover,
+                          // color: Colors.black.withOpacity(0.2),
+                          placeholder: (context, url) => Center(
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.white,
+                              highlightColor: Colors.black12,
+                              child: Container(
+                                // height: 250,
+                                width: double.infinity,
+                                color: Colors.black26.withAlpha(20),
+                              ),
                             ),
                           ),
+                          // handle error
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
-                        // handle error
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
                       ),
                     ),
                   if (item.type != "video")
                     Positioned(
-                      top: 22,
+                      top: 25,
                       bottom: 0,
                       left: 0,
                       right: 0,

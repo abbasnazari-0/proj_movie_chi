@@ -122,7 +122,8 @@ class ArtistHomeWidget extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
-                                  maxLine: 2,
+                                  size: 12.sp,
+                                  // maxLine: 2,
                                 )
                               ],
                             ),

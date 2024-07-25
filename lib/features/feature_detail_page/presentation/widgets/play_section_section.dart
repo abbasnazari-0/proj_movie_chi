@@ -8,7 +8,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/features/feature_home/data/model/cinimo_config_model.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_drawer.dart';
-import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -128,21 +127,23 @@ playerIcons() async {
   final pageController = Get.find<DetailPageController>();
   CinimoConfig config = configDataGetter();
   final downloadController = Get.find<DownloadPageController>();
-  if ((GetStorageData.getData("logined") ?? false) == false) {
-    // // check from persian country or not
-    if ((GetStorageData.getData("user_logined") ?? false) == false) {
-      Get.to(() => LoginScreen());
-      return;
-    }
-    if (GetStorageData.getData("user_status") != "premium") {
-      await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
-          "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
-      Future.delayed(const Duration(milliseconds: 1000), () async {
-        await Get.to(() => const PlanScreen());
-      });
-      return;
-    }
+
+  // if ((GetStorageData.getData("logined") ?? false) == false) {
+  // // check from persian country or not
+  // if ((GetStorageData.getData("user_logined") ?? false) == false) {
+  //   Get.to(() => LoginScreen());
+  //   return;
+  // }
+  if (GetStorageData.getData("user_status") != "premium" &&
+      pageController.videoDetail?.videoType?.type == VideoTypeEnum.premium) {
+    await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
+        "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+    Future.delayed(const Duration(milliseconds: 1000), () async {
+      await Get.to(() => const PlanScreen());
+    });
+    return;
   }
+  // }
 
   if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
       (config.config?.freeUserPaidVideo ?? false) == true) {

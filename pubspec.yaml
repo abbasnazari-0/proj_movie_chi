@@ -53,6 +53,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   pinput:
   share_plus: ^7.1.0
+
   # flutter_meedu_videoplayer:
   #   git:
   #     url: https://github.com/zezo357/flutter_meedu_videoplayer.git

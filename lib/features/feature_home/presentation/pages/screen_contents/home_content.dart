@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/resources/home_view_exported.dart';
+import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/screen_contents/home_views/countinuios_wathcing.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_artist_widgets.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -53,7 +54,7 @@ class HomeScreenContent extends StatelessWidget {
                 child: Column(
                   children: [
                     // const ArtistList(),
-                    const Gap(20),
+                    // const Gap(20),
 
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -70,9 +71,13 @@ class HomeScreenContent extends StatelessWidget {
                               children: [
                                 HomeGalleryVideos(
                                     itemGalleryData: homeCatagoryItem),
-                                HomeZhannerView(width: width),
+                                if ((GetStorageData.getData("logined") ??
+                                    false))
+                                  HomeZhannerView(width: width),
                                 const Gap(10),
-                                ArtistHomeWidget()
+                                if ((GetStorageData.getData("logined") ??
+                                    false))
+                                  ArtistHomeWidget()
                               ],
                             );
                           case "extended_slider":
@@ -102,7 +107,8 @@ class HomeScreenContent extends StatelessWidget {
                         }
                       },
                     ),
-                    HomeZhannerView(width: width),
+                    if ((GetStorageData.getData("logined") ?? false))
+                      HomeZhannerView(width: width),
                   ],
                 ),
               ),

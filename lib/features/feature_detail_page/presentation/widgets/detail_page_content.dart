@@ -297,87 +297,89 @@ class DetailPageContent extends StatelessWidget {
                   width: width,
                   itemCount: itemCount,
                   pageController: pageController),
-            if (pageController.videoDetail?.type == "video")
-              InkWell(
-                onTap: () async {
-                  if ((GetStorageData.getData("logined") ?? false) == false) {
-                    if ((GetStorageData.getData("user_logined") ?? false) ==
-                        false) {
-                      Get.to(() => LoginScreen());
-                      return;
-                    } else {
-                      if (GetStorageData.getData("user_status") == "premium") {
-                        String timeOut =
-                            GetStorageData.getData("time_out_premium");
-                        DateTime expireTimeOut = (DateTime.parse(timeOut));
-                        DateTime now = (DateTime.now());
+            if ((GetStorageData.getData("logined") ?? false))
+              if (pageController.videoDetail?.type == "video")
+                InkWell(
+                  onTap: () async {
+                    if ((GetStorageData.getData("logined") ?? false) == false) {
+                      if ((GetStorageData.getData("user_logined") ?? false) ==
+                          false) {
+                        Get.to(() => LoginScreen());
+                        return;
+                      } else {
+                        if (GetStorageData.getData("user_status") ==
+                            "premium") {
+                          String timeOut =
+                              GetStorageData.getData("time_out_premium");
+                          DateTime expireTimeOut = (DateTime.parse(timeOut));
+                          DateTime now = (DateTime.now());
 
-                        if (expireTimeOut.millisecondsSinceEpoch <
-                            now.millisecondsSinceEpoch) {
+                          if (expireTimeOut.millisecondsSinceEpoch <
+                              now.millisecondsSinceEpoch) {
+                            await Constants.showGeneralSnackBar(
+                                "خطا", "اشتراک شما به پایان رسیده است");
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () async {
+                              await Get.to(() => const PlanScreen());
+                            });
+                            return;
+                          }
+                        } else {
                           await Constants.showGeneralSnackBar(
-                              "خطا", "اشتراک شما به پایان رسیده است");
+                              "تهیه اشتراک ارزان با تخفیف",
+                              "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
                           Future.delayed(const Duration(milliseconds: 1000),
                               () async {
                             await Get.to(() => const PlanScreen());
                           });
                           return;
                         }
-                      } else {
-                        await Constants.showGeneralSnackBar(
-                            "تهیه اشتراک ارزان با تخفیف",
-                            "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
-                        Future.delayed(const Duration(milliseconds: 1000),
-                            () async {
-                          await Get.to(() => const PlanScreen());
-                        });
-                        return;
                       }
                     }
-                  }
-                  downloadController.startNewDownload(
-                      pageController.videoDetail!,
-                      detailController: pageController);
+                    downloadController.startNewDownload(
+                        pageController.videoDetail!,
+                        detailController: pageController);
 
-                  // if ((GetStorageData.getData("logined") ?? false)) {
-                  // } else {
-                  //   checkUSers();
-                  //   showSubscribtion();
-                  // }
-                },
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50 / 4),
-                      color: Theme.of(context).primaryColor),
-                  width: width,
-                  height: 50,
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const MyText(
-                        txt: "دانلود  فیلم",
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 10),
-                      pageController.isVideoDownloaded
-                          ? const Icon(
-                              Iconsax.play,
-                            )
-                          : pageController.isDownloading == true &&
-                                  pageController.videoDetail?.tag ==
-                                      downloadController.video?.tag
-                              ? const Icon(
-                                  Icons.close,
-                                )
-                              : const Icon(
-                                  Icons.download,
-                                ),
-                    ],
+                    // if ((GetStorageData.getData("logined") ?? false)) {
+                    // } else {
+                    //   checkUSers();
+                    //   showSubscribtion();
+                    // }
+                  },
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50 / 4),
+                        color: Theme.of(context).primaryColor),
+                    width: width,
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const MyText(
+                          txt: "دانلود  فیلم",
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 10),
+                        pageController.isVideoDownloaded
+                            ? const Icon(
+                                Iconsax.play,
+                              )
+                            : pageController.isDownloading == true &&
+                                    pageController.videoDetail?.tag ==
+                                        downloadController.video?.tag
+                                ? const Icon(
+                                    Icons.close,
+                                  )
+                                : const Icon(
+                                    Icons.download,
+                                  ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
 
             const Gap(10),
 
@@ -433,10 +435,10 @@ class DetailPageContent extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // Suggest Video by Tags
-
-            if (pageController.showSuggestionView &&
-                pageController.suggestionList.isNotEmpty)
-              SuggestionVideos(pageController: pageController, width: width),
+            if ((GetStorageData.getData("logined") ?? false))
+              if (pageController.showSuggestionView &&
+                  pageController.suggestionList.isNotEmpty)
+                SuggestionVideos(pageController: pageController, width: width),
 
             // Comment Section
             // if (pageController.commentList.isNotEmpty)

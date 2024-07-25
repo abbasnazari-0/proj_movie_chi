@@ -4,12 +4,14 @@ class HomeRequestParams {
   final String version;
   final String amount;
   final String page;
+  final String supportArea;
 
   HomeRequestParams({
     required this.userTag,
     required this.version,
     required this.amount,
     required this.page,
+    required this.supportArea,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,6 +20,7 @@ class HomeRequestParams {
       'version': version,
       'amount': amount,
       'page': page,
+      'support_area': supportArea,
     };
   }
 }

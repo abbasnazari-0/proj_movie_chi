@@ -23,13 +23,13 @@ class HomeGalleryVideos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Constants.hexToColor(itemGalleryData.viewColor!)
-          .withAlpha(int.parse(itemGalleryData.colorAlpha ?? "255")),
+    return SizedBox(
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.50,
       child: GetBuilder<GalleryController>(
-          init: GalleryController(),
+          init: GalleryController(
+            itemGalleryData: itemGalleryData,
+          ),
           builder: (galleryController) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
@@ -106,8 +106,6 @@ class HomeGalleryVideos extends StatelessWidget {
                       left: 0,
                       right: 0,
                       child: Container(
-                        // padding: const EdgeInsets.symmetric(
-                        //     vertical: 50),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
@@ -160,30 +158,31 @@ class HomeGalleryVideos extends StatelessWidget {
                               ),
                             ),
                             const Gap(20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: itemGalleryData.data!
-                                  .getRange(0, 6)
-                                  .toList()
-                                  .asMap()
-                                  .entries
-                                  .map((entry) {
-                                final index = entry.key;
-                                return Container(
-                                  width: 8.0,
-                                  height: 8.0,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 2.0),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: (galleryController.galleryIndex ==
-                                            index)
-                                        ? Colors.white
-                                        : Colors.grey,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
+                            if (itemGalleryData.data?.isNotEmpty ?? false)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: itemGalleryData.data!
+                                    .take(6)
+                                    .toList()
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  final index = entry.key;
+                                  return Container(
+                                    width: 8.0,
+                                    height: 8.0,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: (galleryController.galleryIndex ==
+                                              index)
+                                          ? Colors.white
+                                          : Colors.grey,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             const Gap(20),
                           ],
                         ),

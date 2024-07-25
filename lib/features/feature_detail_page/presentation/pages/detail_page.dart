@@ -15,13 +15,13 @@ import '../widgets/detail_page_loading_view.dart';
 class DetailPage extends StatefulWidget {
   const DetailPage(
       {Key? key,
-      required this.vid_tag,
+      required this.vidTag,
       this.deepLinking = false,
       this.heroTag,
       required this.pic})
       : super(key: key);
 
-  final String vid_tag;
+  final String vidTag;
   final bool deepLinking;
   final String pic;
   final String? heroTag;
@@ -39,7 +39,7 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     super.initState();
     // pageController.placeholder = widget.pic;
-    pageController.setVideoTag(widget.vid_tag);
+    pageController.setVideoTag(widget.vidTag);
 
     pageController.checkUSers();
 
@@ -51,7 +51,7 @@ class _DetailPageState extends State<DetailPage> {
     Map notifData =
         await GetStorageData.readDataWithAwaiting("notif_data") ?? {};
 
-    if (notifData['tag'] == widget.vid_tag) {
+    if (notifData['tag'] == widget.vidTag) {
       GetStorageData.writeData("has_notif", false);
       GetStorageData.writeData("notif_data", "");
     }

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 // import 'package:background_downloader/background_downloader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -479,8 +480,12 @@ class DetailPageController extends GetxController {
   }
 
   checkUSers() async {
+    if (dotenv.env['APP_ACCESS'] == "true") {
+      GetStorageData.writeData("logined", true);
+      return;
+    }
     bool canSeeVide = await isallowToPlay();
-    print(canSeeVide);
+
     if (canSeeVide) {
       //launch mx
 

@@ -8,7 +8,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
+import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
 import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
+import 'package:movie_chi/features/feature_search/presentation/controller/search_page_controller.dart';
 import 'package:status_bar_control/status_bar_control.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
 import 'package:movie_chi/features/feature_onboarding/presentation/screens/onboarding_screen.dart';
@@ -42,6 +46,13 @@ class _SplashState extends State<Splash> {
     }
   }
 
+  final searchController = Get.put(SearchPageController(locator()));
+  final homePageController = Get.put(HomePageController(locator(), locator()));
+  // final adController = Get.put(AdController());
+  final downloadController = Get.put(DownloadPageController());
+  final pageController =
+      Get.put(DetailPageController(locator(), null, locator()));
+
   @override
   initState() {
     super.initState();
@@ -49,6 +60,8 @@ class _SplashState extends State<Splash> {
     //Script that chnage Screen Status
 
     initUniLinks();
+
+    pageController.checkUSers();
   }
 
   Future<void> initUniLinks() async {
@@ -120,25 +133,6 @@ class _SplashState extends State<Splash> {
     } else {
       startNewActivity();
     }
-    // try {
-    //   var res = (await dio.head("",
-    //       options: Options(
-    //           receiveTimeout: Duration(milliseconds: 3000),
-    //           sendTimeout: Duration(milliseconds: 3000))));
-    //   if (res.statusCode == 200) {
-    //     startNewActivity();
-    //   } else {
-    //     print("not ok");
-    //   }
-    // } catch (e) {}
-    // final ping = Ping('pornhub.com', count: 1);
-
-    // // Begin ping process and listen for output
-    // ping.stream.listen((event) {
-    //   if (event.error == null) {
-    //     startNewActivity();
-    //   }
-    // });
   }
 
   startNewActivity() {
@@ -165,7 +159,7 @@ class _SplashState extends State<Splash> {
                     width: MediaQuery.of(context).size.width,
                   ),
                 ),
-                LinearProgressIndicator(
+                const LinearProgressIndicator(
                   minHeight: 2,
                 )
               ],

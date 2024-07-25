@@ -21,7 +21,6 @@ class BottomAppBarController extends GetxController {
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
     checkBannerAd();
   }

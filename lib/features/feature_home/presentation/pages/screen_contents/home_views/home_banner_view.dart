@@ -36,7 +36,7 @@ class HomeBannerView extends StatelessWidget {
           // width: double.tryParse(homeCatagoryItem.viewWidth!)!.w,
           // height: double.tryParse(homeCatagoryItem.viewHeight!)!.h,
           width: double.infinity,
-          height: Get.size.width * 0.6,
+          // height: Get.size.width * 0.6,
           margin: const EdgeInsets.only(bottom: 5),
           color: Colors.transparent,
           child: InkWell(

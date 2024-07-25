@@ -128,6 +128,7 @@ class HomePageController extends GetxController {
     });
   }
 
+  bool supportedArea = ((GetStorageData.getData("logined") ?? false));
   @override
   Future<void> onReady() async {
     super.onReady();
@@ -165,8 +166,8 @@ class HomePageController extends GetxController {
 
       if (notifData['type'] == "video") {
         await Future.delayed(const Duration(milliseconds: 500), () async {
-          await Get.to(() => DetailPage(
-              vid_tag: notifData['tag'], pic: "", deepLinking: true));
+          await Get.to(() =>
+              DetailPage(vidTag: notifData['tag'], pic: "", deepLinking: true));
         });
       } else if (notifData['type'] == "support_message") {
         Constants.openSupportMessages();
@@ -282,8 +283,8 @@ class HomePageController extends GetxController {
             userTag: GetStorageData.getData("user_tag"),
             version: packageInfo.buildNumber,
             amount: homeAmount.toString(),
-            page: homePage.toString()));
-
+            page: homePage.toString(),
+            supportArea: supportedArea ? 'true' : 'false'));
     if (dataState is DataSuccess) {
       if (homeCatagory == null) {
         homeCatagory = dataState.data;
@@ -450,11 +451,15 @@ class HomePageController extends GetxController {
 
   changeBottomNavIndex(int index) {
     navigationIndex = index;
-
+    print(index);
     switch (index) {
+      // case 4 or 10:
       case 4:
         getHomeReels();
         break;
+      // case 3:
+      //   getHomeReels();
+      // break;
       default:
     }
     update();

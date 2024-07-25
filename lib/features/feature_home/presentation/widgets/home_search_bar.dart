@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
 import 'package:movie_chi/config/text_theme.dart';
@@ -24,6 +25,9 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
     // if (searchController.controller.text.isEmpty) return;
     searchController.onstartLoadSearch(true);
   }
+
+  final Debouncer debouncer =
+      Debouncer(delay: const Duration(milliseconds: 1000));
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +78,19 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
             }
           },
           onChanged: (value) {
-            if (value.isNotEmpty) {
-              searchController.onSearchBoxFocusing(true);
+            debouncer.call(() {
+              if (value.isNotEmpty) {
+                searchController.onSearchBoxFocusing(true);
 
-              searchController.suggestionsBoxController.suggestionsBox?.close();
-            } else {
-              searchController.onSearchBoxFocusing(false);
-              searchController.suggestionsBoxController.suggestionsBox?.open();
-            }
+                searchController.suggestionsBoxController.suggestionsBox
+                    ?.close();
+              } else {
+                searchController.onSearchBoxFocusing(false);
+                searchController.suggestionsBoxController.suggestionsBox
+                    ?.open();
+              }
+              onChange();
+            });
             // onChange();
           },
           style: faTextTheme(context),
@@ -101,9 +110,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
                     : const SizedBox(),
               ),
               prefixIcon: IconButton(
-                onPressed: () {
-                  onChange();
-                },
+                onPressed: () {},
                 icon: Icon(Iconsax.search_normal4,
                     color: Theme.of(context).primaryIconTheme.color),
               ),
