@@ -112,10 +112,8 @@ class HomeDataGetter {
   // get update available
   Future<Response> getUpdateAvailable() async {
     // get vesion code
-
     // PackageInfo packageInfo = await PackageInfo.fromPlatform();
     // String version = "23"; //packageInfo.version;
-
     var res = await dio
         .post('${Constants.baseUrl()}${pageUrl}update.php', queryParameters: {
       "type": "get",

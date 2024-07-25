@@ -231,7 +231,7 @@ class HomeCategoryRepositoryImpl implements HomeCategoryRepository {
 
     try {
       if (res.statusCode == 200) {
-        ArtistModels artistModels = ArtistModels.fromJson((res.data));
+        ArtistModels artistModels = ArtistModels.fromJson(res.data);
         if (artistModels.status == "success") {
           return DataSuccess(artistModels.result!);
         } else {

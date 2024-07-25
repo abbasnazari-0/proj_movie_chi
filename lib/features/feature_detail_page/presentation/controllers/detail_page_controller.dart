@@ -488,7 +488,6 @@ class DetailPageController extends GetxController {
 
     if (canSeeVide) {
       //launch mx
-
       GetStorageData.writeData("logined", true);
     } else {
       GetStorageData.writeData("logined", false);

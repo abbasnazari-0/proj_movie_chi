@@ -270,13 +270,17 @@ class HomePageController extends GetxController {
   int homeAmount = 0;
   int homePage = 0;
   // get home catagory data
-  getHomeCatagoryData(bool withmoreLoad) async {
+  getHomeCatagoryData(bool withmoreLoad, {bool? withClear}) async {
     if (homeAmount == 0) homeAmount = 10;
     if (homeAmount > 0 && withmoreLoad) homePage++;
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
+    if (withClear != null && withClear) {
+      homeCatagory = null;
+    }
     homepageStatus = PageStatus.loading;
+    update();
 
     DataState dataState = await homeCatagoryUseCase.getHomeCatagory(
         HomeRequestParams(
@@ -284,7 +288,9 @@ class HomePageController extends GetxController {
             version: packageInfo.buildNumber,
             amount: homeAmount.toString(),
             page: homePage.toString(),
-            supportArea: supportedArea ? 'true' : 'false'));
+            supportArea: (GetStorageData.getData("logined") ?? false)
+                ? 'true'
+                : 'false'));
     if (dataState is DataSuccess) {
       if (homeCatagory == null) {
         homeCatagory = dataState.data;

@@ -87,105 +87,113 @@ class _HomeScreenState extends State<HomeScreen>
             itemBuilder: (context, index) {
               switch (index) {
                 case 0:
-                  return NestedScrollView(
-                    body: HomeScreenContent(),
-                    physics: const BouncingScrollPhysics(),
-                    floatHeaderSlivers: true,
-                    headerSliverBuilder: (context, innerBoxIsScrolled) {
-                      return [
-                        SliverAppBar(
-                          // toolbarHeight: toolbarHeoght,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          // floating: true,
-                          automaticallyImplyLeading: false,
+                  return GetBuilder<HomePageController>(builder: (context) {
+                    return NestedScrollView(
+                      body: RefreshIndicator(
+                          onRefresh: () async {
+                            await pageController.checkUSers();
+                            return homePageController.getHomeCatagoryData(false,
+                                withClear: true);
+                          },
+                          child: HomeScreenContent()),
+                      physics: const BouncingScrollPhysics(),
+                      floatHeaderSlivers: true,
+                      headerSliverBuilder: (context, innerBoxIsScrolled) {
+                        return [
+                          SliverAppBar(
+                            // toolbarHeight: toolbarHeoght,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            // floating: true,
+                            automaticallyImplyLeading: false,
 
-                          pinned: true,
-                          toolbarHeight: 50,
-                          // collapsedHeight: 0,
-                          // titleSpacing: ,
-                          elevation: 5,
-                          excludeHeaderSemantics: true,
-                          // titleSpacing: 10,
+                            pinned: true,
+                            toolbarHeight: 50,
+                            // collapsedHeight: 0,
+                            // titleSpacing: ,
+                            elevation: 5,
+                            excludeHeaderSemantics: true,
+                            // titleSpacing: 10,
 
-                          // excludeHeaderSemantics: true,
+                            // excludeHeaderSemantics: true,
 
-                          // flexibleSpace: controller.hasDataInlocaStorage
-                          //     ? const HomeHeader()
-                          //     : Container(),
-                          // stretch: true,
-                          primary: true,
-                          snap: true,
-                          // expandedHeight: -50,
-                          // collapsedHeight: 0,
+                            // flexibleSpace: controller.hasDataInlocaStorage
+                            //     ? const HomeHeader()
+                            //     : Container(),
+                            // stretch: true,
+                            primary: true,
+                            snap: true,
+                            // expandedHeight: -50,
+                            // collapsedHeight: 0,
 
-                          //     controller.hasDataInlocaStorage ? 100 : 0,
-                          floating: true,
-                          title: Column(
-                            children: [
-                              // AppAppBar(height: height),
-                              // const SocialHeader()
-                              Row(
-                                // mainAxisAlignment:
-                                //     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  if ((GetStorageData.getData("logined") ??
-                                      false))
-                                    IconButton(
-                                        onPressed: () {
-                                          bottomAppBarController
-                                              .chnageItemSelected(4.obs);
-                                          bottomAppBarController
-                                              .chnagePageViewSelected(4.obs);
+                            //     controller.hasDataInlocaStorage ? 100 : 0,
+                            floating: true,
+                            title: Column(
+                              children: [
+                                // AppAppBar(height: height),
+                                // const SocialHeader()
+                                Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    if ((GetStorageData.getData("logined") ??
+                                        false))
+                                      IconButton(
+                                          onPressed: () {
+                                            bottomAppBarController
+                                                .chnageItemSelected(4.obs);
+                                            bottomAppBarController
+                                                .chnagePageViewSelected(4.obs);
 
-                                          homePageController
-                                              .changeBottomNavIndex(4);
+                                            homePageController
+                                                .changeBottomNavIndex(4);
+                                          },
+                                          icon: const Icon(
+                                              Iconsax.search_normal4)),
+                                    const Spacer(),
+                                    Image.asset(
+                                      'assets/images/icon.png',
+                                      height: 30,
+                                    ),
+                                    const MyText(
+                                      txt: 'مووی چی!؟',
+                                      size: 24 / 1.618,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    const Spacer(),
+                                    if ((GetStorageData.getData("logined") ??
+                                        false))
+                                      IconButton(
+                                        onPressed: () async {
+                                          if ((GetStorageData.getData(
+                                                      "user_logined") ??
+                                                  false) ==
+                                              false) {
+                                            await Get.to(() => LoginScreen());
+                                          } else {
+                                            Get.to(() => const ProfileScreen());
+                                          }
                                         },
-                                        icon:
-                                            const Icon(Iconsax.search_normal4)),
-                                  const Spacer(),
-                                  Image.asset(
-                                    'assets/images/icon.png',
-                                    height: 30,
-                                  ),
-                                  const MyText(
-                                    txt: 'مووی چی!؟',
-                                    size: 24 / 1.618,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  const Spacer(),
-                                  if ((GetStorageData.getData("logined") ??
-                                      false))
-                                    IconButton(
-                                      onPressed: () async {
-                                        if ((GetStorageData.getData(
-                                                    "user_logined") ??
-                                                false) ==
-                                            false) {
-                                          await Get.to(() => LoginScreen());
-                                        } else {
-                                          Get.to(() => const ProfileScreen());
-                                        }
-                                      },
-                                      icon: Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        child:
-                                            const Icon(Iconsax.user_octagon4),
-                                      ),
-                                    )
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ];
-                    },
-                  );
+                                        icon: Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          child:
+                                              const Icon(Iconsax.user_octagon4),
+                                        ),
+                                      )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ];
+                      },
+                    );
+                  });
                 // films
                 case 1:
                   return // search Content
