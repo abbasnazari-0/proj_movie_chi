@@ -26,12 +26,38 @@ class HomeCatagory {
   }
 }
 
+class Setting {
+  String? androidVersion;
+  String? updateTitle;
+  String? updateDesc;
+  String? updateUrl;
+
+  Setting(
+      {this.androidVersion, this.updateTitle, this.updateDesc, this.updateUrl});
+  Setting.fromJson(Map<String, dynamic> json) {
+    androidVersion = json['android_version'];
+    updateTitle = json['update_title'];
+    updateDesc = json['update_desc'];
+    updateUrl = json['update_url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['android_version'] = androidVersion;
+    data['update_title'] = updateTitle;
+    data['update_desc'] = updateDesc;
+    data['update_url'] = updateUrl;
+    return data;
+  }
+}
+
 class HomeCatagoryData {
   String? page;
   // String? amount;
   List<HomeCatagoryItemModel>? data;
+  Setting? setting;
 
-  HomeCatagoryData({this.page, this.data});
+  HomeCatagoryData({this.page, this.data, this.setting});
 
   HomeCatagoryData.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -42,6 +68,8 @@ class HomeCatagoryData {
         data!.add(HomeCatagoryItemModel.fromJson(v));
       });
     }
+    setting =
+        json['setting'] != null ? Setting.fromJson(json['setting']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +78,9 @@ class HomeCatagoryData {
     // data['amount'] = amount;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    if (setting != null) {
+      data['setting'] = setting!.toJson();
     }
     return data;
   }

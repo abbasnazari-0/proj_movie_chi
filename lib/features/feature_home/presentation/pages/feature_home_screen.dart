@@ -109,32 +109,14 @@ class _HomeScreenState extends State<HomeScreen>
 
                             pinned: true,
                             toolbarHeight: 50,
-                            // collapsedHeight: 0,
-                            // titleSpacing: ,
                             elevation: 5,
                             excludeHeaderSemantics: true,
-                            // titleSpacing: 10,
-
-                            // excludeHeaderSemantics: true,
-
-                            // flexibleSpace: controller.hasDataInlocaStorage
-                            //     ? const HomeHeader()
-                            //     : Container(),
-                            // stretch: true,
                             primary: true,
                             snap: true,
-                            // expandedHeight: -50,
-                            // collapsedHeight: 0,
-
-                            //     controller.hasDataInlocaStorage ? 100 : 0,
                             floating: true,
                             title: Column(
                               children: [
-                                // AppAppBar(height: height),
-                                // const SocialHeader()
                                 Row(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceBetween,
                                   children: [
                                     if ((GetStorageData.getData("logined") ??
                                         false))

@@ -66,6 +66,8 @@ class HomePageController extends GetxController {
   bool showMutewidget = false;
   int preloadPageAmount = 1;
 
+  PackageInfo? packageInfo;
+
   changePreloadPageView() {
     preloadPageAmount = 3;
     update();
@@ -278,9 +280,9 @@ class HomePageController extends GetxController {
 
     if (withClear != null && withClear) {
       homeCatagory = null;
+      homepageStatus = PageStatus.loading;
+      update();
     }
-    homepageStatus = PageStatus.loading;
-    update();
 
     DataState dataState = await homeCatagoryUseCase.getHomeCatagory(
         HomeRequestParams(
@@ -352,6 +354,8 @@ class HomePageController extends GetxController {
     }
     update();
 
+    print(homeCatagory?.data?.setting?.androidVersion);
+
     if (GetStorageData.getData("privacy") == null ||
         GetStorageData.getData("privacy") == false) {
       // show privacy dialog
@@ -412,9 +416,10 @@ class HomePageController extends GetxController {
   }
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
 
+    packageInfo = await PackageInfo.fromPlatform();
     showIpDialog();
 
     SystemChannels.lifecycle.setMessageHandler((msg) {
