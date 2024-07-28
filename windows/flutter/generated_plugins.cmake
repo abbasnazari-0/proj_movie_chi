@@ -11,6 +11,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   media_kit_video
   permission_handler_windows
   platform_device_id_windows
+  quick_notify_2
   screen_brightness_windows
   screen_retriever
   share_plus

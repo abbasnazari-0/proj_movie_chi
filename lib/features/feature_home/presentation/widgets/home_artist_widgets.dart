@@ -79,54 +79,51 @@ class ArtistHomeWidget extends StatelessWidget {
                         Get.to(() => ArtistPage(
                             artistItemData: artistItemData, page: uniqKey));
                       },
-                      child: Hero(
-                        tag: uniqKey,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: SizedBox(
-                            width: 80.h,
-                            // height: 120.h,
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(999),
-                                  child: SizedBox(
-                                    width: 70.h,
-                                    height: 70.h,
-                                    child: CachedNetworkImage(
-                                      imageUrl: Constants.imageFiller(
-                                          artistItemData.artistPic ?? ""),
-                                      fit: BoxFit.cover,
-                                      color: Colors.black.withAlpha(80),
-                                      colorBlendMode: BlendMode.darken,
-                                      placeholder: (context, url) => Center(
-                                        child: Shimmer.fromColors(
-                                          baseColor: Colors.white,
-                                          highlightColor: Colors.black12,
-                                          child: Container(
-                                            // height: 250,
-                                            width: double.infinity,
-                                            color: Colors.black26.withAlpha(20),
-                                          ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: SizedBox(
+                          width: 80.h,
+                          // height: 120.h,
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(999),
+                                child: SizedBox(
+                                  width: 70.h,
+                                  height: 70.h,
+                                  child: CachedNetworkImage(
+                                    imageUrl: Constants.imageFiller(
+                                        artistItemData.artistPic ?? ""),
+                                    fit: BoxFit.cover,
+                                    color: Colors.black.withAlpha(80),
+                                    colorBlendMode: BlendMode.darken,
+                                    placeholder: (context, url) => Center(
+                                      child: Shimmer.fromColors(
+                                        baseColor: Colors.white,
+                                        highlightColor: Colors.black12,
+                                        child: Container(
+                                          // height: 250,
+                                          width: double.infinity,
+                                          color: Colors.black26.withAlpha(20),
                                         ),
                                       ),
-                                      errorWidget: (context, url, error) {
-                                        return const Icon(Iconsax.user);
-                                      },
                                     ),
+                                    errorWidget: (context, url, error) {
+                                      return const Icon(Iconsax.user);
+                                    },
                                   ),
                                 ),
-                                SizedBox(height: 5.h),
-                                MyText(
-                                  txt: artistItemData.artistName ?? "",
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  size: 12.sp,
-                                  // maxLine: 2,
-                                )
-                              ],
-                            ),
+                              ),
+                              SizedBox(height: 5.h),
+                              MyText(
+                                txt: artistItemData.artistName ?? "",
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                size: 12.sp,
+                                // maxLine: 2,
+                              )
+                            ],
                           ),
                         ),
                       ));

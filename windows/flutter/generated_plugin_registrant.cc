@@ -14,6 +14,7 @@
 #include <media_kit_video/media_kit_video_plugin_c_api.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <platform_device_id_windows/platform_device_id_windows_plugin.h>
+#include <quick_notify_2/quick_notify_plugin.h>
 #include <screen_brightness_windows/screen_brightness_windows_plugin.h>
 #include <screen_retriever/screen_retriever_plugin.h>
 #include <share_plus/share_plus_windows_plugin_c_api.h>
@@ -38,6 +39,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   PlatformDeviceIdWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PlatformDeviceIdWindowsPlugin"));
+  QuickNotifyPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("QuickNotifyPlugin"));
   ScreenBrightnessWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ScreenBrightnessWindowsPlugin"));
   ScreenRetrieverPluginRegisterWithRegistrar(

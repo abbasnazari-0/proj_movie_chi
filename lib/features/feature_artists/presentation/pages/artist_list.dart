@@ -126,60 +126,55 @@ class _ArtistListState extends State<ArtistList> {
                                     page: uniqKey,
                                   ));
                             },
-                            child: Hero(
-                              tag: uniqKey,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: SizedBox(
-                                  width: 60.w,
-                                  child: Column(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(999),
-                                        child: SizedBox(
-                                          width: 60.h,
-                                          height: 60.h,
-                                          child: CachedNetworkImage(
-                                            imageUrl: Constants.imageFiller(
-                                                artistItemData.artistPic ?? ""),
-                                            fit: BoxFit.cover,
-                                            color: Colors.black.withAlpha(80),
-                                            colorBlendMode: BlendMode.darken,
-                                            placeholder: (context, url) =>
-                                                Center(
-                                              child: Shimmer.fromColors(
-                                                baseColor: Colors.white,
-                                                highlightColor: Colors.black12,
-                                                child: Container(
-                                                  // height: 250,
-                                                  width: double.infinity,
-                                                  color: Colors.black26
-                                                      .withAlpha(20),
-                                                ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: SizedBox(
+                                width: 60.w,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(999),
+                                      child: SizedBox(
+                                        width: 60.h,
+                                        height: 60.h,
+                                        child: CachedNetworkImage(
+                                          imageUrl: Constants.imageFiller(
+                                              artistItemData.artistPic ?? ""),
+                                          fit: BoxFit.cover,
+                                          color: Colors.black.withAlpha(80),
+                                          colorBlendMode: BlendMode.darken,
+                                          placeholder: (context, url) => Center(
+                                            child: Shimmer.fromColors(
+                                              baseColor: Colors.white,
+                                              highlightColor: Colors.black12,
+                                              child: Container(
+                                                // height: 250,
+                                                width: double.infinity,
+                                                color: Colors.black26
+                                                    .withAlpha(20),
                                               ),
                                             ),
-                                            errorWidget: (context, url, error) {
-                                              return Container(
-                                                  color: Colors.grey[300],
-                                                  child: const Icon(
-                                                    Iconsax.user,
-                                                    color: Colors.black,
-                                                  ));
-                                            },
                                           ),
+                                          errorWidget: (context, url, error) {
+                                            return Container(
+                                                color: Colors.grey[300],
+                                                child: const Icon(
+                                                  Iconsax.user,
+                                                  color: Colors.black,
+                                                ));
+                                          },
                                         ),
                                       ),
-                                      SizedBox(height: 5.h),
-                                      MyText(
-                                        txt: artistItemData.artistName ?? "",
-                                        fontWeight: FontWeight.bold,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
-                                        maxLine: 10,
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(height: 5.h),
+                                    MyText(
+                                      txt: artistItemData.artistName ?? "",
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      maxLine: 10,
+                                    )
+                                  ],
                                 ),
                               ),
                             ));

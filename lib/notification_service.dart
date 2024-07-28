@@ -22,7 +22,8 @@ class LocalNotificationService {
     // Get any messages which caused the application to open from
     // a terminated state.
     RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage() ??
+            const RemoteMessage();
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
@@ -73,13 +74,15 @@ class LocalNotificationService {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
 
-    var payload = json.decode(message.data['action']);
+    if (message.data['action'] == null || message.data['action'] == "") {
+      var payload = json.decode(message.data['action'] ?? "{}");
 
-    if (payload['type'] == 'video' || payload['type'] == 'support_message') {
-      await GetStorage.init();
-      // write notification click to database
-      GetStorageData.writeData("has_notif", true);
-      GetStorageData.writeData("notif_data", payload);
+      if (payload['type'] == 'video' || payload['type'] == 'support_message') {
+        await GetStorage.init();
+        // write notification click to database
+        GetStorageData.writeData("has_notif", true);
+        GetStorageData.writeData("notif_data", payload);
+      }
     }
   }
 

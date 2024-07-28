@@ -34,37 +34,33 @@ class HomeZhannerView extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Hero(
-                tag: Constants.imageFiller(
-                    controller.zhannerList[index].pics ?? ""),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.r),
-                  child: SizedBox(
-                    width: width * 0.3,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl: Constants.imageFiller(
-                              controller.zhannerList[index].pics ?? ""),
-                          fit: BoxFit.cover,
-                          color: Colors.black.withOpacity(0.5),
-                          colorBlendMode: BlendMode.darken,
-                          errorWidget: (context, url, error) => Container(
-                            color: Theme.of(context).primaryColor,
-                          ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: SizedBox(
+                  width: width * 0.3,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: Constants.imageFiller(
+                            controller.zhannerList[index].pics ?? ""),
+                        fit: BoxFit.cover,
+                        color: Colors.black.withOpacity(0.5),
+                        colorBlendMode: BlendMode.darken,
+                        errorWidget: (context, url, error) => Container(
+                          color: Theme.of(context).primaryColor,
                         ),
-                        Center(
-                          child: MyText(
-                            txt: controller.zhannerList[index].tag ?? "",
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            maxLine: 2,
-                            textAlign: TextAlign.center,
-                          ),
+                      ),
+                      Center(
+                        child: MyText(
+                          txt: controller.zhannerList[index].tag ?? "",
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          maxLine: 2,
+                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

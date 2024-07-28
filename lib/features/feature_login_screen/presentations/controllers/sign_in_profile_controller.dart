@@ -42,6 +42,7 @@ class SignInProfileController extends GetxController {
       GetStorageData.writeData("time_out_premium", model.timeOutPremium);
       GetStorageData.writeData("download_max", model.downloadMax);
       GetStorageData.writeData("user_auth", signInParams.email);
+      GetStorageData.writeData("user_logined", true);
 
       if (singInPage) {
         Get.back(result: model);

@@ -100,17 +100,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   photoUrl: Utils().getProfileData().pic ?? '',
                                 ));
                           },
-                          child: Hero(
-                            tag: Utils().getProfileData().pic ?? "",
-                            child: CircleAvatar(
-                              radius: 30,
-                              backgroundImage: Utils().getProfileData().pic !=
-                                      null
-                                  ? NetworkImage(
-                                      Utils().getProfileData().pic ?? "")
-                                  : const AssetImage('assets/images/icon.png')
-                                      as ImageProvider,
-                            ),
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundImage:
+                                Utils().getProfileData().pic != null
+                                    ? NetworkImage(
+                                        Utils().getProfileData().pic ?? "")
+                                    : const AssetImage('assets/images/icon.png')
+                                        as ImageProvider,
                           ),
                         ),
                         const Gap(10),

@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/features/feature_home/data/model/cinimo_config_model.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_drawer.dart';
+import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -129,11 +130,18 @@ playerIcons() async {
   final downloadController = Get.find<DownloadPageController>();
 
   // if ((GetStorageData.getData("logined") ?? false) == false) {
+
   // // check from persian country or not
-  // if ((GetStorageData.getData("user_logined") ?? false) == false) {
-  //   Get.to(() => LoginScreen());
-  //   return;
-  // }
+
+  try {
+    if ((GetStorageData.getData("logined") ?? false) == false) {
+      Get.to(() => LoginScreen());
+      return;
+    }
+  } catch (e) {
+    Get.to(() => LoginScreen());
+    return;
+  }
   if (GetStorageData.getData("user_status") != "premium" &&
       pageController.videoDetail?.videoType?.type == VideoTypeEnum.premium) {
     await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
@@ -143,8 +151,6 @@ playerIcons() async {
     });
     return;
   }
-  // }
-
   if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
       (config.config?.freeUserPaidVideo ?? false) == true) {
     try {

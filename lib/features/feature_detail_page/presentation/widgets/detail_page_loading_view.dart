@@ -37,15 +37,11 @@ class DetailPageLoadingView extends StatelessWidget {
                   Get.to(() =>
                       PhotoViewer(photoUrl: Constants.imageFiller(img ?? "")));
                 },
-                child: Hero(
-                  tag:
-                      Constants.imageFiller(img ?? "") + UniqueKey().toString(),
-                  child: CachedNetworkImage(
-                    imageUrl: Constants.imageFiller(img ?? ""),
-                    fit: BoxFit.cover,
-                    height: hieght * 0.6,
-                    width: width,
-                  ),
+                child: CachedNetworkImage(
+                  imageUrl: Constants.imageFiller(img ?? ""),
+                  fit: BoxFit.cover,
+                  height: hieght * 0.6,
+                  width: width,
                 ),
               ),
             LoadingAnimationWidget.flickr(

@@ -13,18 +13,13 @@ class MoviesSeriasDataSource {
       "showType": showType,
       "q": q,
       "user_tag": GetStorageData.getData("user_tag"),
+      'support_area':
+          (GetStorageData.getData("logined") ?? false) ? 'true' : 'false'
     });
     return res;
   }
 
   Future<Response> getMovies(int page, String showType, String q) async {
-    print({
-      "typePage": "video",
-      "page": page,
-      "showType": showType,
-      "q": q,
-      "user_tag": GetStorageData.getData("user_tag"),
-    });
     Response res = await dio
         .post('${Constants.baseUrl()}${pageUrl}home.php', queryParameters: {
       "typePage": "video",
@@ -32,6 +27,8 @@ class MoviesSeriasDataSource {
       "showType": showType,
       "q": q,
       "user_tag": GetStorageData.getData("user_tag"),
+      'support_area':
+          (GetStorageData.getData("logined") ?? false) ? 'true' : 'false'
     });
     return res;
   }

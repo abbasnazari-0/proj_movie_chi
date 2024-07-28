@@ -8,7 +8,6 @@ import 'package:movie_chi/features/feature_zhanner/presentation/controllers/zhan
 import 'package:movie_chi/features/feature_zhanner/presentation/pages/zhanner_detail.dart';
 import 'package:movie_chi/locator.dart';
 
-import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/page_status.dart';
 
 class ZhannerList extends StatelessWidget {
@@ -40,55 +39,51 @@ class ZhannerList extends StatelessWidget {
                     Get.to(() =>
                         ZhannerDetail(zhanner: controller.zhannerList[index]));
                   },
-                  child: Hero(
-                    tag: Constants.imageFiller(
-                        controller.zhannerList[index].pics ?? ""),
-                    child: Material(
-                      child: Container(
-                        width: double.infinity,
-                        height: 80.h,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              controller.zhannerList[index].pics ?? '',
-                            ),
-                            fit: BoxFit.cover,
+                  child: Material(
+                    child: Container(
+                      width: double.infinity,
+                      height: 80.h,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(
+                            controller.zhannerList[index].pics ?? '',
                           ),
+                          fit: BoxFit.cover,
                         ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.7),
-                                  ],
-                                  stops: const [0.0, 0.5],
-                                  tileMode: TileMode.clamp,
-                                  transform: const GradientRotation(1),
-                                ),
+                      ),
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.7),
+                                ],
+                                stops: const [0.0, 0.5],
+                                tileMode: TileMode.clamp,
+                                transform: const GradientRotation(1),
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 60.h),
-                                child: MyText(
-                                  txt: controller.zhannerList[index].tag!,
-                                  color: Colors.white,
-                                  size: 20.sp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLine: 1,
-                                ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 60.h),
+                              child: MyText(
+                                txt: controller.zhannerList[index].tag!,
+                                color: Colors.white,
+                                size: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis,
+                                maxLine: 1,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

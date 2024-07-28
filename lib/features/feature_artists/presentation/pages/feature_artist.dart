@@ -91,31 +91,28 @@ class _ArtistPageState extends State<ArtistPage> {
           centerTitle: true,
           titleSpacing: 0,
           flexibleSpace: FlexibleSpaceBar(
-            background: Hero(
-              tag: widget.page,
-              child: Material(
-                color: Colors.transparent,
+            background: Material(
+              color: Colors.transparent,
+              child: SizedBox(
+                width: 80.w,
                 child: SizedBox(
-                  width: 80.w,
-                  child: SizedBox(
-                    width: 60.w,
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => PhotoViewer(
-                              photoUrl: Constants.imageFiller(
-                                  widget.artistItemData.artistPic ?? ""),
-                              heroTag: widget.page,
-                            ));
-                      },
-                      child: CachedNetworkImage(
-                        imageUrl: Constants.imageFiller(
-                            widget.artistItemData.artistPic ?? ""),
-                        fit: BoxFit.cover,
-                        color: Colors.black.withAlpha(100),
-                        colorBlendMode: BlendMode.darken,
-                        placeholder: (context, url) => Container(
-                          color: Colors.grey[300],
-                        ),
+                  width: 60.w,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => PhotoViewer(
+                            photoUrl: Constants.imageFiller(
+                                widget.artistItemData.artistPic ?? ""),
+                            heroTag: widget.page,
+                          ));
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: Constants.imageFiller(
+                          widget.artistItemData.artistPic ?? ""),
+                      fit: BoxFit.cover,
+                      color: Colors.black.withAlpha(100),
+                      colorBlendMode: BlendMode.darken,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[300],
                       ),
                     ),
                   ),

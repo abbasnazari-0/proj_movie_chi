@@ -76,23 +76,17 @@ class HomeGalleryVideos extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  child: Hero(
-                                    tag: Constants.imageFiller(
-                                            i.thumbnail1x ?? "") +
-                                        UniqueKey().toString(),
-                                    child: CachedNetworkImage(
-                                      imageUrl: i.thumbnail1x ?? "",
-                                      color:
-                                          const Color.fromARGB(66, 27, 18, 18),
-                                      colorBlendMode: BlendMode.darken,
-                                      fit: BoxFit.cover,
-                                      httpHeaders: const {
-                                        'Referer': 'https://www.cinimo.ir/'
-                                      },
-                                      // handle error
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    ),
+                                  child: CachedNetworkImage(
+                                    imageUrl: i.thumbnail1x ?? "",
+                                    color: const Color.fromARGB(66, 27, 18, 18),
+                                    colorBlendMode: BlendMode.darken,
+                                    fit: BoxFit.cover,
+                                    httpHeaders: const {
+                                      'Referer': 'https://www.cinimo.ir/'
+                                    },
+                                    // handle error
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
                               ),
