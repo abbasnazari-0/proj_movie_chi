@@ -468,6 +468,9 @@ class HomePageController extends GetxController {
       case 4:
         getHomeReels();
         break;
+      case 3:
+        getHomeReels();
+        break;
       // case 3:
       //   getHomeReels();
       // break;

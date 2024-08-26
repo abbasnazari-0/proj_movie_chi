@@ -117,8 +117,7 @@ class LoginScreen extends StatelessWidget {
                       child: Pinput(
                         length: 6,
                         closeKeyboardWhenCompleted: true,
-                        androidSmsAutofillMethod:
-                            AndroidSmsAutofillMethod.smsRetrieverApi,
+
                         errorText: "ddd",
                         controller: codecontroller,
                         defaultPinTheme: defaultPinTheme,

@@ -15,7 +15,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   screen_brightness_windows
   screen_retriever
   share_plus
-  smart_auth
   url_launcher_windows
   window_manager
 )

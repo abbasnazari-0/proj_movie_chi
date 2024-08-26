@@ -54,7 +54,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         deviceName = androidInfo.model;
       } else if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        deviceName = iosInfo.utsname.machine!;
+        deviceName = iosInfo.utsname.machine;
       }
     }
     GetStorageData.writeData("user_tag", generateRandomString(10));
