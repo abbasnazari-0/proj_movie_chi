@@ -16,65 +16,24 @@ class _SearchFilterParentState extends State<SearchFilterParent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: SizedBox(
             height: 50,
             child: Row(
-              children: [
-                // SearchFilterWidget(
-                //     child: DropDownFilter(
-                //   list: cont.typeList,
-                //   title: "نوع",
-                //   onSelected: (value) {
-                //     if (value == null) return;
-                //     cont.typeSelected = value;
-                //   },
-                // )),
-                // const SizedBox(width: 10),
-                // SearchFilterWidget(
-                //     child: DropDownFilter(
-                //   list: cont.zhannerList,
-                //   title: "ژانر",
-                //   onSelected: (value) {
-                //     print(value);
-                //     // if (value == null) return;
-                //     cont.zhannerSelected = value!;
-                //   },
-                // )),
-              ],
+              children: [],
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: SizedBox(
             height: 50,
             child: Row(
-              children: [
-                // SearchFilterWidget(
-                //     child: DropDownFilter(
-                //   list: cont.imdbItems,
-                //   title: "امتیاز IMDB",
-                //   onSelected: (value) {
-                //     // if (value == null) return;
-                //     cont.imdbSelected = value!;
-                //   },
-                // )),
-                // const SizedBox(width: 10),
-                // SearchFilterWidget(
-                //     child: DropDownFilter(
-                //   list: cont.yearItems,
-                //   title: "سال ساخت",
-                //   onSelected: (value) {
-                //     if (value == null) return;
-                //     cont.yearSelected = value;
-                //   },
-                // ))
-              ],
+              children: [],
             ),
           ),
         ),

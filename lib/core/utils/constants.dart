@@ -23,7 +23,7 @@ import '../widgets/mytext.dart';
 
 String bbaseUrl = dotenv.env['CONST_URL'] ?? "";
 String bfileBaseUrl = "https://files.cinimo.ir";
-String pageUrl = "/v8/cinimo/";
+String pageUrl = "/v9/cinimo/";
 
 String packageName = "com.arianadeveloper.movie.chi";
 

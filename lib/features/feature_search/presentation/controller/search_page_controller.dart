@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:movie_chi/core/params/search_params.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
+import 'package:movie_chi/features/feature_search/data/models/search_model.dart';
 import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
@@ -12,7 +13,6 @@ import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/features/feature_search/domain/usecases/search_usecase.dart';
 
 import '../../../feature_home/presentation/controller/bottom_app_bar_controller.dart';
-import '../../../../core/models/search_video_model.dart';
 
 class SearchPageController extends GetxController {
   final SearchUseCase searchUseCase;
@@ -24,7 +24,8 @@ class SearchPageController extends GetxController {
       Get.put<BottomAppBarController>(BottomAppBarController());
   SearchPageController(this.searchUseCase);
 
-  List<SearchVideo> searchData = [];
+  // List<SearchVideo> searchData = [];
+  SearchModel searchData = SearchModel();
   bool searchFouceMode = false;
   List suggestionList = [];
   SuggestionsBoxController suggestionsBoxController =
@@ -74,10 +75,11 @@ class SearchPageController extends GetxController {
   }
 
   onstartLoadSearch(bool withremoving,
-      {withChangePage = true, RefreshController? refreshController}) async {
+      {withChangePage = true,
+      RefreshController? refreshController,
+      bool? isDebouncer}) async {
     final searchBarCont =
         Get.put<HomeSearchBarController>(HomeSearchBarController());
-
     // if (controller.text.isEmpty) {
     //   searchPageStatus = PageStatus.empty;
     //   update();
@@ -88,9 +90,9 @@ class SearchPageController extends GetxController {
       // bottomAppBarController.chnageItemSelected(2.obs);
       // bottomAppBarController.chnagePageViewSelected(2.obs);
     }
-
     if (withremoving) {
-      searchData.clear();
+      // searchData.clear();
+      searchData.data?.clear();
       page = 1.obs;
     } else {
       page++;
@@ -99,7 +101,6 @@ class SearchPageController extends GetxController {
       searchPageStatus = PageStatus.loading;
     }
     update();
-
     DataState dataState = await searchUseCase.call(SearchParamsQuery(
         query: controller.text,
         count: page.value,
@@ -107,18 +108,16 @@ class SearchPageController extends GetxController {
         type: searchBarCont.typeSelected,
         year: searchBarCont.yearSelected,
         zhanner: searchBarCont.zhannerSelected,
-        advancedQuery: searchBarCont.advancedFilter));
-
+        advancedQuery: searchBarCont.advancedFilter,
+        isDebouncer: isDebouncer));
     if (dataState is DataSuccess) {
       if (withremoving) {
         searchData = dataState.data;
       } else {
-        searchData.addAll(dataState.data);
+        searchData.data?.addAll(dataState.data.data!);
       }
       refreshController?.loadComplete();
-
       searchPageStatus = PageStatus.success;
-
       update();
     }
     if (dataState is DataFailed) {

@@ -167,7 +167,7 @@ class PlanItem extends StatelessWidget {
       overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: () {
         mlaunchUrl(
-            "${dotenv.env['CONST_URL'] ?? ""}/v8/payment/request.php?type=${controller.plan.data![index].id}&token=${GetStorageData.getData("user_tag")}");
+            "${dotenv.env['CONST_URL'] ?? ""}/v9/payment/request.php?type=${controller.plan.data![index].id}&token=${GetStorageData.getData("user_tag")}");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

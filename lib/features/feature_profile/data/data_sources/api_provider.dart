@@ -11,7 +11,7 @@ class ProfileApiProvider {
   Future<Response> getProfile() async {
     var baseUrl = dotenv.env['CONST_URL'];
     return await dio
-        .get("$baseUrl/v8/cinimo/user_managing.php", queryParameters: {
+        .get("$baseUrl/v9/cinimo/user_managing.php", queryParameters: {
       "type": "get_profile",
       "user_token": GetStorageData.getData("user_tag") ?? "",
     });
@@ -20,7 +20,7 @@ class ProfileApiProvider {
   Future<Response> updateProfile(ProfileUpdator params) async {
     var baseUrl = dotenv.env['CONST_URL'];
     return await dio.post(
-      "$baseUrl/v8/cinimo/user_managing.php",
+      "$baseUrl/v9/cinimo/user_managing.php",
       queryParameters: {
         'type': 'update_profile',
         'first_name': params.firstName,

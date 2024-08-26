@@ -56,31 +56,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //   child: const Icon(Icons.arrow_forward_ios),
           // ),
           body: SafeArea(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                const Gap(10),
-                Image.asset(
-                  'assets/images/icon.png',
-                  height: 40,
-                ),
-                const Gap(10),
-                const MyText(
-                  txt: 'پروفایل',
-                  size: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                const Spacer(),
-                IconButton(
-                    onPressed: () => Get.back(), icon: const Icon(Icons.close)),
-                const Gap(10),
-              ],
-            ),
-            const Gap(10),
-            Expanded(
-              child: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  const Gap(10),
+                  Image.asset(
+                    'assets/images/icon.png',
+                    height: 40,
+                  ),
+                  const Gap(10),
+                  const MyText(
+                    txt: 'پروفایل',
+                    size: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                      onPressed: () => Get.back(),
+                      icon: const Icon(Icons.close)),
+                  const Gap(10),
+                ],
+              ),
+              const Gap(10),
+              Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -225,12 +226,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ),
-                      )
+                      ),
+                    const Text("version: 1.3.74-release"),
+                    const Gap(10)
                   ],
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       )),
     );

@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:dio/dio.dart';
 import 'package:movie_chi/core/params/search_params.dart';
 import 'package:movie_chi/core/utils/constants.dart';
@@ -15,7 +16,8 @@ class SearchDataGetter {
       "imdb": searchParamsQuery.imdb,
       "year": searchParamsQuery.year,
       "version": await Constants.versionApplication(),
-      "advancedQuery": searchParamsQuery.advancedQuery
+      "advancedQuery": searchParamsQuery.advancedQuery,
+      // "isBouncerRequested": searchParamsQuery.isDebouncer,
     });
     return res;
   }

@@ -6,13 +6,16 @@ class SearchParamsQuery {
   final String? imdb;
   final String? year;
   final bool? advancedQuery;
+  final bool? isDebouncer;
 
-  SearchParamsQuery(
-      {required this.query,
-      required this.count,
-      this.type,
-      this.zhanner,
-      this.imdb,
-      this.year,
-      this.advancedQuery});
+  SearchParamsQuery({
+    required this.query,
+    required this.count,
+    this.type,
+    this.zhanner,
+    this.imdb,
+    this.year,
+    this.advancedQuery,
+    this.isDebouncer,
+  });
 }

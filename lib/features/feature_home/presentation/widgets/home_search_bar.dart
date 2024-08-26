@@ -21,9 +21,9 @@ class HomeSearchBar extends StatefulWidget {
 class _HomeSearchBarState extends State<HomeSearchBar> {
   final searchController = Get.find<SearchPageController>();
 
-  onChange() {
+  onChange(bool isDebouncer) {
     // if (searchController.controller.text.isEmpty) return;
-    searchController.onstartLoadSearch(true);
+    searchController.onstartLoadSearch(true, isDebouncer: isDebouncer);
   }
 
   final Debouncer debouncer =
@@ -51,7 +51,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
             List history = GetStorageData.getData("hisstory") ?? [];
             history.add(searchController.controller.text);
             GetStorageData.writeData("hisstory", history);
-            onChange();
+            onChange(false);
           },
           onTap: () {
             searchController.onSearchBoxFocusing(true);
@@ -89,7 +89,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
                 searchController.suggestionsBoxController.suggestionsBox
                     ?.open();
               }
-              onChange();
+              onChange(true);
             });
             // onChange();
           },
@@ -104,7 +104,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
                         onPressed: () {
                           // clear search Box
                           controller.controller.text = "";
-                          onChange();
+                          onChange(false);
                         },
                       )
                     : const SizedBox(),
@@ -134,7 +134,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
             }
           }
           searchController.controller.setText(suggestion.toString());
-          onChange();
+          onChange(false);
         },
         noItemsFoundBuilder: (context) {
           return const SizedBox();

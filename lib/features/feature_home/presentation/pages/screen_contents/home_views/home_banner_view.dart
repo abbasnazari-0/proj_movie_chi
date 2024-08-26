@@ -38,7 +38,7 @@ class HomeBannerView extends StatelessWidget {
           width: double.infinity,
           // height: Get.size.width * 0.6,
           margin: const EdgeInsets.only(bottom: 5),
-          color: Colors.transparent,
+          color: const Color(0xFF161718),
           child: InkWell(
             onTap: () {
               Constants.openHomeItem(homeCatagoryItem, 0,
@@ -51,7 +51,7 @@ class HomeBannerView extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: MyText(
                     txt: homeCatagoryItem.data?.first.title ?? "",
-                    color: Colors.white,
+                    color: const Color.fromRGBO(255, 255, 255, 1),
                     // size: 10,
                   ),
                 ),

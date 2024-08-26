@@ -32,6 +32,7 @@ class SearchItem extends StatelessWidget {
   final SearchVideo item;
   final bool chainrouter;
   final Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -70,12 +71,8 @@ class SearchItem extends StatelessWidget {
                             imageUrl: Constants.imageFiller(
                                 item.thumbnail1x.toString()),
 
-                            // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
-                            // handle error
-                            // height: 250,
                             filterQuality: FilterQuality.low,
                             fit: BoxFit.cover,
-
                             // color: Colors.black.withOpacity(0.2),
                             placeholder: (context, url) => Center(
                               child: Shimmer.fromColors(
@@ -88,8 +85,6 @@ class SearchItem extends StatelessWidget {
                                 ),
                               ),
                             ),
-
-                            // handle error
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),
@@ -110,8 +105,6 @@ class SearchItem extends StatelessWidget {
                           color: Colors.black.withAlpha(100),
                           imageUrl: Constants.imageFiller(
                               item.thumbnail1x.toString()),
-
-                          // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
                           // handle error
                           height: 250,
                           filterQuality: FilterQuality.low,
@@ -147,10 +140,6 @@ class SearchItem extends StatelessWidget {
                           color: Colors.black.withAlpha(50),
                           imageUrl: Constants.imageFiller(
                               item.thumbnail1x.toString()),
-
-                          // httpHeaders: const {'Referer': 'https://www.cinimo.ir/'},
-                          // handle error
-                          // height: 200,
                           filterQuality: FilterQuality.low,
                           fit: BoxFit.cover,
                           // color: Colors.black.withOpacity(0.2),
@@ -165,43 +154,12 @@ class SearchItem extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          // handle error
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         ),
                       ),
                     ),
-                  // Positioned.fill(
-                  //   child: ClipPath(
-                  //     clipper: MyCustomClipper(),
-                  //     child: Container(
-                  //       color: Colors.red,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: [
-                  //     Container(
-                  //       height: 40.h,
-                  //       alignment: Alignment.center,
-                  //       color: Colors.black.withAlpha(150),
-                  //       child: MyText(
-                  //         txt: item.title.toString().replaceAll("فیلم", ""),
-                  //         color: Colors.white,
-                  //         maxLine: 2,
-                  //         fontWeight: FontWeight.bold,
-                  //         size: 16.0,
-                  //         textAlign: TextAlign.center,
-                  //         overflow: TextOverflow.ellipsis,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   Positioned(
-                    // top: (item.type != "video") ? 18.h : 10.h,
-                    // left: 0.w,
                     right: 0,
                     height: 25.h,
                     bottom: 0,
@@ -221,8 +179,6 @@ class SearchItem extends StatelessWidget {
                 txt: item.title.toString().replaceAll("فیلم", ""),
                 color: Colors.white,
                 maxLine: 2,
-                // fontWeight: FontWeight.bold,
-                // size: 16.0,
                 textAlign: TextAlign.center,
               ),
             ),

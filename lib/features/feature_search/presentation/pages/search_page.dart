@@ -15,7 +15,6 @@ class SearchPage extends StatefulWidget {
   const SearchPage({
     Key? key,
   }) : super(key: key);
-
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
@@ -23,20 +22,15 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   List data = [];
   bool isloading = true;
-
   var searchController = Get.find<SearchPageController>();
-
   void onloadig() {
     // isloading = !isloading;
     // searchController.loadingChanger(!searchController.searchLoader.value);
   }
-
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
   var lastOneDetected = false;
-
   int itemCount = 25;
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -51,7 +45,7 @@ class _SearchPageState extends State<SearchPage> {
                   if (controller.searchPageStatus == PageStatus.empty) {
                     return const EmptyPage();
                   }
-                  if (controller.searchData.isEmpty &&
+                  if (controller.searchData.data!.isEmpty &&
                       controller.searchPageStatus == PageStatus.error) {
                     return const SearchEmptyScreen();
                   } else {
@@ -75,9 +69,10 @@ class _SearchPageState extends State<SearchPage> {
                                           MediaQuery.of(context).size.height *
                                               0.27,
                                       crossAxisCount: 3),
-                              itemCount: controller.searchData.length,
+                              itemCount: controller.searchData.data?.length,
                               itemBuilder: (BuildContext context, int index) {
-                                SearchVideo item = controller.searchData[index];
+                                SearchVideo item =
+                                    controller.searchData.data![index];
                                 return SearchItem(item: item);
                               },
                             ),
