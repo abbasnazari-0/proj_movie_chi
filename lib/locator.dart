@@ -63,13 +63,6 @@ import 'features/feature_video_player/domain/repositories/video_player_repositor
 
 GetIt locator = GetIt.instance;
 
-locatConfigSecoundPage() {
-  // locator.registerSingleton<DownloadPageController>(DownloadPageController());
-
-  // locator.registerSingleton<AdController>(AdController());
-  // Get.put(AdController());
-}
-
 setup() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -148,47 +141,8 @@ setup() async {
       NewsRepostiryImpl(apiProvider: locator()));
   locator.registerSingleton<NewsUseCase>(NewsUseCase(repository: locator()));
 
-  locatConfigSecoundPage();
-
   locator.registerSingleton(ProfileApiProvider());
   locator
       .registerSingleton<ProfileRepository>(ProfileRepositoryImpl(locator()));
   locator.registerSingleton<ProfileUsecase>(ProfileUsecase(locator()));
-/*
-  //Init Firebase Remot Config
-  locator
-      .registerSingleton<FirebaseRemoteConfig>(FirebaseRemoteConfig.instance);
-
-  await locator<FirebaseRemoteConfig>().setConfigSettings(RemoteConfigSettings(
-    fetchTimeout: const Duration(minutes: 1),
-    minimumFetchInterval: const Duration(minutes: 5),
-  ));
-
-  await locator<FirebaseRemoteConfig>().fetchAndActivate();
-
-  //Init Firebase By Checking platforms
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  } else {
-    if (Platform.isAndroid || Platform.isIOS) {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      if (Platform.isAndroid) {
-        //If is Android
-        TapsellPlus.instance.initialize(
-            'cfsmnptkpgccjpccojhlakgkimajspklnmrtrjtesoqkcaammqfqeffththclelgajnpfq');
-      } else {
-        //If is ios
-      }
-    } else if (Platform.isFuchsia) {
-    } else if (Platform.isLinux) {
-    } else if (Platform.isMacOS) {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-    } else if (Platform.isWindows) {}
-  }*/
 }

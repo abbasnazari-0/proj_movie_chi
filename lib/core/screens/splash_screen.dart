@@ -116,7 +116,6 @@ class _SplashState extends State<Splash> {
     }
 
     await dbInitlizer();
-    await locatConfigSecoundPage();
 
     if (await Constants.pingWithPort(dotenv.env['CONST_URL'] ?? "", "443") ==
         -1) {
