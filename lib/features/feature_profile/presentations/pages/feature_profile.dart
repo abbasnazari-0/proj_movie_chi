@@ -96,10 +96,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const Gap(10),
                         InkWell(
                           onTap: () {
-                            Get.to(() => PhotoViewer(
-                                  heroTag: Utils().getProfileData().pic ?? "",
-                                  photoUrl: Utils().getProfileData().pic ?? '',
-                                ));
+                            Get.toNamed(
+                              PhotoViewer.routeName,
+                              arguments: {
+                                'heroTag': Utils().getProfileData().pic ?? "",
+                                'photoUrl': Utils().getProfileData().pic ?? ""
+                              },
+                            );
                           },
                           child: CircleAvatar(
                             radius: 30,

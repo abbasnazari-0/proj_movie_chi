@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -46,46 +45,46 @@ class VideoReporter {
             ),
             color: Theme.of(context).primaryColor,
           ),
-          padding: EdgeInsets.all(10.sp),
+          padding: const EdgeInsets.all(10),
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 10.sp),
-                MyText(
+                const SizedBox(height: 10),
+                const MyText(
                   txt: "گزاش خطا",
                   fontWeight: FontWeight.bold,
-                  size: 18.sp,
+                  size: 18,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10.sp),
-                MyText(
+                const SizedBox(height: 10),
+                const MyText(
                   txt:
                       "با گزاش دادن مشکلات و خطا های فیلم ما را مطلع کنید\n تا از آن با خبر شویم تا این مشکل را بزودی حل کنیم",
                   fontWeight: FontWeight.bold,
-                  size: 12.sp,
+                  size: 12,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10.sp),
+                const SizedBox(height: 10),
                 TextFormField(
                   controller: _textEditingController,
                   scrollPhysics: const BouncingScrollPhysics(),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.sp),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     hintText: "مشکلی که با آن مواجه شدید را بنویسید...",
                   ),
                   maxLines: 5,
                 ),
-                SizedBox(height: 10.sp),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.error,
                     // full width
-                    minimumSize: Size(double.infinity, 50.sp),
+                    minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.sp),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   onPressed: () {

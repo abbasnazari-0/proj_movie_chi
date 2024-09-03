@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -11,7 +10,6 @@ import 'package:movie_chi/features/feature_login_screen/presentations/screens/fe
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/widgets/play_section_section.dart';
@@ -30,7 +28,6 @@ import '../pages/detial_widgets/header_action_button_groups.dart';
 import '../pages/detial_widgets/imdb.dart';
 import '../pages/detial_widgets/title_a_qualaties.dart';
 import '../pages/detial_widgets/year_a_tags.dart';
-import 'comment_section.dart';
 import 'detail_suggestion_videos.dart';
 import 'film_crew_section.dart';
 import 'gallery_section_listview.dart';
@@ -87,20 +84,25 @@ class DetailPageContent extends StatelessWidget {
                 if (pageController.videoDetail?.thumbnail1x != null)
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => PhotoViewer(
-                          photoUrl: Constants.imageFiller(
-                              pageController.videoDetail!.thumbnail1x!)));
+                      Get.toNamed(PhotoViewer.routeName, arguments: {
+                        "heroTag": heroTag ?? pageController.videoDetail!.tag!,
+                        "photoUrl": Constants.imageFiller(
+                            pageController.videoDetail!.thumbnail1x!)
+                      });
                     },
-                    child: SizedBox(
-                      height: hieght * 0.6,
-                      width: width,
-                      child: CachedNetworkImage(
-                        imageUrl: Constants.imageFiller(
-                          pageController.videoDetail!.thumbnail1x!,
+                    child: Hero(
+                      tag: heroTag ?? pageController.videoDetail!.tag!,
+                      child: SizedBox(
+                        height: hieght * 0.6,
+                        width: width,
+                        child: CachedNetworkImage(
+                          imageUrl: Constants.imageFiller(
+                            pageController.videoDetail!.thumbnail1x!,
+                          ),
+                          color: Colors.black.withOpacity(0.4),
+                          colorBlendMode: BlendMode.darken,
+                          fit: BoxFit.cover,
                         ),
-                        color: Colors.black.withOpacity(0.4),
-                        colorBlendMode: BlendMode.darken,
-                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -118,61 +120,53 @@ class DetailPageContent extends StatelessWidget {
             ),
             const SizedBox(height: 4.0),
 
-            SizedBox(height: 10.h),
+            const Gap(10),
             // Title Section
-            SizedBox(height: 1.h),
+            const Gap(1),
             TitleAQualities(
                 width: width, vid: controller.videoDetail ?? Video()),
-            SizedBox(height: 5.h),
+            const Gap(5),
 
             YearATags(width: width, vid: controller.videoDetail ?? Video()),
-            SizedBox(height: 5.h),
-
+            const Gap(10),
+            const Divider(
+              color: Colors.white10,
+            ),
+            const Gap(10),
             SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
                   ImdbSection(
                       width: width, vid: controller.videoDetail ?? Video()),
-                  const VerticalDivider(
-                    color: Colors.white,
-                    width: 10,
-                    thickness: 10,
-                  ),
+                  const Gap(10),
                   if ((pageController.videoDetail?.dubble ?? "0") == "1")
-                    ((pageController.videoDetail?.dubble ?? "0") == "1")
-                        ? const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(
-                                Iconsax.microphone,
-                                color: Colors.amber,
-                              ),
-                              MyText(txt: "دوبله فارسی", color: Colors.amber)
-                            ],
-                          )
-                        : Container(),
-                  const VerticalDivider(
-                    color: Colors.white,
-                    width: 10,
-                    thickness: 10,
-                  ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(
+                          Iconsax.microphone,
+                          color: Colors.amber,
+                        ),
+                        MyText(txt: "دوبله فارسی", color: Colors.amber)
+                      ],
+                    ),
+                  const Gap(10),
                   if ((pageController.videoDetail?.subtitle ?? "0") == "1")
-                    ((pageController.videoDetail?.subtitle ?? "0") == "1")
-                        ? const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(Iconsax.subtitle),
-                              MyText(
-                                txt: "زیرنویس فارسی",
-                                color: Colors.white,
-                              )
-                            ],
-                          )
-                        : Container(),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Iconsax.subtitle),
+                        MyText(
+                          txt: "زیرنویس فارسی",
+                          color: Colors.white,
+                        )
+                      ],
+                    )
                 ],
               ),
             ),
-            SizedBox(height: 20.h),
+            const Gap(20),
             HeaderActionButtonGroup(),
 
             // SizedBox(height: 10.h),
@@ -200,14 +194,14 @@ class DetailPageContent extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Align(
+                              const Align(
                                 alignment: Alignment.center,
                                 child: MyText(
                                   txt: "جزییات فیلم",
                                   // color: Theme.of(context).colorScheme.secondary,
                                   fontWeight: FontWeight.bold,
                                   textAlign: TextAlign.center,
-                                  size: 16.sp,
+                                  size: 16,
                                 ),
                               ),
                               Align(
@@ -219,7 +213,7 @@ class DetailPageContent extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   // length: 20,
                                   maxLine: 2,
-                                  size: 13.sp,
+                                  size: 13,
                                 ),
                               ),
                               // const Spacer(),
@@ -231,7 +225,7 @@ class DetailPageContent extends StatelessWidget {
                                       Theme.of(context).colorScheme.secondary,
                                   fontWeight: FontWeight.bold,
                                   textAlign: TextAlign.center,
-                                  size: 16.sp,
+                                  size: 16,
                                 ),
                               ),
                             ],
@@ -256,7 +250,7 @@ class DetailPageContent extends StatelessWidget {
 
                           style: TextStyle(
                             color: Theme.of(context).textTheme.bodyLarge!.color,
-                            fontSize: 14.sp,
+                            fontSize: 14,
                           ),
                           // change color of thumb and selection
                           // selectionControls: TextSelectionControls ,
@@ -442,87 +436,87 @@ class DetailPageContent extends StatelessWidget {
 
             // Comment Section
             // if (pageController.commentList.isNotEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: MyText(
-                txt: "نظرات کاربران",
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 10.0),
+            //   child: MyText(
+            //     txt: "نظرات کاربران",
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
 
-            Builder(builder: (cont) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40 / 4),
-                  // color: Theme.of(context).primaryColor,
-                ),
-                width: width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: controller.userCommentController,
-                        decoration: const InputDecoration(
-                          hintText: 'نظر خود را بنویسید',
-                          border: InputBorder.none,
-                        ),
-                        maxLines: null,
-                        onSubmitted: (value) {
-                          controller.submitComment();
-                        },
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        controller.submitComment();
-                      },
-                      icon: controller.commentStatus == PageStatus.loading
-                          ? const CircularProgressIndicator()
-                          : const Icon(
-                              Icons.send,
-                              color: Colors.white,
-                            ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+            // Builder(builder: (cont) {
+            //   return Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(40 / 4),
+            //       // color: Theme.of(context).primaryColor,
+            //     ),
+            //     width: width,
+            //     padding: const EdgeInsets.symmetric(horizontal: 10),
+            //     margin:
+            //         const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            //     child: Row(
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Expanded(
+            //           child: TextField(
+            //             controller: controller.userCommentController,
+            //             decoration: const InputDecoration(
+            //               hintText: 'نظر خود را بنویسید',
+            //               border: InputBorder.none,
+            //             ),
+            //             maxLines: null,
+            //             onSubmitted: (value) {
+            //               controller.submitComment();
+            //             },
+            //           ),
+            //         ),
+            //         IconButton(
+            //           onPressed: () {
+            //             controller.submitComment();
+            //           },
+            //           icon: controller.commentStatus == PageStatus.loading
+            //               ? const CircularProgressIndicator()
+            //               : const Icon(
+            //                   Icons.send,
+            //                   color: Colors.white,
+            //                 ),
+            //         ),
+            //       ],
+            //     ),
+            //   );
+            // }),
 
-            Divider(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+            // Divider(
+            //   color: Theme.of(context).colorScheme.secondary,
+            // ),
 
-            const SizedBox(height: 10),
-            // Comment Section
-            if (pageController.commentList.isNotEmpty)
-              VisibilityDetector(
-                key: const Key("unique key"),
-                onVisibilityChanged: (info) {
-                  if (info.visibleFraction > 0.5) {
-                    pageController.onCommentTap(true);
-                  } else {
-                    pageController.onCommentTap(false);
-                  }
-                },
-                child: CommentSection(
-                    pageController: pageController, width: width),
-              ),
+            // const SizedBox(height: 10),
+            // // Comment Section
+            // if (pageController.commentList.isNotEmpty)
+            //   VisibilityDetector(
+            //     key: const Key("unique key"),
+            //     onVisibilityChanged: (info) {
+            //       if (info.visibleFraction > 0.5) {
+            //         pageController.onCommentTap(true);
+            //       } else {
+            //         pageController.onCommentTap(false);
+            //       }
+            //     },
+            //     child: CommentSection(
+            //         pageController: pageController, width: width),
+            //   ),
 
-            if (pageController.showCommentInput)
-              const SizedBox(
-                height: 50.0,
-              ),
+            // if (pageController.showCommentInput)
+            //   const SizedBox(
+            //     height: 50.0,
+            //   ),
 
-            const SizedBox(
-              height: 10.0,
-            )
+            // const SizedBox(
+            //   height: 10.0,
+            // )
           ],
         ),
         if (controller.videoDetail!.trailerSources!.isNotEmpty)

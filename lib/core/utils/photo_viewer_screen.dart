@@ -1,14 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
 class PhotoViewer extends StatelessWidget {
-  const PhotoViewer({Key? key, required this.photoUrl, this.heroTag})
-      : super(key: key);
+  PhotoViewer({Key? key}) : super(key: key);
 
-  final String photoUrl;
-  final String? heroTag;
+  static const routeName = '/photoViewer';
+
+  final String photoUrl = Get.arguments['photoUrl'];
+  final String? heroTag = Get.arguments['heroTag'];
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +30,19 @@ class PhotoViewer extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         backgroundColor: Colors.black,
-        body: PinchZoom(
-          resetDuration: const Duration(milliseconds: 100),
-          maxScale: 2.5,
-          onZoomStart: () {
-            debugPrint('Start zooming');
-          },
-          onZoomEnd: () {
-            debugPrint('Stop zooming');
-          },
-          child: CachedNetworkImage(imageUrl: photoUrl),
+        body: Hero(
+          tag: heroTag ?? "",
+          child: PinchZoom(
+            resetDuration: const Duration(milliseconds: 100),
+            maxScale: 2.5,
+            onZoomStart: () {
+              debugPrint('Start zooming');
+            },
+            onZoomEnd: () {
+              debugPrint('Stop zooming');
+            },
+            child: CachedNetworkImage(imageUrl: photoUrl),
+          ),
         ),
       ),
     );

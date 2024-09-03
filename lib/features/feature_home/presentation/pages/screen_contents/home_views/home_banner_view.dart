@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -55,12 +54,15 @@ class HomeBannerView extends StatelessWidget {
                     // size: 10,
                   ),
                 ),
-                CachedNetworkImage(
-                  imageUrl: Constants.imageFiller(
-                      getBannerThumbnail(homeCatagoryItem.data!.first)),
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  height: Get.size.width * 0.5,
+                Hero(
+                  tag: 'home-item-${homeCatagoryItem.data!.first.tag}',
+                  child: CachedNetworkImage(
+                    imageUrl: Constants.imageFiller(
+                        getBannerThumbnail(homeCatagoryItem.data!.first)),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    height: Get.size.width * 0.5,
+                  ),
                 ),
               ],
             ),
@@ -70,8 +72,8 @@ class HomeBannerView extends StatelessWidget {
           // top: (item.type != "video") ? 18.h : 10.h,
           // left: 0.w,
           right: 0,
-          height: 25.h,
-          bottom: 15.w,
+          height: 25,
+          bottom: 15,
           child: VideoItemHeader(
             imdb: homeCatagoryItem.data!.first.imdb.toString(),
             isDubbed: homeCatagoryItem.data?.first.dubble != null,

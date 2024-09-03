@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/params/sign_in_profile_screen.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -94,11 +93,11 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
                                 hintText: enabledEdit == true
                                     ? "لطفا نام مورد نظر را وارد کنید"
                                     : ""),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: "vazir",
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.sp),
+                                fontSize: 20),
                           ),
                         ),
                         IconButton(
@@ -121,13 +120,13 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
                         txt: signInParams.email,
                         color: Colors.grey,
                         fontWeight: FontWeight.normal,
-                        size: 14.sp),
+                        size: 14),
                     SizedBox(height: size.height * 0.05),
-                    MyText(
+                    const MyText(
                         txt: "شما با موفقیت وارد شدید",
                         color: Colors.grey,
                         fontWeight: FontWeight.normal,
-                        size: 14.sp),
+                        size: 14),
                     SizedBox(height: size.height * 0.1),
                     EasyButton(
                       type: EasyButtonType.elevated,

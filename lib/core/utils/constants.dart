@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/features/feature_new_notification/presentation/pages/news_page.dart';
@@ -14,7 +13,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../features/feature_detail_page/data/model/video_model.dart';
-import '../../features/feature_detail_page/presentation/pages/detail_page.dart';
 import '../../features/feature_home/data/model/cinimo_config_model.dart';
 import '../../features/feature_home/data/model/home_catagory_model.dart';
 import '../../features/feature_home/presentation/widgets/home_drawer.dart';
@@ -83,7 +81,7 @@ class Constants {
     CinimoConfig config = configDataGetter();
 
     String base = config.config?.baseUrl ?? bbaseUrl;
-    print(base);
+
     return base;
   }
 
@@ -161,14 +159,14 @@ class Constants {
         txt: titl,
         color: Colors.black,
         textAlign: TextAlign.center,
-        size: 15.h,
+        size: 15,
         fontWeight: FontWeight.bold,
       ),
       messageText: MyText(
         txt: txt,
         color: Colors.black,
         textAlign: TextAlign.center,
-        size: 12.h,
+        size: 12,
       ),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Theme.of(Get.context!).colorScheme.secondary,
@@ -325,6 +323,7 @@ class Constants {
         // Get.to(() => DetailPage(vid_tag: homeCatagoryItem.data![index].tag!));
         openVideoDetail(
             picture: pic,
+            hero: 'home-item-${homeCatagoryItem.data![index].tag}',
             vidTag: homeCatagoryItem.data![index].tag!,
             type: homeCatagoryItem.data?[index].type,
             commonTag: homeCatagoryItem.data?[index].commonTag);
@@ -361,11 +360,14 @@ class Constants {
       bool deepLink = false,
       String? hero = "",
       required String picture}) {
-    Get.to(() => DetailPage(
-          vidTag: vidTag,
-          pic: picture,
-          heroTag: hero,
-        ));
+    Get.toNamed('/detail', arguments: {
+      "tag": vidTag,
+      "deepLinking": deepLink,
+      "pic": picture,
+      "heroTag": hero,
+      "commonTag": commonTag,
+      "type": type
+    });
   }
 
   static Color hexToColor(String hexString) {
@@ -395,7 +397,10 @@ class Constants {
 
 bool isLink(String text) {
   RegExp regExp = RegExp(
-      r"^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$");
+    r'^(https?|ftp)://[^\s/$.?#].[^\s]*$',
+    caseSensitive: false,
+    multiLine: false,
+  );
   return regExp.hasMatch(text);
 }
 

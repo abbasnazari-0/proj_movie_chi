@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +26,7 @@ class CountinuisWatching extends StatelessWidget {
     return Container(
       color: Constants.hexToColor(homeCatagoryItem.viewColor!)
           .withAlpha(int.parse(homeCatagoryItem.colorAlpha ?? "255")),
-      height: 250.h,
+      height: 250,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -39,12 +38,12 @@ class CountinuisWatching extends StatelessWidget {
                   txt: homeCatagoryItem.title!,
                   color: Theme.of(context).primaryTextTheme.bodyMedium!.color,
                   fontWeight: FontWeight.bold,
-                  size: 16.sp,
+                  size: 16,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
-            SizedBox(height: 20.h),
+            const Gap(20),
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -87,7 +86,7 @@ class CountinuisWatching extends StatelessWidget {
                             }
                           },
                           child: Container(
-                            height: 150.h,
+                            height: 150,
                             width: width * 0.7,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -110,7 +109,7 @@ class CountinuisWatching extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.black87),
-                                    margin: EdgeInsets.all(3.h),
+                                    margin: EdgeInsets.all(3),
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: MyText(
@@ -123,7 +122,7 @@ class CountinuisWatching extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 10.h),
+                                const Gap(10),
                                 Directionality(
                                   textDirection: TextDirection.ltr,
                                   child: LinearProgressIndicator(
@@ -144,7 +143,7 @@ class CountinuisWatching extends StatelessWidget {
                               .color
                               ?.withAlpha(200),
                           fontWeight: FontWeight.bold,
-                          size: 14.sp,
+                          size: 14,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

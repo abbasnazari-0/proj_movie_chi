@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
@@ -79,13 +78,13 @@ class _ArtistPageState extends State<ArtistPage> {
       }),
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
-          expandedHeight: 300.h,
+          expandedHeight: 300,
           pinned: true,
           title: MyText(
             txt: widget.artistItemData.artistName ?? "",
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            size: 20.sp,
+            size: 20,
             overflow: TextOverflow.ellipsis,
           ),
           centerTitle: true,
@@ -94,16 +93,16 @@ class _ArtistPageState extends State<ArtistPage> {
             background: Material(
               color: Colors.transparent,
               child: SizedBox(
-                width: 80.w,
+                width: 80,
                 child: SizedBox(
-                  width: 60.w,
+                  width: 60,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => PhotoViewer(
-                            photoUrl: Constants.imageFiller(
-                                widget.artistItemData.artistPic ?? ""),
-                            heroTag: widget.page,
-                          ));
+                      Get.toNamed(PhotoViewer.routeName, arguments: {
+                        'photoUrl': Constants.imageFiller(
+                            widget.artistItemData.artistPic ?? ""),
+                        'tag': widget.page
+                      });
                     },
                     child: CachedNetworkImage(
                       imageUrl: Constants.imageFiller(

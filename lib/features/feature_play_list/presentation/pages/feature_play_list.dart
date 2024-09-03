@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
@@ -79,12 +78,12 @@ class _PlayListScreenState extends State<PlayListScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Lottie.asset("assets/lotties/empty.json",
-                      height: 200.h, width: 200.w),
+                      height: 200, width: 200),
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: MyText(
                         txt: "خالی است!",
-                        size: 14.sp,
+                        size: 14,
                         fontWeight: FontWeight.bold,
                         textAlign: TextAlign.center,
                         color: Theme.of(context).textTheme.bodyMedium!.color),
@@ -98,7 +97,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  expandedHeight: widget.backGroundImage != "" ? 200.h : 60.h,
+                  expandedHeight: widget.backGroundImage != "" ? 200 : 60,
                   backgroundColor: Theme.of(context).colorScheme.background,
                   centerTitle: true,
                   // show image in appbar
@@ -116,7 +115,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                   title: widget.backGroundImage == ""
                       ? MyText(
                           txt: widget.title,
-                          size: 14.sp,
+                          size: 14,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.center,
                           color: Theme.of(context).textTheme.bodyMedium!.color,

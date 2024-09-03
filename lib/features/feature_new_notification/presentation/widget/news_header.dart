@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -29,28 +29,28 @@ class NewsHeader extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          SizedBox(width: 0.02.sw),
-          CircleAvatar(
-            radius: 0.03.sh,
-            backgroundImage: const AssetImage(
+          const Gap(1),
+          const CircleAvatar(
+            radius: 0.03,
+            backgroundImage: AssetImage(
               'assets/images/icon.png',
             ),
           ),
-          SizedBox(width: 0.02.sw),
-          Column(
+          const Gap(1),
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MyText(
                 txt: 'اطلاع رسانی مووی چی',
                 color: Colors.white,
-                size: 15.sp,
+                size: 15,
                 fontWeight: FontWeight.bold,
               ),
               MyText(
                 txt: "اطلاع رسانی های مهم در این قسمت قرار میگیرد",
                 color: Colors.white,
-                size: 10.sp,
+                size: 10,
                 fontWeight: FontWeight.w300,
               ),
             ],

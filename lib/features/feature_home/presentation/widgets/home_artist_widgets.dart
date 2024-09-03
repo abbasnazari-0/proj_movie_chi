@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -40,15 +39,15 @@ class ArtistHomeWidget extends StatelessWidget {
                     txt: "هنرمندان",
                     color: Theme.of(context).primaryTextTheme.bodyMedium!.color,
                     fontWeight: FontWeight.bold,
-                    size: 16.sp,
+                    size: 16,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const Spacer(),
-                  MyText(
+                  const MyText(
                       txt: "بیشتر",
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      size: 13.sp),
+                      size: 13),
                   const Icon(Iconsax.arrow_left_2),
                 ],
               ),
@@ -56,7 +55,7 @@ class ArtistHomeWidget extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
-            height: 120.h,
+            height: 120,
             child: SmartRefresher(
               controller: refreshController,
               scrollDirection: Axis.horizontal,
@@ -82,15 +81,15 @@ class ArtistHomeWidget extends StatelessWidget {
                       child: Material(
                         color: Colors.transparent,
                         child: SizedBox(
-                          width: 80.h,
+                          width: 80,
                           // height: 120.h,
                           child: Column(
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(999),
                                 child: SizedBox(
-                                  width: 70.h,
-                                  height: 70.h,
+                                  width: 70,
+                                  height: 70,
                                   child: CachedNetworkImage(
                                     imageUrl: Constants.imageFiller(
                                         artistItemData.artistPic ?? ""),
@@ -114,13 +113,13 @@ class ArtistHomeWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 5.h),
+                              const SizedBox(height: 5),
                               MyText(
                                 txt: artistItemData.artistName ?? "",
                                 fontWeight: FontWeight.bold,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
-                                size: 12.sp,
+                                size: 12,
                                 // maxLine: 2,
                               )
                             ],

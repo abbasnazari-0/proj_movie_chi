@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/core/utils/constants.dart';
-
-import '../../../../core/utils/photo_viewer_screen.dart';
+import 'package:movie_chi/core/utils/photo_viewer_screen.dart';
 
 class DetailPageLoadingView extends StatelessWidget {
   const DetailPageLoadingView({
@@ -34,14 +33,19 @@ class DetailPageLoadingView extends StatelessWidget {
             if (img != null)
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      PhotoViewer(photoUrl: Constants.imageFiller(img ?? "")));
+                  Get.toNamed(PhotoViewer.routeName, arguments: {
+                    'photoUrl': Constants.imageFiller(img ?? ""),
+                    'heroTag': heroTag
+                  });
                 },
-                child: CachedNetworkImage(
-                  imageUrl: Constants.imageFiller(img ?? ""),
-                  fit: BoxFit.cover,
-                  height: hieght * 0.6,
-                  width: width,
+                child: Hero(
+                  tag: heroTag ?? "",
+                  child: CachedNetworkImage(
+                    imageUrl: Constants.imageFiller(img ?? ""),
+                    fit: BoxFit.cover,
+                    height: hieght * 0.6,
+                    width: width,
+                  ),
                 ),
               ),
             LoadingAnimationWidget.flickr(

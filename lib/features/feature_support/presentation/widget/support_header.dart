@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -29,27 +29,27 @@ class SupportHeader extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          SizedBox(width: 0.02.sw),
-          CircleAvatar(
-            radius: 0.03.sh,
-            backgroundImage: const NetworkImage(
+          const Gap(4),
+          const CircleAvatar(
+            radius: 0.03,
+            backgroundImage: NetworkImage(
                 'https://avatars.githubusercontent.com/u/60203108?v=4'),
           ),
-          SizedBox(width: 0.02.sw),
-          Column(
+          const Gap(4),
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MyText(
                 txt: 'پشتیبان مووی چی',
                 color: Colors.white,
-                size: 15.sp,
+                size: 15,
                 fontWeight: FontWeight.bold,
               ),
               MyText(
                 txt: "سرعت پاسخگویی معمولا کمتر از 10 دقیقه است",
                 color: Colors.white,
-                size: 10.sp,
+                size: 10,
                 fontWeight: FontWeight.w300,
               ),
             ],

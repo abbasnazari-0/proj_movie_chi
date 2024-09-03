@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -24,7 +23,7 @@ class ZhannerList extends StatelessWidget {
               leftDotColor: Theme.of(context).colorScheme.secondary,
               rightDotColor:
                   Theme.of(context).colorScheme.background.withAlpha(100),
-              size: 30.w,
+              size: 30,
             );
           }
           if (controller.pageStatus == PageStatus.error) {
@@ -36,13 +35,13 @@ class ZhannerList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Get.to(() =>
-                        ZhannerDetail(zhanner: controller.zhannerList[index]));
+                    Get.toNamed(ZhannerDetail.routeName,
+                        arguments: controller.zhannerList[index]);
                   },
                   child: Material(
                     child: Container(
                       width: double.infinity,
-                      height: 80.h,
+                      height: 80,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         image: DecorationImage(
@@ -72,11 +71,11 @@ class ZhannerList extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
-                              padding: EdgeInsets.only(right: 60.h),
+                              padding: const EdgeInsets.only(right: 60),
                               child: MyText(
                                 txt: controller.zhannerList[index].tag!,
                                 color: Colors.white,
-                                size: 20.sp,
+                                size: 20,
                                 fontWeight: FontWeight.bold,
                                 overflow: TextOverflow.ellipsis,
                                 maxLine: 1,

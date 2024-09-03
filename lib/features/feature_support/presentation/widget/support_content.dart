@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
@@ -23,10 +23,10 @@ class SupportContent extends StatelessWidget {
               child: Column(
                 children: [
                   Lottie.asset("assets/lotties/support.json", repeat: false),
-                  MyText(
+                  const MyText(
                       txt: 'پیامی برای شما وجود ندارد',
                       color: Colors.white,
-                      size: 15.sp,
+                      size: 15,
                       fontWeight: FontWeight.bold),
                 ],
               ),
@@ -44,10 +44,10 @@ class SupportContent extends StatelessWidget {
                 child: Column(
               children: [
                 Lottie.asset("assets/lotties/error.json", repeat: false),
-                MyText(
+                const MyText(
                     txt: 'خطایی رخ داده است',
                     color: Colors.white,
-                    size: 15.sp,
+                    size: 15,
                     fontWeight: FontWeight.bold),
               ],
             ));
@@ -86,12 +86,12 @@ class SupportContent extends StatelessWidget {
                       children: [
                         if (cont.messageClassModel.data?[index].from ==
                             "from_user")
-                          CircleAvatar(
-                            radius: 0.03.sh,
-                            backgroundImage: const NetworkImage(
+                          const CircleAvatar(
+                            radius: 0.03,
+                            backgroundImage: NetworkImage(
                                 'https://avatars.githubusercontent.com/u/01503001?v=4'),
                           ),
-                        SizedBox(width: 0.02.sw),
+                        const SizedBox(width: 0.02),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 20,
@@ -118,13 +118,13 @@ class SupportContent extends StatelessWidget {
                                     .bodyMedium!
                                     .color
                                     ?.withAlpha(200),
-                                size: 8.sp,
+                                size: 8,
                                 fontWeight: FontWeight.w300,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 0.01.sh),
+                              const Gap(10),
                               SizedBox(
-                                width: 0.5.sw,
+                                width: 0.5,
                                 child: MyText(
                                   txt:
                                       cont.messageClassModel.data?[index].msg ??
@@ -133,12 +133,12 @@ class SupportContent extends StatelessWidget {
                                       .textTheme
                                       .bodyMedium
                                       ?.color,
-                                  size: 10.sp,
+                                  size: 10,
                                   fontWeight: FontWeight.bold,
                                   // overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              SizedBox(height: 0.01.sh),
+                              const Gap(4),
                               MyText(
                                 txt: cont.messageClassModel.data?[index].time ??
                                     "",
@@ -147,19 +147,19 @@ class SupportContent extends StatelessWidget {
                                     .bodyMedium!
                                     .color
                                     ?.withAlpha(200),
-                                size: 8.sp,
+                                size: 8,
                                 fontWeight: FontWeight.w300,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(width: 0.02.sw),
+                        const Gap(4),
                         if (cont.messageClassModel.data?[index].from ==
                             "from_admin")
-                          CircleAvatar(
-                            radius: 0.03.sh,
-                            backgroundImage: const NetworkImage(
+                          const CircleAvatar(
+                            radius: 0.33,
+                            backgroundImage: NetworkImage(
                                 'https://avatars.githubusercontent.com/u/60203108?v=4'),
                           ),
                       ],

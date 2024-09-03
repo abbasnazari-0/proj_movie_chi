@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -59,7 +58,7 @@ class _CommenItemState extends State<CommenItem> {
       width: widget.width,
       child: Column(
         children: [
-          SizedBox(height: 10.h),
+          const Gap(10),
           Row(
             children: [
               ClipRRect(
@@ -138,7 +137,7 @@ class _CommenItemState extends State<CommenItem> {
                         textAlign: TextAlign.right,
                       )),
           ),
-          SizedBox(height: 10.h),
+          const Gap(10),
           GetBuilder<CommmentController>(
               init: CommmentController(locator()),
               builder: (controller) {

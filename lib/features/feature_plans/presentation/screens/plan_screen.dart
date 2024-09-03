@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -77,7 +76,7 @@ class _PlanScreenState extends State<PlanScreen> {
                       height: size.height * 0.3),
                   MyText(
                     txt: controller.plan.title ?? "",
-                    size: 20.sp,
+                    size: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     textAlign: TextAlign.center,
@@ -87,7 +86,7 @@ class _PlanScreenState extends State<PlanScreen> {
                         horizontal: 40, vertical: 20),
                     child: MyText(
                       txt: controller.plan.desc ?? "",
-                      size: 14.sp,
+                      size: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade100,
                       textAlign: TextAlign.center,
@@ -125,7 +124,7 @@ class _PlanScreenState extends State<PlanScreen> {
                     child: MyText(
                       txt:
                           "نوت : پس از پرداخت لطفا برنامه را کامل ببنید و باز کنید",
-                      size: 12.sp,
+                      size: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.shade100,
                       textAlign: TextAlign.center,
@@ -195,7 +194,7 @@ class PlanItem extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.h),
+                  borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
                         color: Colors.white.withOpacity(0.15),
@@ -209,7 +208,7 @@ class PlanItem extends StatelessWidget {
                           style: BorderStyle.solid)
                       : null,
                   color: Theme.of(context).colorScheme.background),
-              height: 65.h,
+              height: 65,
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -265,9 +264,9 @@ class PlanItem extends StatelessWidget {
                           txt:
                               "${downloadMaxToString(controller.plan.data![index].planDownMax ?? "80.0")} ${controller.monthly ? "دانلود در سه ماه" : "دانلود در ماه"}",
                         ),
-                        MyText(
+                        const MyText(
                           txt: "تماشای نامحدود فیلم و سریال و انیمیشن",
-                          size: 10.sp,
+                          size: 10,
                           color: Colors.green,
                         ),
                       ],

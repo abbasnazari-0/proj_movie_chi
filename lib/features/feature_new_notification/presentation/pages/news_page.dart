@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
@@ -99,12 +98,12 @@ class NewsPage extends StatelessWidget {
                                 MyText(
                                   txt: itemData['title'],
                                   fontWeight: FontWeight.bold,
-                                  size: 14.sp,
+                                  size: 14,
                                 ),
                                 MyText(
                                   txt: itemData['desc'],
                                   fontWeight: FontWeight.w300,
-                                  size: 11.sp,
+                                  size: 11,
                                 ),
                               ],
                             ),

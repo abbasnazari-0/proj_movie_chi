@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
@@ -16,16 +16,29 @@ import '../../../../core/widgets/mytext.dart';
 import '../../../feature_search/presentation/widgets/search_screen_item.dart';
 
 class ZhannerDetail extends StatelessWidget {
-  const ZhannerDetail({
+  ZhannerDetail({
     Key? key,
-    required this.zhanner,
   }) : super(key: key);
 
-  final Zhanner zhanner;
+  final Zhanner zhanner = Get.arguments[0] as Zhanner;
+  final String heroID = Get.arguments[1] as String;
+  static String routeName = '/zhannerDetail';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 30, right: 20),
+        child: FloatingActionButton(
+          onPressed: () {
+            Get.back();
+          },
+          backgroundColor: Theme.of(context).colorScheme.background,
+          child: Icon(Iconsax.arrow_right_14,
+              color: Theme.of(context).textTheme.bodyMedium!.color),
+        ),
+      ),
       body: GetBuilder<ZhannerDetailController>(
           init: ZhannerDetailController(locator(), zhanner.tag!),
           builder: (controller) {
@@ -45,62 +58,65 @@ class ZhannerDetail extends StatelessWidget {
                     // excludeHeaderSemantics: true,
 
                     flexibleSpace: Material(
-                      child: Container(
-                        width: double.infinity,
-                        height: 250.h,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              zhanner.pics ?? '',
+                      child: Hero(
+                        tag: heroID,
+                        child: Container(
+                          width: double.infinity,
+                          height: 250,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                zhanner.pics ?? '',
+                              ),
+                              fit: BoxFit.cover,
                             ),
-                            fit: BoxFit.cover,
                           ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.7),
-                                  ],
-                                  stops: const [0.0, 0.5],
-                                  tileMode: TileMode.clamp,
-                                  transform: const GradientRotation(1),
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.black.withOpacity(0.7),
+                                    ],
+                                    stops: const [0.0, 0.5],
+                                    tileMode: TileMode.clamp,
+                                    transform: const GradientRotation(1),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 60.h),
-                                child: MyText(
-                                  txt: zhanner.tag!,
-                                  color: Colors.white,
-                                  size: 20.sp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLine: 1,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 60),
+                                  child: MyText(
+                                    txt: zhanner.tag!,
+                                    color: Colors.white,
+                                    size: 20,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLine: 1,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     // stretch: true,
-                    expandedHeight: 220.h,
+                    expandedHeight: 220,
                   )
                 ];
               },
               body: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 3.w,
-                  vertical: 5.h,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 3,
+                  vertical: 5,
                 ),
                 child: controller.pageStatus == PageStatus.error
                     ? const Center(child: Text('Error'))
@@ -114,7 +130,7 @@ class ZhannerDetail extends StatelessWidget {
                                     .colorScheme
                                     .background
                                     .withAlpha(100),
-                                size: 30.w,
+                                size: 30,
                               )
                             : SmartRefresher(
                                 controller: RefreshController(),

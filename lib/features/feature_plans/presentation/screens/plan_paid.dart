@@ -1,6 +1,5 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -88,7 +87,7 @@ class _PlanPaidState extends State<PlanPaid> {
                           height: size.height * 0.3),
                       MyText(
                         txt: controller.isPremium ? "مبارکه" : "پریمیوم نشدی",
-                        size: 20.sp,
+                        size: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         textAlign: TextAlign.center,
@@ -100,7 +99,7 @@ class _PlanPaidState extends State<PlanPaid> {
                           txt: controller.isPremium
                               ? "با موفقیت پریموم شدی!"
                               : "اکانتت هنوز پریمیوم نشد",
-                          size: 14.sp,
+                          size: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey.shade100,
                           textAlign: TextAlign.center,

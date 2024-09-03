@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -18,7 +17,8 @@ class DownloadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyText(txt: "در حال دانلود", size: 16.sp, fontWeight: FontWeight.bold),
+        const MyText(
+            txt: "در حال دانلود", size: 16, fontWeight: FontWeight.bold),
         SizedBox(
           width: double.infinity,
           height: 160,

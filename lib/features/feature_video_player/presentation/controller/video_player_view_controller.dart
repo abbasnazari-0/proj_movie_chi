@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_archive/flutter_archive.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
@@ -217,15 +217,15 @@ class VideoPlayerViewController extends GetxController {
                             decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.background,
                                 borderRadius: BorderRadius.circular(20)),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 20.w, vertical: 20.h),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
                             child: Directionality(
                               textDirection: TextDirection.rtl,
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      SizedBox(width: 0.05.sh),
+                                      const Gap(10),
                                       IconButton(
                                           onPressed: () {
                                             Get.close(0);
@@ -238,30 +238,30 @@ class VideoPlayerViewController extends GetxController {
                                       children: [
                                         Lottie.asset(
                                             "assets/lotties/empty.json",
-                                            height: 120.h),
+                                            height: 120),
                                         const MyText(
                                             txt:
                                                 "زیر نویسی برای این فیلم یافت نشد")
                                       ],
                                     ),
                                   if ((videoSubtitle.amount ?? 0) > 0)
-                                    SizedBox(height: 0.05.sh),
-                                  MyText(
+                                    const Gap(10),
+                                  const MyText(
                                     txt: "انتخاب زیرنویس",
-                                    size: 20.sp,
+                                    size: 20,
                                     fontWeight: FontWeight.bold,
                                     textAlign: TextAlign.center,
                                   ),
-                                  SizedBox(height: 0.01.sh),
+                                  const Gap(10),
                                   if ((videoSubtitle.amount ?? 0) > 0)
-                                    MyText(
+                                    const MyText(
                                       txt:
                                           "لطفا یکی از زیرنویس های زیر را انتخاب کنید",
-                                      size: 16.sp,
+                                      size: 16,
                                       fontWeight: FontWeight.w300,
                                       textAlign: TextAlign.center,
                                     ),
-                                  SizedBox(height: 0.07.sh),
+                                  const Gap(10),
                                   if ((videoSubtitle.amount ?? 0) > 0)
                                     Expanded(
                                       child: ListView.separated(
@@ -283,7 +283,7 @@ class VideoPlayerViewController extends GetxController {
                                               txt: videoSubtitle
                                                   .data![index].title
                                                   .toString(),
-                                              size: 15.sp,
+                                              size: 15,
                                               color: Colors.amber,
                                             ),
                                           );

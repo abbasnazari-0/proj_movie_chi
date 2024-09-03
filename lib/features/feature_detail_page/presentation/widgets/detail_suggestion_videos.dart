@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/features/feature_search/presentation/widgets/search_screen_item.dart';
@@ -80,14 +79,14 @@ class SuggestionVideos extends StatelessWidget {
           ),
         const SizedBox(height: 20),
         SizedBox(
-          height: 150.h,
+          height: 150,
           width: width,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return SizedBox(
-                    width: 100.h,
+                    width: 100,
                     child: SearchItem(
                       item: pageController.suggestionList[index],
                       onTap: () {

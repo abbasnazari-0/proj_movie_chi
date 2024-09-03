@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/locator.dart';
@@ -26,10 +25,10 @@ class DownloadedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(children: [
-          MyText(txt: "دانلود شده ها", size: 16.sp, fontWeight: FontWeight.bold)
+        const Row(children: [
+          MyText(txt: "دانلود شده ها", size: 16, fontWeight: FontWeight.bold)
         ]),
-        SizedBox(height: 10.h),
+        const SizedBox(height: 10),
         GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -78,7 +77,7 @@ class DownloadedView extends StatelessWidget {
                 child: SizedBox(
                   // margin: EdgeInsets.all(10),
                   width: double.infinity,
-                  height: 200.h,
+                  height: 200,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -86,7 +85,7 @@ class DownloadedView extends StatelessWidget {
                         imageUrl: Constants.imageFiller(video.thumbnail1x!),
                         fit: BoxFit.cover,
                         color: Colors.black26,
-                        height: 200.h,
+                        height: 200,
                         colorBlendMode: BlendMode.darken,
                       ),
                       Align(
@@ -118,7 +117,7 @@ class DownloadedView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               maxLine: 2,
                               overflow: TextOverflow.ellipsis,
-                              size: 14.sp,
+                              size: 14,
                               textAlign: TextAlign.center,
                             ),
                           ),

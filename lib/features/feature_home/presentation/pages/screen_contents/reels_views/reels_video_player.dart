@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:pod_player/pod_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:movie_chi/features/feature_home/data/model/home_reels_model.dart';
@@ -152,7 +151,7 @@ class _VideoReelsPlayerState extends State<VideoReelsPlayer> {
                                 ? EvaIcons.volume_mute
                                 : EvaIcons.volume_up,
                             color: Colors.white,
-                            size: 20.sp,
+                            size: 20,
                           ),
                         ),
                       )

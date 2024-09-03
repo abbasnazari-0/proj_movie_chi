@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/widgets/mytext.dart';
@@ -86,7 +86,7 @@ chooseQuality(List videosQualities,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  SizedBox(height: 20.h),
+                                  const Gap(20),
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/model/home_catagory_model.dart';
@@ -19,8 +18,8 @@ class ExtendedSliderHomeView extends StatelessWidget {
     return Container(
         color: Constants.hexToColor(homeCatagoryItem.viewColor!)
             .withAlpha(int.parse(homeCatagoryItem.colorAlpha ?? "255")),
-        width: double.tryParse(homeCatagoryItem.viewWidth!)!.w,
-        height: double.tryParse(homeCatagoryItem.viewHeight!)!.h,
+        width: double.tryParse(homeCatagoryItem.viewWidth!)!,
+        height: double.tryParse(homeCatagoryItem.viewHeight!)!,
         child: CarouselSlider(
           options: CarouselOptions(
               enlargeCenterPage: true,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -35,8 +35,8 @@ class _GridHomeViewState extends State<GridHomeView> {
     return Container(
       color: Constants.hexToColor(widget.homeCatagoryItem.viewColor!)
           .withAlpha(int.parse(widget.homeCatagoryItem.colorAlpha ?? "255")),
-      width: double.tryParse(widget.homeCatagoryItem.viewWidth!)!.w,
-      height: double.tryParse(widget.homeCatagoryItem.viewHeight!)!.h,
+      width: double.tryParse(widget.homeCatagoryItem.viewWidth!)!,
+      height: double.tryParse(widget.homeCatagoryItem.viewHeight!)!,
       child: Column(
         children: [
           InkWell(
@@ -58,21 +58,21 @@ class _GridHomeViewState extends State<GridHomeView> {
                     txt: widget.homeCatagoryItem.title!,
                     color: Theme.of(context).primaryTextTheme.bodyMedium!.color,
                     fontWeight: FontWeight.bold,
-                    size: 16.sp,
+                    size: 16,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const Spacer(),
-                  MyText(
+                  const MyText(
                       txt: "بیشتر",
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      size: 13.sp),
+                      size: 13),
                   const Icon(Iconsax.arrow_left_2),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 5.h),
+          const Gap(5),
           Expanded(
             child: SmartRefresher(
               controller: refreshController,
@@ -92,6 +92,8 @@ class _GridHomeViewState extends State<GridHomeView> {
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.homeCatagoryItem.data?.length,
+                  // optimization
+                  cacheExtent: 20,
                   itemBuilder: (context, index) {
                     HomeItemData itemData =
                         widget.homeCatagoryItem.data![index];
@@ -108,7 +110,7 @@ class _GridHomeViewState extends State<GridHomeView> {
                   }),
             ),
           ),
-          SizedBox(height: 8.h),
+          const Gap(8),
         ],
       ),
     );

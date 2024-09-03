@@ -24,6 +24,7 @@ import '../utils/get_storage_data.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
+  static const routeName = '/splash';
 
   @override
   State<Splash> createState() => _SplashState();
@@ -139,7 +140,7 @@ class _SplashState extends State<Splash> {
     if ((GetStorageData.getData('isNotFirestTime')) ?? true) {
       Get.off(() => ObBoardingScreen());
     } else {
-      Get.off(() => const HomeScreen());
+      Get.toNamed(HomeScreen.routeName);
     }
   }
 

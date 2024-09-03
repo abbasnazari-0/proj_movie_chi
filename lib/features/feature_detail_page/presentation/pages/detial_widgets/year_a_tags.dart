@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../../core/widgets/mytext.dart';
@@ -21,15 +21,15 @@ class YearATags extends StatelessWidget {
           SizedBox(width: width * 0.05),
           Icon(Icons.calendar_month_rounded,
               color: Theme.of(context).colorScheme.secondary),
-          SizedBox(width: 4.w),
+          const Gap(4),
           MyText(txt: (vid.year ?? "")),
-          SizedBox(width: 10.w),
+          const Gap(10),
           const Text("●", style: TextStyle(color: Colors.grey)),
 
-          SizedBox(width: 10.w),
+          const Gap(10),
           Icon(FontAwesome.masks_theater,
               color: Theme.of(context).colorScheme.secondary),
-          SizedBox(width: 4.w),
+          const Gap(4),
           // Catagory Section
           if (vid.tagData != null) catagoryWidget(vid.tagData!),
         ],

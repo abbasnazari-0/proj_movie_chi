@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../core/widgets/mytext.dart';
@@ -16,16 +16,25 @@ class ImdbSection extends StatelessWidget {
     return Row(children: [
       SizedBox(width: width * 0.05),
       const Icon(Iconsax.star1, color: Colors.amber),
-      SizedBox(width: width * 0.01),
-      const MyText(txt: ("امتیاز IMDb : "), color: Colors.amber),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+            color: Colors.amber, borderRadius: BorderRadius.circular(5)),
+        child: Row(
+          children: [
+            SizedBox(width: width * 0.01),
+            const MyText(txt: ("امتیاز IMDb : "), color: Colors.black),
 
-      SizedBox(width: 4.w),
-      // Catagory Section
-      MyText(
-          txt: double.parse(vid.imdb.toString()).toStringAsFixed(1),
-          size: 22,
-          fontWeight: FontWeight.bold,
-          color: Colors.amber),
+            const Gap(4),
+            // Catagory Section
+            MyText(
+                txt: double.parse(vid.imdb.toString()).toStringAsFixed(1),
+                size: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ],
+        ),
+      ),
     ]);
   }
 }

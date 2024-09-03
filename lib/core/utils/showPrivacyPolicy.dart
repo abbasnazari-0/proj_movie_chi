@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../widgets/mytext.dart';
@@ -18,26 +17,26 @@ showPrivacyDialog() {
           child: Material(
             color: Colors.transparent,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 80.h),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40.r),
+                  borderRadius: BorderRadius.circular(40),
                   color: Theme.of(Get.context!).primaryColor,
                 ),
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
-                    MyText(
+                    const MyText(
                         txt: "قوانین استفاده از اپلیکیشن",
-                        size: 22.sp,
+                        size: 22,
                         fontWeight: FontWeight.bold,
                         textAlign: TextAlign.center),
                     const SizedBox(height: 30),
-                    Expanded(
+                    const Expanded(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: const Column(children: [
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(children: [
                             MyText(
                                 txt:
                                     ("""برنامه مووی چی! در نظر دارد تا به کاربران امکان دسترسی به فیلم‌ها و سریال‌ها را بدهد. با این حال، ما به صراحت اعلام می‌کنیم که این برنامه برای استفاده توسط افراد زیر 18 سال مناسب نیست.

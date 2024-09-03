@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -39,6 +38,7 @@ class SearchItem extends StatelessWidget {
       onTap: () {
         if (onTap != null) onTap!();
         Constants.openVideoDetail(
+            hero: 'search-item-${item.tag}',
             vidTag: item.tag.toString(),
             type: item.type,
             commonTag: item.commonTag,
@@ -63,30 +63,33 @@ class SearchItem extends StatelessWidget {
                         // height: 240,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            colorBlendMode: BlendMode.srcOver,
-                            color: item.type == "video"
-                                ? Colors.black.withAlpha(50)
-                                : Colors.black.withAlpha(190),
-                            imageUrl: Constants.imageFiller(
-                                item.thumbnail1x.toString()),
+                          child: Hero(
+                            tag: 'search-item-${item.tag}',
+                            child: CachedNetworkImage(
+                              colorBlendMode: BlendMode.srcOver,
+                              color: item.type == "video"
+                                  ? Colors.black.withAlpha(50)
+                                  : Colors.black.withAlpha(190),
+                              imageUrl: Constants.imageFiller(
+                                  item.thumbnail1x.toString()),
 
-                            filterQuality: FilterQuality.low,
-                            fit: BoxFit.cover,
-                            // color: Colors.black.withOpacity(0.2),
-                            placeholder: (context, url) => Center(
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.white,
-                                highlightColor: Colors.black12,
-                                child: Container(
-                                  // height: 250,
-                                  width: double.infinity,
-                                  color: Colors.black26.withAlpha(20),
+                              filterQuality: FilterQuality.low,
+                              fit: BoxFit.cover,
+                              // color: Colors.black.withOpacity(0.2),
+                              placeholder: (context, url) => Center(
+                                child: Shimmer.fromColors(
+                                  baseColor: Colors.white,
+                                  highlightColor: Colors.black12,
+                                  child: Container(
+                                    // height: 250,
+                                    width: double.infinity,
+                                    color: Colors.black26.withAlpha(20),
+                                  ),
                                 ),
                               ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -161,7 +164,7 @@ class SearchItem extends StatelessWidget {
                     ),
                   Positioned(
                     right: 0,
-                    height: 25.h,
+                    height: 25,
                     bottom: 0,
                     child: VideoItemHeader(
                       imdb: item.imdb.toString(),
@@ -174,7 +177,7 @@ class SearchItem extends StatelessWidget {
             ),
             const Gap(10),
             SizedBox(
-              height: 40.h,
+              height: 40,
               child: MyText(
                 txt: item.title.toString().replaceAll("فیلم", ""),
                 color: Colors.white,

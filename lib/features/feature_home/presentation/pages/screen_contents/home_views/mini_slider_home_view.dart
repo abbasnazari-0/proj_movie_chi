@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../core/utils/constants.dart';
 import '../../../../data/model/home_catagory_model.dart';
@@ -27,8 +26,8 @@ class _MiniSliderViewState extends State<MiniSliderView> {
       color: Constants.hexToColor(widget.homeCatagoryItem.viewColor!)
           .withAlpha(int.parse(widget.homeCatagoryItem.colorAlpha ?? "255")),
       margin: const EdgeInsets.all(5),
-      width: double.tryParse(widget.homeCatagoryItem.viewWidth!)!.w,
-      height: double.tryParse(widget.homeCatagoryItem.viewHeight!)!.h,
+      width: double.tryParse(widget.homeCatagoryItem.viewWidth!)!,
+      height: double.tryParse(widget.homeCatagoryItem.viewHeight!)!,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

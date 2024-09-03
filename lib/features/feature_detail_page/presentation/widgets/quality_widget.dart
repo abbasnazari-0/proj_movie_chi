@@ -1,6 +1,5 @@
 // set quality Widget
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
 
@@ -8,7 +7,7 @@ Widget qualityWidget(String quality) {
   // ignore: unnecessary_null_comparison
   if (quality != null) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.w),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9999),
         color: Get.theme.colorScheme.secondary.withAlpha(190),
@@ -21,8 +20,8 @@ Widget qualityWidget(String quality) {
           ),
         ],
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      height: 20.h,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: 20,
       child: Center(
         child: MyText(
           txt: quality,

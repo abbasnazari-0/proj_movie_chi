@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/widgets/mytext.dart';
 
@@ -37,13 +36,13 @@ class HeaderActionButtons extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon, size: 25.sp),
+            Icon(icon, size: 25),
             MyText(
               txt: title,
               color: Colors.white,
               fontWeight: FontWeight.bold,
               textAlign: TextAlign.center,
-              size: 10.sp,
+              size: 10,
             ),
           ],
         ),

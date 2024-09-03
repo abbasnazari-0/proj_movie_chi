@@ -13,18 +13,9 @@ import '../widgets/detail_page_content.dart';
 import '../widgets/detail_page_loading_view.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage(
-      {Key? key,
-      required this.vidTag,
-      this.deepLinking = false,
-      this.heroTag,
-      required this.pic})
-      : super(key: key);
-
-  final String vidTag;
-  final bool deepLinking;
-  final String pic;
-  final String? heroTag;
+  const DetailPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -32,6 +23,10 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   List secdata = [];
+  final String vidTag = Get.arguments['tag'];
+  final bool deepLinkin = Get.arguments['deepLinking'] ?? false;
+  final String pic = Get.arguments['pic'];
+  final String? heroTag = Get.arguments['heroTag'] ?? "";
 
   final pageController = Get.find<DetailPageController>();
 
@@ -39,7 +34,7 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     super.initState();
     // pageController.placeholder = widget.pic;
-    pageController.setVideoTag(widget.vidTag);
+    pageController.setVideoTag(vidTag);
 
     pageController.checkUSers();
 
@@ -51,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
     Map notifData =
         await GetStorageData.readDataWithAwaiting("notif_data") ?? {};
 
-    if (notifData['tag'] == widget.vidTag) {
+    if (notifData['tag'] == vidTag) {
       GetStorageData.writeData("has_notif", false);
       GetStorageData.writeData("notif_data", "");
     }
@@ -87,8 +82,8 @@ class _DetailPageState extends State<DetailPage> {
                   return DetailPageLoadingView(
                     hieght: hieght,
                     width: width,
-                    img: widget.pic,
-                    heroTag: widget.heroTag,
+                    img: pic,
+                    heroTag: heroTag,
                   );
                 }
                 if (controller.detailPageStatus == PageStatus.error) {
@@ -114,8 +109,8 @@ class _DetailPageState extends State<DetailPage> {
                 // return Container();
 
                 return DetailPageContent(
-                  deepLinking: widget.deepLinking,
-                  heroTag: widget.heroTag,
+                  deepLinking: deepLinkin,
+                  heroTag: heroTag,
                 );
               }),
             ),

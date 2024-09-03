@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -42,7 +42,7 @@ class _ArtistListState extends State<ArtistList> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 60.h,
+            toolbarHeight: 60,
             actions: [
               IconButton(
                   onPressed: () {}, icon: const Icon(Iconsax.search_normal2))
@@ -129,14 +129,14 @@ class _ArtistListState extends State<ArtistList> {
                             child: Material(
                               color: Colors.transparent,
                               child: SizedBox(
-                                width: 60.w,
+                                width: 60,
                                 child: Column(
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(999),
                                       child: SizedBox(
-                                        width: 60.h,
-                                        height: 60.h,
+                                        width: 60,
+                                        height: 60,
                                         child: CachedNetworkImage(
                                           imageUrl: Constants.imageFiller(
                                               artistItemData.artistPic ?? ""),
@@ -166,7 +166,7 @@ class _ArtistListState extends State<ArtistList> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 5.h),
+                                    const Gap(5),
                                     MyText(
                                       txt: artistItemData.artistName ?? "",
                                       fontWeight: FontWeight.bold,

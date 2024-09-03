@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/widgets/mytext.dart';
@@ -19,31 +19,31 @@ class CatagoryHomeView extends StatelessWidget {
     return Container(
       color: Constants.hexToColor(homeCatagoryItem.viewColor!)
           .withAlpha(int.parse(homeCatagoryItem.colorAlpha ?? "255")),
-      width: double.tryParse(homeCatagoryItem.viewWidth!)!.w,
-      height: double.tryParse(homeCatagoryItem.viewHeight!)!.h,
+      width: double.tryParse(homeCatagoryItem.viewWidth!)!,
+      height: double.tryParse(homeCatagoryItem.viewHeight!)!,
       child: Column(
         children: [
           Row(
             children: [
-              SizedBox(width: 15.w),
+              const Gap(15),
               MyText(
                 txt: homeCatagoryItem.title!,
                 color: Theme.of(context).primaryTextTheme.bodyMedium!.color,
                 fontWeight: FontWeight.bold,
-                size: 16.sp,
+                size: 16,
                 overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
           Expanded(
             child: GridView.builder(
-                padding: EdgeInsets.all(10.w),
+                padding: const EdgeInsets.all(10),
                 scrollDirection: Axis.horizontal,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1,
-                  crossAxisSpacing: 10.w,
-                  mainAxisSpacing: 10.w,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                 ),
                 itemCount: homeCatagoryItem.data?.length,
                 itemBuilder: (context, index) {
@@ -57,7 +57,7 @@ class CatagoryHomeView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                               color: Theme.of(context).colorScheme.primary,
-                              width: 0.4.w,
+                              width: 0.4,
                               style: BorderStyle.solid)),
                       child: Center(
                           child: Column(
@@ -67,9 +67,9 @@ class CatagoryHomeView extends StatelessWidget {
                             imageUrl: Constants.imageFiller(
                               homeCatagoryItem.data?[index].thumbnail1x ?? '',
                             ),
-                            width: 30.w,
+                            width: 30,
                           ),
-                          SizedBox(height: 5.h),
+                          const Gap(5),
                           MyText(txt: homeCatagoryItem.data![index].title!),
                         ],
                       )),

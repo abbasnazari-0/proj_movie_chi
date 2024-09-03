@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/utils/constants.dart';
@@ -111,8 +110,6 @@ class _SessionItemState extends State<SessionItem> {
         // LogPrint(widget.video.toJson());
         // print(widget.video.toJson());
         try {
-          print(GetStorageData.getData("logined"));
-          print('ddd1');
           if ((GetStorageData.getData("logined") ?? false)) {
             String qualityLink = await downloadController
                 .checkQuality(widget.video, actionButton: "پخش");
@@ -222,7 +219,7 @@ class _SessionItemState extends State<SessionItem> {
             height: 60,
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
+              borderRadius: BorderRadius.circular(10),
               gradient: LinearGradient(
                 colors: [
                   Theme.of(context).colorScheme.secondary.withAlpha(200),

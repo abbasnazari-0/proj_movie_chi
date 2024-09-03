@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
@@ -148,14 +148,14 @@ class SettingController {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 10.h),
+                      const Gap(10),
                       const TabBar(tabs: [
                         Tab(
                           text: 'کیفیت ویدیو',
                           icon: Icon(Icons.video_settings_rounded),
                         ),
                       ]),
-                      SizedBox(height: 10.h),
+                      const Gap(10),
                       const Divider(
                         color: Colors.white,
                         height: 0.5,
@@ -163,7 +163,7 @@ class SettingController {
                         indent: 40,
                         thickness: 0.1,
                       ),
-                      SizedBox(height: 10.h),
+                      const Gap(10),
                       Expanded(
                         child: PageView(
                           pageSnapping: false,

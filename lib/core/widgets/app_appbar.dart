@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:badges/badges.dart' as badges;
@@ -57,7 +56,7 @@ class AppAppBar extends StatelessWidget {
             txt: 'مووی چی!',
             color: Theme.of(context).primaryIconTheme.color,
             fontWeight: FontWeight.w900,
-            size: 16.sp,
+            size: 16,
           ),
           const Spacer(),
           // IconButton(

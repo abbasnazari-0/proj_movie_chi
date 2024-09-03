@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class VideoItemHeader extends StatelessWidget {
@@ -75,12 +74,12 @@ class VideoItemHeader extends StatelessWidget {
                           : null,
                   color: Colors.white,
                   fill: 0,
-                  size: 12.sp,
+                  size: 12,
                 ),
               ),
             ),
           SizedBox(
-            width: 5.w,
+            width: 5,
           ),
         ],
       ),
