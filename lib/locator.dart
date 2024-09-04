@@ -39,7 +39,7 @@ import 'package:movie_chi/features/feature_login_screen/domain/repositories/otp_
 import 'package:movie_chi/features/feature_login_screen/domain/usecase/otp_usecase.dart';
 import 'package:movie_chi/features/feature_play_list/data/data_sources/remote/play_list_data_getter.dart';
 import 'package:movie_chi/features/feature_play_list/domain/repositories/play_list_repository.dart';
-import 'package:movie_chi/features/feature_search/data/data_source/remote/searchGetData.dart';
+import 'package:movie_chi/features/feature_search/data/data_source/remote/search_api_provider.dart';
 import 'package:movie_chi/features/feature_search/data/respository/search_repository_impl.dart';
 import 'package:movie_chi/features/feature_search/domain/repositories/search_repository.dart';
 import 'package:movie_chi/features/feature_search/domain/usecases/search_usecase.dart';

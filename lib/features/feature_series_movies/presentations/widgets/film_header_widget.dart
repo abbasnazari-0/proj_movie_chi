@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/features/feature_series_movies/presentations/widgets/mock_search_widget.dart';
 
 import '../../../../core/widgets/mytext.dart';
 import '../../../../locator.dart';
@@ -19,28 +21,8 @@ class FilmHeader extends StatelessWidget {
       height: 80,
       child: Row(
         children: [
-          // Expanded(
-          //   child: ArtistSearchBox(
-          //     searchController: filmController.searchController,
-          //     size: MediaQuery.of(context).size,
-          //     onChanegd: () {
-          //       if (filmController.searchController.text.isEmpty) {
-          //         filmController.searchQ = "";
-
-          //         filmController.getMovies(true);
-          //       }
-          //     },
-          //     onSubmited: (value) {
-          //       filmController.searchQ = filmController.searchController.text;
-
-          //       filmController.getMovies(true);
-          //     },
-          //     onClosed: () {
-          //       filmController.searchQ = "";
-          //       filmController.getMovies(true);
-          //     },
-          //   ),
-          // ),
+          SearchWidgetShow(),
+          const Gap(10),
           GetBuilder<MvoiesController>(builder: (controller) {
             return PopupMenuButton(
                 icon: const Icon(Icons.filter_list),

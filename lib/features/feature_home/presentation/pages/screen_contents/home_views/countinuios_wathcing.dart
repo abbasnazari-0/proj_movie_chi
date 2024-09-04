@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/widgets/mytext.dart';
-import '../../../../../feature_detail_page/data/model/video_model.dart';
 import '../../../../data/model/home_catagory_model.dart';
 import '../../../controller/home_page_controller.dart';
 
@@ -66,71 +65,84 @@ class CountinuisWatching extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Video vid = Video.fromJson((json.decode(controller
-                                .historyList[index]['video_detail'])));
+                            Map<String, dynamic> videoDetail = json.decode(
+                                controller.historyList[index]['video_detail']
+                                    .toString());
 
-                            if (vid.type == "session") {
+                            if (videoDetail['type'] == "session") {
                               Constants.openVideoDetail(
-                                vidTag: "${vid.commonTag}_session",
-                                type: item['type'],
-                                commonTag: item['commonTag'],
-                                picture: item['image'],
+                                vidTag: (videoDetail['common_tag'] ?? "") +
+                                    '_session',
+                                type: videoDetail['type'],
+                                commonTag: videoDetail['common_tag'],
+                                picture: videoDetail['thumbnail_1x'],
+                                hero: 'countinuis_watching-${item['tag']}',
                               );
                             } else {
                               Constants.openVideoDetail(
-                                vidTag: vid.tag ?? "",
-                                type: item['type'],
-                                commonTag: item['commonTag'],
-                                picture: item['image'],
+                                vidTag: (videoDetail['tag'] ?? ""),
+                                type: videoDetail['type'],
+                                commonTag: videoDetail['common_tag'],
+                                picture: videoDetail['thumbnail_1x'],
+                                hero: 'countinuis_watching-${item['tag']}',
                               );
                             }
                           },
-                          child: Container(
-                            height: 150,
-                            width: width * 0.7,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: CachedNetworkImageProvider(
-                                        Constants.imageFiller(item['image'])),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.black87),
-                                  child: const Icon(Icons.play_arrow),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.black87),
-                                    margin: EdgeInsets.all(3),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: MyText(
-                                          txt:
-                                              ' ${Constants.formatTime(item['vid_duration'])}  /  ${Constants.formatTime(item['vid_time'])}  ',
-                                          textAlign: TextAlign.center,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          size: 16),
+                          child: Hero(
+                            tag: 'countinuis_watching-${item['tag']}',
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                height: 150,
+                                width: width * 0.7,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            Constants.imageFiller(
+                                                item['image'])),
+                                        fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.black87),
+                                      child: const Icon(Icons.play_arrow),
                                     ),
-                                  ),
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.black87),
+                                        margin: const EdgeInsets.all(3),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: MyText(
+                                              txt:
+                                                  ' ${Constants.formatTime(item['vid_duration'])}  /  ${Constants.formatTime(item['vid_time'])}  ',
+                                              textAlign: TextAlign.center,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              size: 16),
+                                        ),
+                                      ),
+                                    ),
+                                    const Gap(10),
+                                    Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: LinearProgressIndicator(
+                                        value: val,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const Gap(10),
-                                Directionality(
-                                  textDirection: TextDirection.ltr,
-                                  child: LinearProgressIndicator(
-                                    value: val,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),

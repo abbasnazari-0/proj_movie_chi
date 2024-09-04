@@ -29,127 +29,141 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
   final Debouncer debouncer =
       Debouncer(delay: const Duration(milliseconds: 1000));
 
+  var focusNode = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+
+// or
+    focusNode.requestFocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
-      // margin: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).primaryColor,
-      ),
-      width: size.width,
-      child: TypeAheadField(
-        suggestionsBoxController: searchController.suggestionsBoxController,
-        textFieldConfiguration: TextFieldConfiguration(
-          onTapOutside: (event) {
-            searchController.onSearchBoxFocusing(false);
-            searchController.suggestionsBoxController.close();
-          },
-          controller: searchController.controller,
-          onSubmitted: (value) {
-            List history = GetStorageData.getData("hisstory") ?? [];
-            history.add(searchController.controller.text);
-            GetStorageData.writeData("hisstory", history);
-            onChange(false);
-          },
-          onTap: () {
-            searchController.onSearchBoxFocusing(true);
-            try {
-              if (searchController.controller.selection ==
-                  TextSelection.fromPosition(TextPosition(
-                      offset: searchController.controller.text.length - 1))) {
-                setState(() {
-                  searchController.controller.selection =
-                      TextSelection.fromPosition(TextPosition(
-                          offset: searchController.controller.text.length));
-                });
+    return Hero(
+      tag: 'search-widget',
+      child: Container(
+        // margin: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).primaryColor,
+        ),
+        width: size.width,
+        child: TypeAheadField(
+          suggestionsBoxController: searchController.suggestionsBoxController,
+          textFieldConfiguration: TextFieldConfiguration(
+            focusNode: focusNode,
+            onTapOutside: (event) {
+              searchController.onSearchBoxFocusing(false);
+              searchController.suggestionsBoxController.close();
+            },
+            controller: searchController.controller,
+            onSubmitted: (value) {
+              List history = GetStorageData.getData("hisstory") ?? [];
+              history.add(searchController.controller.text);
+              GetStorageData.writeData("hisstory", history);
+              onChange(false);
+            },
+            onTap: () {
+              searchController.onSearchBoxFocusing(true);
+              try {
+                if (searchController.controller.selection ==
+                    TextSelection.fromPosition(TextPosition(
+                        offset: searchController.controller.text.length - 1))) {
+                  setState(() {
+                    searchController.controller.selection =
+                        TextSelection.fromPosition(TextPosition(
+                            offset: searchController.controller.text.length));
+                  });
+                }
+              } catch (e) {
+                if (kDebugMode) {
+                  debugPrint(e.toString());
+                }
               }
-            } catch (e) {
-              if (kDebugMode) {
-                debugPrint(e.toString());
-              }
-            }
-            if (searchController.controller.text.isEmpty) {
-              searchController.suggestionsBoxController.open();
-              searchController.getSearchHisotry();
-            } else {
-              searchController.suggestionsBoxController.suggestionsBox?.close();
-            }
-          },
-          onChanged: (value) {
-            debouncer.call(() {
-              if (value.isNotEmpty) {
-                searchController.onSearchBoxFocusing(true);
-
+              if (searchController.controller.text.isEmpty) {
+                searchController.suggestionsBoxController.open();
+                searchController.getSearchHisotry();
+              } else {
                 searchController.suggestionsBoxController.suggestionsBox
                     ?.close();
-              } else {
-                searchController.onSearchBoxFocusing(false);
-                searchController.suggestionsBoxController.suggestionsBox
-                    ?.open();
               }
-              onChange(true);
-            });
-            // onChange();
+            },
+            onChanged: (value) {
+              debouncer.call(() {
+                if (value.isNotEmpty) {
+                  searchController.onSearchBoxFocusing(true);
+
+                  searchController.suggestionsBoxController.suggestionsBox
+                      ?.close();
+                } else {
+                  searchController.onSearchBoxFocusing(false);
+                  searchController.suggestionsBoxController.suggestionsBox
+                      ?.open();
+                }
+                onChange(true);
+              });
+              // onChange();
+            },
+            style: faTextTheme(context),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                suffixIcon: GetBuilder<SearchPageController>(
+                  builder: (controller) => controller.searchFouceMode == true &&
+                          controller.controller.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            // clear search Box
+                            controller.controller.text = "";
+                            onChange(false);
+                          },
+                        )
+                      : const SizedBox(),
+                ),
+                prefixIcon: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Iconsax.search_normal4,
+                      color: Theme.of(context).primaryIconTheme.color),
+                ),
+                hintText: '  جستجو نمایید',
+                hintStyle: faTextTheme(context)),
+          ),
+          itemBuilder: (BuildContext context, itemData) {
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: ListTile(
+                leading: const Icon(Icons.history),
+                title: MyText(txt: itemData.toString()),
+              ),
+            );
           },
-          style: faTextTheme(context),
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              suffixIcon: GetBuilder<SearchPageController>(
-                builder: (controller) => controller.searchFouceMode == true &&
-                        controller.controller.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          // clear search Box
-                          controller.controller.text = "";
-                          onChange(false);
-                        },
-                      )
-                    : const SizedBox(),
-              ),
-              prefixIcon: IconButton(
-                onPressed: () {},
-                icon: Icon(Iconsax.search_normal4,
-                    color: Theme.of(context).primaryIconTheme.color),
-              ),
-              hintText: '  جستجو نمایید',
-              hintStyle: faTextTheme(context)),
-        ),
-        itemBuilder: (BuildContext context, itemData) {
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListTile(
-              leading: const Icon(Icons.history),
-              title: MyText(txt: itemData.toString()),
-            ),
-          );
-        },
-        onSuggestionSelected: (Object? suggestion) {
-          if (searchController.suggestionList.isNotEmpty) {
-            if (suggestion == "حذف تاریخچه") {
-              searchController.removeSearchHisotry(context);
-              return;
+          onSuggestionSelected: (Object? suggestion) {
+            if (searchController.suggestionList.isNotEmpty) {
+              if (suggestion == "حذف تاریخچه") {
+                searchController.removeSearchHisotry(context);
+                return;
+              }
             }
-          }
-          searchController.controller.setText(suggestion.toString());
-          onChange(false);
-        },
-        noItemsFoundBuilder: (context) {
-          return const SizedBox();
-        },
-        suggestionsBoxDecoration: SuggestionsBoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            elevation: 10,
-            constraints: const BoxConstraints.tightForFinite(height: 200)),
-        suggestionsCallback: (String pattern) async {
-          if (pattern.isEmpty) {
-            return searchController.suggestionList;
-          } else {
-            return [];
-          }
-        },
+            searchController.controller.setText(suggestion.toString());
+            onChange(false);
+          },
+          noItemsFoundBuilder: (context) {
+            return const SizedBox();
+          },
+          suggestionsBoxDecoration: SuggestionsBoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              elevation: 10,
+              constraints: const BoxConstraints.tightForFinite(height: 200)),
+          suggestionsCallback: (String pattern) async {
+            if (pattern.isEmpty) {
+              return searchController.suggestionList;
+            } else {
+              return [];
+            }
+          },
+        ),
       ),
     );
   }

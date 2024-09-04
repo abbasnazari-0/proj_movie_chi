@@ -23,7 +23,7 @@
 </queries> -->
 
    <application
-        android:label="مووی چی!!"
+        android:label="مووی چی!؟"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

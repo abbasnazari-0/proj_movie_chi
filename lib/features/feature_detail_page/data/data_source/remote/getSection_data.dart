@@ -73,12 +73,13 @@ class VideoDetailDataGetter {
 
   //  get video comment replies
   Future<Response> getVideoCommentReplies(commentId) async {
-    var res = dio
+    var res = await dio
         .post('${Constants.baseUrl()}${pageUrl}comment.php', queryParameters: {
       "comment_id": commentId,
       "user_tag": GetStorageData.getData("user_tag"),
       "type": "getReply",
     });
+    print(res.data);
     return res;
   }
 

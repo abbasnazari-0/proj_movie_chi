@@ -17,6 +17,7 @@ import 'feature_artist.dart';
 
 class ArtistList extends StatefulWidget {
   const ArtistList({super.key});
+  static const routeName = '/artist_list';
 
   @override
   State<ArtistList> createState() => _ArtistListState();
@@ -41,8 +42,21 @@ class _ArtistListState extends State<ArtistList> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+          floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(top: 30, right: 20),
+            child: FloatingActionButton(
+              onPressed: () {
+                Get.back();
+              },
+              backgroundColor: Theme.of(context).colorScheme.background,
+              child: Icon(Iconsax.arrow_right_14,
+                  color: Theme.of(context).textTheme.bodyMedium!.color),
+            ),
+          ),
           appBar: AppBar(
             toolbarHeight: 60,
+            leading: const SizedBox(width: 10),
             actions: [
               IconButton(
                   onPressed: () {}, icon: const Icon(Iconsax.search_normal2))
@@ -121,10 +135,10 @@ class _ArtistListState extends State<ArtistList> {
                         String uniqKey = UniqueKey().toString();
                         return InkWell(
                             onTap: () {
-                              Get.to(() => ArtistPage(
-                                    artistItemData: artistItemData,
-                                    page: uniqKey,
-                                  ));
+                              Get.toNamed(ArtistPage.routeName, arguments: {
+                                "artistItemData": artistItemData,
+                                "page": uniqKey,
+                              });
                             },
                             child: Material(
                               color: Colors.transparent,
@@ -137,32 +151,37 @@ class _ArtistListState extends State<ArtistList> {
                                       child: SizedBox(
                                         width: 60,
                                         height: 60,
-                                        child: CachedNetworkImage(
-                                          imageUrl: Constants.imageFiller(
-                                              artistItemData.artistPic ?? ""),
-                                          fit: BoxFit.cover,
-                                          color: Colors.black.withAlpha(80),
-                                          colorBlendMode: BlendMode.darken,
-                                          placeholder: (context, url) => Center(
-                                            child: Shimmer.fromColors(
-                                              baseColor: Colors.white,
-                                              highlightColor: Colors.black12,
-                                              child: Container(
-                                                // height: 250,
-                                                width: double.infinity,
-                                                color: Colors.black26
-                                                    .withAlpha(20),
+                                        child: Hero(
+                                          tag:
+                                              'artist${artistItemData.artistTag}',
+                                          child: CachedNetworkImage(
+                                            imageUrl: Constants.imageFiller(
+                                                artistItemData.artistPic ?? ""),
+                                            fit: BoxFit.cover,
+                                            color: Colors.black.withAlpha(80),
+                                            colorBlendMode: BlendMode.darken,
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: Shimmer.fromColors(
+                                                baseColor: Colors.white,
+                                                highlightColor: Colors.black12,
+                                                child: Container(
+                                                  // height: 250,
+                                                  width: double.infinity,
+                                                  color: Colors.black26
+                                                      .withAlpha(20),
+                                                ),
                                               ),
                                             ),
+                                            errorWidget: (context, url, error) {
+                                              return Container(
+                                                  color: Colors.grey[300],
+                                                  child: const Icon(
+                                                    Iconsax.user,
+                                                    color: Colors.black,
+                                                  ));
+                                            },
                                           ),
-                                          errorWidget: (context, url, error) {
-                                            return Container(
-                                                color: Colors.grey[300],
-                                                child: const Icon(
-                                                  Iconsax.user,
-                                                  color: Colors.black,
-                                                ));
-                                          },
                                         ),
                                       ),
                                     ),

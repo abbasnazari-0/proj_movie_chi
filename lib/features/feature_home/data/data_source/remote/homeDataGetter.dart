@@ -40,6 +40,7 @@ class HomeDataGetter {
       "user_tag": userTag,
       "count": count,
       "version": await Constants.versionApplication(),
+      "support_area": GetStorageData.getData("logined") ?? "0"
     });
 
     return res;

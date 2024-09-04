@@ -30,64 +30,73 @@ class ZhannerList extends StatelessWidget {
             return const Center(child: Text('Error'));
           }
 
-          return ListView.builder(
-              itemCount: controller.zhannerList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.toNamed(ZhannerDetail.routeName,
-                        arguments: controller.zhannerList[index]);
-                  },
-                  child: Material(
-                    child: Container(
-                      width: double.infinity,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                            controller.zhannerList[index].pics ?? '',
+          return MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView.builder(
+                itemCount: controller.zhannerList.length,
+                itemBuilder: (context, index) {
+                  String heroId = (controller.zhannerList[index].tag ?? '') +
+                      UniqueKey().toString();
+                  return InkWell(
+                    onTap: () {
+                      Get.toNamed(ZhannerDetail.routeName,
+                          arguments: [controller.zhannerList[index], heroId]);
+                    },
+                    child: Material(
+                      child: Hero(
+                        tag: heroId,
+                        child: Container(
+                          width: double.infinity,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                controller.zhannerList[index].pics ?? '',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          fit: BoxFit.cover,
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.black.withOpacity(0.7),
+                                    ],
+                                    stops: const [0.0, 0.5],
+                                    tileMode: TileMode.clamp,
+                                    transform: const GradientRotation(1),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 60),
+                                  child: MyText(
+                                    txt: controller.zhannerList[index].tag!,
+                                    color: Colors.white,
+                                    size: 20,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLine: 1,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.black.withOpacity(0.7),
-                                ],
-                                stops: const [0.0, 0.5],
-                                tileMode: TileMode.clamp,
-                                transform: const GradientRotation(1),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 60),
-                              child: MyText(
-                                txt: controller.zhannerList[index].tag!,
-                                color: Colors.white,
-                                size: 20,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis,
-                                maxLine: 1,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                  ),
-                );
-              });
+                  );
+                }),
+          );
         });
   }
 }

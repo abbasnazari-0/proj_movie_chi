@@ -17,6 +17,8 @@ class DetailPage extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  static const String routeName = "/detail";
+
   @override
   State<DetailPage> createState() => _DetailPageState();
 }

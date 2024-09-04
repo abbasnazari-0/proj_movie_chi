@@ -62,7 +62,7 @@ class MyButton extends StatelessWidget {
                         ? textColor ?? Colors.white
                         : textColor ?? (textColor ?? Colors.deepPurple),
                     // color: Colors.black,
-                    size: 18 / 1.618,
+                    size: 17 / 1.618,
                   ),
                 if (loading == false) const Gap(10),
                 if (loading == false)

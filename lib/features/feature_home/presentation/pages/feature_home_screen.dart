@@ -102,18 +102,20 @@ class _HomeScreenState extends State<HomeScreen>
                         return [
                           SliverAppBar(
                             // toolbarHeight: toolbarHeoght,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.surface,
+                            backgroundColor: Colors.black54,
+                            // backgroundColor:
+                            //     Theme.of(context).colorScheme.surface,
                             // floating: true,
                             automaticallyImplyLeading: false,
 
                             pinned: true,
-                            toolbarHeight: 50,
+                            toolbarHeight: 60,
                             elevation: 5,
                             excludeHeaderSemantics: true,
                             primary: true,
                             snap: true,
                             floating: true,
+                            // foregroundColor: Colors.red,
                             title: HomeHeaderBar(),
                           )
                         ];
@@ -246,15 +248,20 @@ class _HomeScreenState extends State<HomeScreen>
                     headerSliverBuilder: (context, innerBoxIsScrolled) {
                       return [
                         SliverAppBar(
+                          toolbarHeight: 60,
                           automaticallyImplyLeading: false,
-                          toolbarHeight: 80,
                           backgroundColor:
                               Theme.of(context).colorScheme.background,
+                          stretch: true,
+                          pinned: true,
                           flexibleSpace: Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: Column(
                               children: [
-                                AppAppBar(height: height),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 40),
+                                  child: AppAppBar(height: height),
+                                ),
                               ],
                             ),
                           ),

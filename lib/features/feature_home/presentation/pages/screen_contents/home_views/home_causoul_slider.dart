@@ -66,7 +66,7 @@ class HomeGalleryVideos extends StatelessWidget {
                                     type: i.type,
                                     commonTag: i.commonTag,
                                     picture: (i.thumbnail1x!),
-                                    // hero: "${i.thumbnail1x ?? ""}_slider",
+                                    hero: "${i.thumbnail1x ?? ""}_slider",
                                   );
                                   final homePageController =
                                       Get.find<HomePageController>();
@@ -76,17 +76,21 @@ class HomeGalleryVideos extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  child: CachedNetworkImage(
-                                    imageUrl: i.thumbnail1x ?? "",
-                                    color: const Color.fromARGB(66, 27, 18, 18),
-                                    colorBlendMode: BlendMode.darken,
-                                    fit: BoxFit.cover,
-                                    httpHeaders: const {
-                                      'Referer': 'https://www.cinimo.ir/'
-                                    },
-                                    // handle error
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
+                                  child: Hero(
+                                    tag: "${i.thumbnail1x ?? ""}_slider",
+                                    child: CachedNetworkImage(
+                                      imageUrl: i.thumbnail1x ?? "",
+                                      color:
+                                          const Color.fromARGB(66, 27, 18, 18),
+                                      colorBlendMode: BlendMode.darken,
+                                      fit: BoxFit.cover,
+                                      httpHeaders: const {
+                                        'Referer': 'https://www.cinimo.ir/'
+                                      },
+                                      // handle error
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
                                   ),
                                 ),
                               ),

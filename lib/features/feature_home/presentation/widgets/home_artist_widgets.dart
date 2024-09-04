@@ -9,7 +9,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/widgets/mytext.dart';
 import '../../../feature_artists/data/models/artist_data_model.dart';
-import '../../../feature_artists/presentation/pages/feature_artist.dart';
 import '../controller/home_page_controller.dart';
 import '../pages/screen_contents/home_views/grid_home_view.dart';
 
@@ -28,7 +27,7 @@ class ArtistHomeWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Get.to(() => const ArtistList());
+              Get.toNamed(ArtistList.routeName);
             },
             child: Padding(
               padding: const EdgeInsets.only(
@@ -75,8 +74,10 @@ class ArtistHomeWidget extends StatelessWidget {
                   String uniqKey = UniqueKey().toString();
                   return InkWell(
                       onTap: () {
-                        Get.to(() => ArtistPage(
-                            artistItemData: artistItemData, page: uniqKey));
+                        Get.toNamed('artist', arguments: {
+                          "artistItemData": artistItemData,
+                          "page": uniqKey,
+                        });
                       },
                       child: Material(
                         color: Colors.transparent,
@@ -90,26 +91,30 @@ class ArtistHomeWidget extends StatelessWidget {
                                 child: SizedBox(
                                   width: 70,
                                   height: 70,
-                                  child: CachedNetworkImage(
-                                    imageUrl: Constants.imageFiller(
-                                        artistItemData.artistPic ?? ""),
-                                    fit: BoxFit.cover,
-                                    color: Colors.black.withAlpha(80),
-                                    colorBlendMode: BlendMode.darken,
-                                    placeholder: (context, url) => Center(
-                                      child: Shimmer.fromColors(
-                                        baseColor: Colors.white,
-                                        highlightColor: Colors.black12,
-                                        child: Container(
-                                          // height: 250,
-                                          width: double.infinity,
-                                          color: Colors.black26.withAlpha(20),
+                                  child: Hero(
+                                    tag:
+                                        "artist${artistItemData.artistTag ?? ""}",
+                                    child: CachedNetworkImage(
+                                      imageUrl: Constants.imageFiller(
+                                          artistItemData.artistPic ?? ""),
+                                      fit: BoxFit.cover,
+                                      color: Colors.black.withAlpha(80),
+                                      colorBlendMode: BlendMode.darken,
+                                      placeholder: (context, url) => Center(
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.white,
+                                          highlightColor: Colors.black12,
+                                          child: Container(
+                                            // height: 250,
+                                            width: double.infinity,
+                                            color: Colors.black26.withAlpha(20),
+                                          ),
                                         ),
                                       ),
+                                      errorWidget: (context, url, error) {
+                                        return const Icon(Iconsax.user);
+                                      },
                                     ),
-                                    errorWidget: (context, url, error) {
-                                      return const Icon(Iconsax.user);
-                                    },
                                   ),
                                 ),
                               ),

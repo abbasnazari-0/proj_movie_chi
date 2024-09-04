@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_chi/features/feature_series_movies/presentations/widgets/mock_search_widget.dart';
 import 'package:movie_chi/locator.dart';
 
 import '../../../../core/widgets/mytext.dart';
@@ -19,6 +20,7 @@ class SeriasHeader extends StatelessWidget {
       height: 80,
       child: Row(
         children: [
+          SearchWidgetShow(),
           GetBuilder<SeriasController>(builder: (controller) {
             return PopupMenuButton(
                 icon: const Icon(Icons.filter_list),

@@ -141,96 +141,101 @@ class _CommenItemState extends State<CommenItem> {
           GetBuilder<CommmentController>(
               init: CommmentController(locator()),
               builder: (controller) {
-                return Row(
-                  children: [
-                    TextButton.icon(
-                      label: MyText(
-                          txt: widget.pageController.commentList[widget.index]
-                              .totalLike
-                              .toString()),
-                      onPressed: () {
-                        controller.likeComment(
-                            int.parse(widget.pageController
-                                    .commentList[widget.index].id ??
-                                "0"),
-                            widget.pageController);
-                      },
-                      icon: FaIcon(
-                        int.parse(widget.pageController
-                                        .commentList[widget.index].userLiked ??
-                                    "0") >
-                                0
-                            ? FontAwesomeIcons.solidThumbsUp
-                            : FontAwesomeIcons.thumbsUp,
-                      ),
-                    ),
-
-                    TextButton.icon(
-                      label: MyText(
-                          txt: widget.pageController.commentList[widget.index]
-                              .totalDisLike
-                              .toString()),
-                      onPressed: () {
-                        controller.unlikeComment(
-                            int.parse(widget.pageController
-                                    .commentList[widget.index].id ??
-                                "0"),
-                            widget.pageController);
-                      },
-                      icon: FaIcon(
-                        int.parse(widget
-                                        .pageController
-                                        .commentList[widget.index]
-                                        .userDesLiked ??
-                                    "0") >
-                                0
-                            ? FontAwesomeIcons.solidThumbsDown
-                            : FontAwesomeIcons.thumbsDown,
-                      ),
-                    ),
-
-                    // like
-
-                    TextButton.icon(
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        label: MyText(
+                            txt: widget.pageController.commentList[widget.index]
+                                .totalLike
+                                .toString()),
                         onPressed: () {
-                          repiledEnable = !repiledEnable;
-                          setState(() {});
-
-                          controller.getCommentReplies(
+                          controller.likeComment(
                               int.parse(widget.pageController
                                       .commentList[widget.index].id ??
                                   "0"),
                               widget.pageController);
                         },
-                        icon: const Icon(
-                          Iconsax.message,
+                        icon: FaIcon(
+                          int.parse(widget
+                                          .pageController
+                                          .commentList[widget.index]
+                                          .userLiked ??
+                                      "0") >
+                                  0
+                              ? FontAwesomeIcons.solidThumbsUp
+                              : FontAwesomeIcons.thumbsUp,
                         ),
-                        label: MyText(
-                            txt:
-                                "پاسخ (${widget.pageController.commentList[widget.index].totalReply ?? ""})",
-                            color: Theme.of(context).colorScheme.secondary)),
-                    const Spacer(),
-                    // spoil report
-                    TextButton.icon(
-                      onPressed: () {
-                        controller.reportCommentSpoiler(widget
-                                .pageController.commentList[widget.index].id ??
-                            "");
-                      },
-                      icon: const Icon(
-                        Icons.report_rounded,
                       ),
-                      label: const MyText(txt: 'گزارش اسپویل'),
-                    )
 
-                    // dislike
+                      TextButton.icon(
+                        label: MyText(
+                            txt: widget.pageController.commentList[widget.index]
+                                .totalDisLike
+                                .toString()),
+                        onPressed: () {
+                          controller.unlikeComment(
+                              int.parse(widget.pageController
+                                      .commentList[widget.index].id ??
+                                  "0"),
+                              widget.pageController);
+                        },
+                        icon: FaIcon(
+                          int.parse(widget
+                                          .pageController
+                                          .commentList[widget.index]
+                                          .userDesLiked ??
+                                      "0") >
+                                  0
+                              ? FontAwesomeIcons.solidThumbsDown
+                              : FontAwesomeIcons.thumbsDown,
+                        ),
+                      ),
 
-                    // label: MyText(
-                    //     txt: "لایک",
-                    //     color: Theme.of(context).colorScheme.secondary)),
+                      // like
 
-                    // reply
-                  ],
+                      TextButton.icon(
+                          onPressed: () {
+                            repiledEnable = !repiledEnable;
+                            setState(() {});
+
+                            controller.getCommentReplies(
+                                int.parse(widget.pageController
+                                        .commentList[widget.index].id ??
+                                    "0"),
+                                widget.pageController);
+                          },
+                          icon: const Icon(
+                            Iconsax.message,
+                          ),
+                          label: MyText(
+                              txt:
+                                  "پاسخ (${widget.pageController.commentList[widget.index].totalReply ?? ""})",
+                              color: Theme.of(context).colorScheme.secondary)),
+                      // const Spacer(),
+                      // spoil report
+                      TextButton.icon(
+                        onPressed: () {
+                          controller.reportCommentSpoiler(widget.pageController
+                                  .commentList[widget.index].id ??
+                              "");
+                        },
+                        icon: const Icon(
+                          Icons.report_rounded,
+                        ),
+                        label: const MyText(txt: 'گزارش اسپویل'),
+                      )
+
+                      // dislike
+
+                      // label: MyText(
+                      //     txt: "لایک",
+                      //     color: Theme.of(context).colorScheme.secondary)),
+
+                      // reply
+                    ],
+                  ),
                 );
               }),
           const Gap(10),

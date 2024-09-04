@@ -17,17 +17,16 @@ import '../../../feature_search/presentation/widgets/search_screen_item.dart';
 import '../controller/play_list_controller.dart';
 
 class PlayListScreen extends StatefulWidget {
-  const PlayListScreen({
+  PlayListScreen({
     Key? key,
-    required this.homeCatagoryItemID,
-    required this.type,
-    this.title = "",
-    this.backGroundImage = "",
   }) : super(key: key);
-  final String homeCatagoryItemID;
-  final String type;
-  final String title;
-  final String backGroundImage;
+
+  static const routeName = "/play_list";
+  final String homeCatagoryItemID = Get.arguments["homeCatagoryItemID"];
+  final String type = Get.arguments["type"];
+  final String title = Get.arguments["title"];
+  final String backGroundImage = Get.arguments["backGroundImage"] ?? "";
+  final VideoTypeType vtype = Get.arguments["videoType"] ?? "";
   @override
   State<PlayListScreen> createState() => _PlayListScreenState();
 }
@@ -44,7 +43,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
     controller.type = widget.type;
     controller.keyWord = widget.title;
 
-    controller.loadPlayListData();
+    controller.loadPlayListData(videoType: widget.vtype);
   }
 
   @override

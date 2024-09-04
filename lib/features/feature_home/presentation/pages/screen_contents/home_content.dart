@@ -63,56 +63,62 @@ class HomeScreenContent extends StatelessWidget {
                                 .homeCatagory?.data?.setting?.androidVersion ??
                             "0"))
                       UpdateWidget(),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount:
-                          ((controller.homeCatagory?.data?.data?.length) ?? 0),
-                      itemBuilder: (context, index) {
-                        HomeCatagoryItemModel homeCatagoryItem =
-                            controller.homeCatagory!.data!.data![index];
+                    MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount:
+                            ((controller.homeCatagory?.data?.data?.length) ??
+                                0),
+                        itemBuilder: (context, index) {
+                          HomeCatagoryItemModel homeCatagoryItem =
+                              controller.homeCatagory!.data!.data![index];
 
-                        switch (homeCatagoryItem.viewName) {
-                          case "carousel_slider":
-                            return Column(
-                              children: [
-                                HomeGalleryVideos(
-                                    itemGalleryData: homeCatagoryItem),
-                                if ((GetStorageData.getData("logined") ??
-                                    false))
-                                  HomeZhannerView(width: width),
-                                const Gap(10),
-                                if ((GetStorageData.getData("logined") ??
-                                    false))
-                                  ArtistHomeWidget()
-                              ],
-                            );
-                          case "extended_slider":
-                            return ExtendedSliderHomeView(
-                                homeCatagoryItem: homeCatagoryItem);
-                          case "banner":
-                            return HomeBannerView(
-                                homeCatagoryItem: homeCatagoryItem);
-                          case "catagory":
-                            return CatagoryHomeView(
-                                homeCatagoryItem: homeCatagoryItem);
-                          case "mini_slider":
-                            return MiniSliderView(
-                                homeCatagoryItem: homeCatagoryItem);
-                          case "grid":
-                            return GridHomeView(
-                                homeCatagoryItem: homeCatagoryItem);
-                          case "continue_watchin":
-                            if (controller.historyList.isNotEmpty) {
-                              return CountinuisWatching(
+                          switch (homeCatagoryItem.viewName) {
+                            case "carousel_slider":
+                              return Column(
+                                children: [
+                                  HomeGalleryVideos(
+                                      itemGalleryData: homeCatagoryItem),
+                                  if ((GetStorageData.getData("logined") ??
+                                      false))
+                                    HomeZhannerView(width: width),
+                                  const Gap(10),
+                                  if ((GetStorageData.getData("logined") ??
+                                      false))
+                                    ArtistHomeWidget()
+                                ],
+                              );
+                            case "extended_slider":
+                              return ExtendedSliderHomeView(
                                   homeCatagoryItem: homeCatagoryItem);
-                            } else {
+                            case "banner":
+                              return HomeBannerView(
+                                  homeCatagoryItem: homeCatagoryItem);
+                            case "catagory":
+                              return CatagoryHomeView(
+                                  homeCatagoryItem: homeCatagoryItem);
+                            case "mini_slider":
+                              return MiniSliderView(
+                                  homeCatagoryItem: homeCatagoryItem);
+                            case "grid":
+                              return GridHomeView(
+                                  type: VideoTypeType.both,
+                                  homeCatagoryItem: homeCatagoryItem);
+                            case "continue_watchin":
+                              if (controller.historyList.isNotEmpty) {
+                                return CountinuisWatching(
+                                    homeCatagoryItem: homeCatagoryItem);
+                              } else {
+                                return Container();
+                              }
+                            default:
                               return Container();
-                            }
-                          default:
-                            return Container();
-                        }
-                      },
+                          }
+                        },
+                      ),
                     ),
                     if ((GetStorageData.getData("logined") ?? false))
                       HomeZhannerView(width: width),

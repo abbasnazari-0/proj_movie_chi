@@ -7,7 +7,7 @@ import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/features/feature_search/data/models/search_model.dart';
 
 import '../../domain/repositories/search_repository.dart';
-import '../data_source/remote/searchGetData.dart';
+import '../data_source/remote/search_api_provider.dart';
 
 class SearchReposityImpl extends SearchRepository {
   final SearchDataGetter searchDataGetter;

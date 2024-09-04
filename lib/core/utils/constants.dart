@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/pages/detail_page.dart';
 import 'package:movie_chi/features/feature_new_notification/presentation/pages/news_page.dart';
 import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
 import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
@@ -24,6 +25,8 @@ String bfileBaseUrl = "https://files.cinimo.ir";
 String pageUrl = "/v9/cinimo/";
 
 String packageName = "com.arianadeveloper.movie.chi";
+
+enum VideoTypeType { movie, serial, both }
 
 class Constants {
   static urlLauncher(url) async {
@@ -335,13 +338,12 @@ class Constants {
         if (val.startsWith("https://")) {
           openUrl(val);
         } else {
-          Get.to(() => PlayListScreen(
-                homeCatagoryItemID: homeCatagoryItem.data![index].id.toString(),
-                type: type,
-                backGroundImage:
-                    homeCatagoryItem.data![index].thumbnail1x ?? '',
-                title: homeCatagoryItem.data![index].title ?? '',
-              ));
+          Get.toNamed(PlayListScreen.routeName, arguments: {
+            "homeCatagoryItemID": homeCatagoryItem.data![index].id.toString(),
+            "type": type,
+            "backGroundImage": homeCatagoryItem.data![index].thumbnail1x ?? '',
+            "title": homeCatagoryItem.data![index].title ?? '',
+          });
         }
 
         break;
@@ -360,7 +362,7 @@ class Constants {
       bool deepLink = false,
       String? hero = "",
       required String picture}) {
-    Get.toNamed('/detail', arguments: {
+    Get.toNamed(DetailPage.routeName, arguments: {
       "tag": vidTag,
       "deepLinking": deepLink,
       "pic": picture,

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:movie_chi/core/utils/constants.dart';
+
 class PlayListParams {
   String version;
   String playListId;
   String playListType;
   String keyWord;
   String videoIds;
+  VideoTypeType vtype;
 
   int amount;
   PlayListParams({
@@ -15,6 +18,7 @@ class PlayListParams {
     this.amount = 20,
     this.keyWord = "",
     this.videoIds = "",
+    this.vtype = VideoTypeType.both,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +30,19 @@ class PlayListParams {
       'keyWord': keyWord,
       'video_ids': videoIds,
     };
+  }
+
+  getVideoTypeAsString() {
+    switch (vtype) {
+      case VideoTypeType.both:
+        return "both";
+      case VideoTypeType.movie:
+        return "movie";
+      case VideoTypeType.serial:
+        return "series";
+      default:
+        return "both";
+    }
   }
 
   factory PlayListParams.fromMap(Map<String, dynamic> map) {

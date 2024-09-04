@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/resources/home_view_exported.dart';
+import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/features/feature_home/data/model/home_catagory_model.dart';
 
@@ -55,7 +56,10 @@ class MoviesScreen extends StatelessWidget {
                     case "mini_slider":
                       return MiniSliderView(homeCatagoryItem: homeCatagoryItem);
                     case "grid":
-                      return GridHomeView(homeCatagoryItem: homeCatagoryItem);
+                      return GridHomeView(
+                        homeCatagoryItem: homeCatagoryItem,
+                        type: VideoTypeType.movie,
+                      );
 
                     default:
                       return Container();

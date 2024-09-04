@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -117,7 +118,7 @@ Future<dynamic> CommentBottomSheet(
                                                       txt: controller
                                                           .reelCommentData[
                                                               index]
-                                                          .userTag!,
+                                                          .name!,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -142,7 +143,8 @@ Future<dynamic> CommentBottomSheet(
                         ReelUserInputComment(
                           size: size,
                           reelsModel: reelsModel,
-                        )
+                        ),
+                        const Gap(30),
                       ],
                     ),
                   ),

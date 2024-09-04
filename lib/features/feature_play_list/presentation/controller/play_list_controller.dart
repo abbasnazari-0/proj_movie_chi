@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:movie_chi/core/utils/constants.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
@@ -27,7 +28,7 @@ class PlayListController extends GetxController {
     return videoIDS;
   }
 
-  loadPlayListData({bool withLoad = false}) async {
+  loadPlayListData({bool withLoad = false, VideoTypeType? videoType}) async {
     List videoIDS = [];
     if (playListModel != null && playListModel!.data!.isNotEmpty) {
       videoIDS = convertModelToListIds(playListModel ?? PlayListModel());
@@ -42,13 +43,14 @@ class PlayListController extends GetxController {
     }
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
+    print(videoType);
     DataState dataState = await useCase.getPlayList(PlayListParams(
       version: packageInfo.version,
       playListId: playListId,
       playListType: type,
       keyWord: keyWord,
       videoIds: json.encode(videoIDS.toString()),
+      vtype: videoType ?? VideoTypeType.both,
     ));
     if (dataState is DataSuccess) {
       PlayListModel playListModel2 = dataState.data;

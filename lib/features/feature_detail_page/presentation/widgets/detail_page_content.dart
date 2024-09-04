@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/widgets/comment_section.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:share_plus/share_plus.dart';
@@ -14,6 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/widgets/play_section_section.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/widgets/session_items_groupe.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/photo_viewer_screen.dart';
@@ -436,87 +438,87 @@ class DetailPageContent extends StatelessWidget {
 
             // Comment Section
             // if (pageController.commentList.isNotEmpty)
-            // const Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 10.0),
-            //   child: MyText(
-            //     txt: "نظرات کاربران",
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: MyText(
+                txt: "نظرات کاربران",
+                fontWeight: FontWeight.bold,
+              ),
+            ),
 
-            // Builder(builder: (cont) {
-            //   return Container(
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(40 / 4),
-            //       // color: Theme.of(context).primaryColor,
-            //     ),
-            //     width: width,
-            //     padding: const EdgeInsets.symmetric(horizontal: 10),
-            //     margin:
-            //         const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            //     child: Row(
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       children: [
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //         Expanded(
-            //           child: TextField(
-            //             controller: controller.userCommentController,
-            //             decoration: const InputDecoration(
-            //               hintText: 'نظر خود را بنویسید',
-            //               border: InputBorder.none,
-            //             ),
-            //             maxLines: null,
-            //             onSubmitted: (value) {
-            //               controller.submitComment();
-            //             },
-            //           ),
-            //         ),
-            //         IconButton(
-            //           onPressed: () {
-            //             controller.submitComment();
-            //           },
-            //           icon: controller.commentStatus == PageStatus.loading
-            //               ? const CircularProgressIndicator()
-            //               : const Icon(
-            //                   Icons.send,
-            //                   color: Colors.white,
-            //                 ),
-            //         ),
-            //       ],
-            //     ),
-            //   );
-            // }),
+            Builder(builder: (cont) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40 / 4),
+                  // color: Theme.of(context).primaryColor,
+                ),
+                width: width,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: controller.userCommentController,
+                        decoration: const InputDecoration(
+                          hintText: 'نظر خود را بنویسید',
+                          border: InputBorder.none,
+                        ),
+                        maxLines: null,
+                        onSubmitted: (value) {
+                          controller.submitComment();
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        controller.submitComment();
+                      },
+                      icon: controller.commentStatus == PageStatus.loading
+                          ? const CircularProgressIndicator()
+                          : const Icon(
+                              Icons.send,
+                              color: Colors.white,
+                            ),
+                    ),
+                  ],
+                ),
+              );
+            }),
 
-            // Divider(
-            //   color: Theme.of(context).colorScheme.secondary,
-            // ),
+            Divider(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
 
-            // const SizedBox(height: 10),
+            const Gap(10),
             // // Comment Section
-            // if (pageController.commentList.isNotEmpty)
-            //   VisibilityDetector(
-            //     key: const Key("unique key"),
-            //     onVisibilityChanged: (info) {
-            //       if (info.visibleFraction > 0.5) {
-            //         pageController.onCommentTap(true);
-            //       } else {
-            //         pageController.onCommentTap(false);
-            //       }
-            //     },
-            //     child: CommentSection(
-            //         pageController: pageController, width: width),
-            //   ),
+            if (pageController.commentList.isNotEmpty)
+              VisibilityDetector(
+                key: const Key("unique key"),
+                onVisibilityChanged: (info) {
+                  if (info.visibleFraction > 0.5) {
+                    pageController.onCommentTap(true);
+                  } else {
+                    pageController.onCommentTap(false);
+                  }
+                },
+                child: CommentSection(
+                    pageController: pageController, width: width),
+              ),
 
-            // if (pageController.showCommentInput)
-            //   const SizedBox(
-            //     height: 50.0,
-            //   ),
+            if (pageController.showCommentInput)
+              const SizedBox(
+                height: 50.0,
+              ),
 
-            // const SizedBox(
-            //   height: 10.0,
-            // )
+            const SizedBox(
+              height: 10.0,
+            )
           ],
         ),
         if (controller.videoDetail!.trailerSources!.isNotEmpty)

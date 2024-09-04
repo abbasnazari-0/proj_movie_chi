@@ -79,6 +79,7 @@ class CommmentController extends GetxController {
       for (var e in detailPageController.commentList) {
         if (e.id == commentID.toString()) {
           e.replies = commentReplies.data ?? [];
+          print("replies : ${e.replies}");
         }
       }
 
