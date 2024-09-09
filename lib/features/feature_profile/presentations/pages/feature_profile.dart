@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                    const Text("version: 1.3.74-release"),
+                    const Text("version: 1.3.76-release"),
                     const Gap(10)
                   ],
                 ),

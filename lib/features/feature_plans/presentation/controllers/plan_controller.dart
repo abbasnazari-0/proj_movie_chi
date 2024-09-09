@@ -96,7 +96,7 @@ class PlanScreenController extends GetxController {
         "",
         "",
         "",
-        GetStorageData.getData("user_tag")));
+        GetStorageData.getData("user_tag") ?? ""));
 
     if (dataState is DataSuccess) {
       UserLoginModel model = dataState.data as UserLoginModel;

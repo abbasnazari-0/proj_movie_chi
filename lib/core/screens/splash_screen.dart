@@ -35,9 +35,9 @@ class _SplashState extends State<Splash> {
     await StatusBarControl.setFullscreen(true);
   }
 
+  final controller = Get.put(PlanScreenController(locator(), locator()));
   final artistController =
       Get.put(ArtistListController(homeCatagoryUseCase: locator()));
-  final controller = Get.put(PlanScreenController(locator(), locator()));
 
   dbInitlizer() async {
     if (MobileDetector.isMobile()) {
@@ -47,8 +47,8 @@ class _SplashState extends State<Splash> {
     }
   }
 
-  final searchController = Get.put(SearchPageController(locator()));
   final homePageController = Get.put(HomePageController(locator(), locator()));
+  final searchController = Get.put(SearchPageController(locator()));
   // final adController = Get.put(AdController());
   final downloadController = Get.put(DownloadPageController());
   final pageController =
@@ -57,6 +57,8 @@ class _SplashState extends State<Splash> {
   @override
   initState() {
     super.initState();
+
+    dbInitlizer();
 
     //Script that chnage Screen Status
 

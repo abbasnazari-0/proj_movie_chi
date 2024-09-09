@@ -8,6 +8,7 @@ class DictionaryDataBaseHelper {
   Database? _db;
 
   void _onCreate(Database db, int version) async {
+    print('creating ....');
     // ایجاد جداول در دیتابیس
     await db.execute('''
       CREATE TABLE tbl_bookmark(

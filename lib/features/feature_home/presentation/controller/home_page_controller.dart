@@ -285,7 +285,7 @@ class HomePageController extends GetxController {
 
     DataState dataState = await homeCatagoryUseCase.getHomeCatagory(
         HomeRequestParams(
-            userTag: GetStorageData.getData("user_tag"),
+            userTag: GetStorageData.getData("user_tag") ?? "",
             version: packageInfo.buildNumber,
             amount: homeAmount.toString(),
             page: homePage.toString(),

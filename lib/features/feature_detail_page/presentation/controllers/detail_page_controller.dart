@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/constants.dart';
+import 'package:movie_chi/core/utils/random_string.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:movie_chi/core/resources/data_state.dart';
@@ -490,6 +491,9 @@ class DetailPageController extends GetxController {
       //launch mx
       GetStorageData.writeData("logined", true);
     } else {
+      if (GetStorageData.getData("user_tag") != null) {
+        GetStorageData.writeData("user_tag", generateRandomString(20));
+      }
       GetStorageData.writeData("logined", false);
     }
   }

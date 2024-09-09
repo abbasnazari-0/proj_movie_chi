@@ -29,9 +29,20 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
+					<string>cinimo.ir</string>
 					<string>com.googleusercontent.apps.628256163112-dj6qgv0pdd9na1kkrkrbthnhidqqdb8b</string>
 				</array>
 			</dict>
+		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>cinimo.ir</string>
+			<string>comgooglemaps</string>
+			<string>comgooglemaps-x-callback</string>
+		</array>
+		<key>NSUserActivityTypes</key>
+		<array>
+				<string>NSUserActivityTypeBrowsingWeb</string>
 		</array>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
@@ -68,3 +79,4 @@
 		<false/>
 	</dict>
 </plist>
+
