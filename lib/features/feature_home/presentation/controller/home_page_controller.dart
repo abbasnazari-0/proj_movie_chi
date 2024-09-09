@@ -141,7 +141,7 @@ class HomePageController extends GetxController {
     checkUseStatus();
 
     getNotificationNewsNew();
-    checkVideoStatus();
+    // checkVideoStatus();
   }
 
   checkUseStatus() async {

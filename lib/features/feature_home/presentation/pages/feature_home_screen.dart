@@ -53,6 +53,12 @@ class _HomeScreenState extends State<HomeScreen>
   bool supportedArea = ((GetStorageData.getData("logined") ?? false));
 
   @override
+  void initState() {
+    super.initState();
+    homePageController.checkVideoStatus();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     //Change StatusBarColor

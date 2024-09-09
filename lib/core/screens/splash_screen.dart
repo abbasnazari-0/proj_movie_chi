@@ -7,12 +7,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
-import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
-import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
-import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
-import 'package:movie_chi/features/feature_search/presentation/controller/search_page_controller.dart';
 import 'package:status_bar_control/status_bar_control.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
 import 'package:movie_chi/features/feature_onboarding/presentation/screens/onboarding_screen.dart';
@@ -35,10 +29,6 @@ class _SplashState extends State<Splash> {
     await StatusBarControl.setFullscreen(true);
   }
 
-  final controller = Get.put(PlanScreenController(locator(), locator()));
-  final artistController =
-      Get.put(ArtistListController(homeCatagoryUseCase: locator()));
-
   dbInitlizer() async {
     if (MobileDetector.isMobile()) {
       DictionaryDataBaseHelper dbHelper = locator();
@@ -46,13 +36,6 @@ class _SplashState extends State<Splash> {
       await dbHelper.init();
     }
   }
-
-  final homePageController = Get.put(HomePageController(locator(), locator()));
-  final searchController = Get.put(SearchPageController(locator()));
-  // final adController = Get.put(AdController());
-  final downloadController = Get.put(DownloadPageController());
-  final pageController =
-      Get.put(DetailPageController(locator(), null, locator()));
 
   @override
   initState() {
@@ -63,8 +46,6 @@ class _SplashState extends State<Splash> {
     //Script that chnage Screen Status
 
     initUniLinks();
-
-    pageController.checkUSers();
   }
 
   Future<void> initUniLinks() async {
@@ -83,11 +64,24 @@ class _SplashState extends State<Splash> {
             GetStorageData.writeData("plan_viewed", true);
             GetStorageData.writeData("is_premium", false);
             openScreenWithPeriodic();
+            return;
           }
           if (uri.queryParameters['type'] == "player") {
             GetStorageData.writeData("video_open", query);
           }
         }
+        // https://cinimo.ir/video/ihiehfdf
+        // should have video path
+        if ((uri.scheme == "http" || uri.scheme == "https") &&
+            uri.pathSegments[0] == "video") {
+          GetStorageData.writeData("video_open", uri.pathSegments[1]);
+          openScreenWithPeriodic();
+          return;
+        }
+        //   //
+
+        // }
+        //
 
         if (uri.pathSegments.isNotEmpty) {
           if (uri.pathSegments[0] == "payment") {
@@ -102,14 +96,15 @@ class _SplashState extends State<Splash> {
           GetStorageData.writeData("notif_data", payload);
 
           openScreenWithPeriodic();
+          return;
           // }
-        } else {
-          openScreenWithPeriodic();
-        }
+        } else {}
       }
     } on PlatformException {
       openScreenWithPeriodic();
+      return;
     }
+    openScreenWithPeriodic();
   }
 
   openScreenWithPeriodic() async {
@@ -142,7 +137,7 @@ class _SplashState extends State<Splash> {
     if ((GetStorageData.getData('isNotFirestTime')) ?? true) {
       Get.off(() => ObBoardingScreen());
     } else {
-      Get.toNamed(HomeScreen.routeName);
+      Get.offNamed(HomeScreen.routeName);
     }
   }
 

@@ -10,11 +10,17 @@ import 'package:movie_chi/config/theme.dart';
 import 'package:movie_chi/core/screens/splash_screen.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/core/utils/photo_viewer_screen.dart';
+import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
 import 'package:movie_chi/features/feature_artists/presentation/pages/artist_list.dart';
 import 'package:movie_chi/features/feature_artists/presentation/pages/feature_artist.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/pages/detail_page.dart';
+import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
+import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
 import 'package:movie_chi/features/feature_play_list/presentation/pages/feature_play_list.dart';
+import 'package:movie_chi/features/feature_search/presentation/controller/search_page_controller.dart';
 import 'package:movie_chi/features/feature_zhanner/presentation/pages/zhanner_detail.dart';
 import 'package:uni_links/uni_links.dart';
 import 'firebase_options.dart';
@@ -85,7 +91,17 @@ void main() async {
   }
 
   FlutterNativeSplash.remove();
-  await initialDeepLinks();
+  // await initialDeepLinks();
+
+  Get.put(PlanScreenController(locator(), locator()));
+
+  Get.put(ArtistListController(homeCatagoryUseCase: locator()));
+  Get.put(HomePageController(locator(), locator()));
+  Get.put(SearchPageController(locator()));
+  // final adController = Get.put(AdController());
+  Get.put(DownloadPageController());
+
+  Get.put(DetailPageController(locator(), null, locator())).checkUSers();
 
   runApp(
     GetMaterialApp(
