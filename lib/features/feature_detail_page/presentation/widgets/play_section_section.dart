@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:movie_chi/core/utils/player_utils/check_quality.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/features/feature_home/data/model/cinimo_config_model.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_drawer.dart';
@@ -18,7 +19,6 @@ import '../../../../core/utils/get_storage_data.dart';
 import '../../../../core/widgets/mytext.dart';
 import '../../../../locator.dart';
 import '../controllers/detail_page_controller.dart';
-import '../controllers/download_page_controller.dart';
 
 class PlaySectionDetailPage extends StatefulWidget {
   const PlaySectionDetailPage({
@@ -51,7 +51,7 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
     lastViewMap = lastView[lastView.length - 1];
 
     setState(() {});
-    LogPrint(lastViewMap);
+    debugPrint(lastViewMap.toString());
   }
 
   @override
@@ -127,7 +127,6 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
 playerIcons() async {
   final pageController = Get.find<DetailPageController>();
   CinimoConfig config = configDataGetter();
-  final downloadController = Get.find<DownloadPageController>();
 
   // if ((GetStorageData.getData("logined") ?? false) == false) {
 
@@ -135,11 +134,11 @@ playerIcons() async {
 
   try {
     if ((GetStorageData.getData("logined") ?? false) == false) {
-      Get.to(() => LoginScreen());
+      Get.toNamed(LoginScreen.routeName);
       return;
     }
   } catch (e) {
-    Get.to(() => LoginScreen());
+    Get.toNamed(LoginScreen.routeName);
     return;
   }
   if (GetStorageData.getData("user_status") != "premium" &&
@@ -154,8 +153,9 @@ playerIcons() async {
   if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
       (config.config?.freeUserPaidVideo ?? false) == true) {
     try {
-      String? qualityLink = await downloadController
-          .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+      String? qualityLink = await CheckQuality.checkQuality(
+          pageController.videoDetail!,
+          actionButton: "پخش");
       if (qualityLink == null) return;
       Constants.openVideoPlayer(
           pageController.video ?? pageController.videoDetail!,
@@ -183,8 +183,9 @@ playerIcons() async {
 
       try {
         // if ((GetStorageData.getData("logined") ?? false)) {
-        String? qualityLink = await downloadController
-            .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+        String? qualityLink = await CheckQuality.checkQuality(
+            pageController.videoDetail!,
+            actionButton: "پخش");
         if (qualityLink == null) return;
         Constants.openVideoPlayer(
             pageController.video ?? pageController.videoDetail!,
@@ -216,10 +217,10 @@ class PlayIcon extends StatelessWidget {
     bool canSeeVide = await pageController.isallowToPlay();
 
     if (canSeeVide) {
-      //launch mx
-      final downloadController = Get.find<DownloadPageController>();
-      String qualityLink = await downloadController
-          .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+      //launch mxoadController = Get.find<DownloadPageController>();
+      String qualityLink = await CheckQuality.checkQuality(
+          pageController.videoDetail!,
+          actionButton: "پخش");
 
       GetStorageData.writeData("logined", true);
       Constants.openVideoPlayer(

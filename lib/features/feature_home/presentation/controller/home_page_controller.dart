@@ -353,7 +353,7 @@ class HomePageController extends GetxController {
     }
     update();
 
-    print(homeCatagory?.data?.setting?.androidVersion);
+    debugPrint(homeCatagory?.data?.setting?.androidVersion);
 
     if (GetStorageData.getData("privacy") == null ||
         GetStorageData.getData("privacy") == false) {
@@ -461,7 +461,6 @@ class HomePageController extends GetxController {
 
   changeBottomNavIndex(int index) {
     navigationIndex = index;
-    print(index);
     switch (index) {
       // case 4 or 10:
       case 4:
@@ -486,7 +485,6 @@ class HomePageController extends GetxController {
 
   likeVideo(List<ReelsModel> reelsModelList, int index) async {
     showLikeReels();
-    print("like status ${reelsModelList[index].userLiked}");
     ReelsModel reelsModel = reelsModelList[index];
     DataState dataState = await homeCatagoryUseCase.likeOrDeslikeReelPost(
         GetStorageData.getData("user_tag"),
@@ -506,7 +504,7 @@ class HomePageController extends GetxController {
       }
       update();
     } else {
-      print(dataState.error);
+      debugPrint(dataState.error);
     }
   }
 

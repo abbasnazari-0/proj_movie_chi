@@ -1,9 +1,55 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
+import 'package:movie_chi/core/utils/random_string.dart';
+import 'package:movie_chi/features/feature_detail_page/data/model/location_ip_model.dart';
+import 'package:movie_chi/features/feature_detail_page/domain/usecases/video_detail_usecase.dart';
 import 'package:movie_chi/features/feature_profile/data/models/profile_model.dart';
+import 'package:movie_chi/locator.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Utils {
+  isallowToPlay() async {
+    final VideoDetailUseCase videoDetailUseCase = locator();
+    DataState data = await videoDetailUseCase.getLocationFromIp();
+
+    if (data is DataSuccess) {
+      LocationModel locationModel = data.data;
+
+      if (locationModel.country == null) return false;
+
+      if (locationModel.country?.toLowerCase() == "ir") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (data is DataFailed) {
+      debugPrint(data.error);
+    }
+  }
+
+  checkUSers() async {
+    if (dotenv.env['APP_ACCESS'] == "true" &&
+        GetStorageData.getData("user_tag") != null) {
+      GetStorageData.writeData("logined", true);
+      return;
+    }
+    bool canSeeVide = await isallowToPlay();
+
+    if (canSeeVide) {
+      //launch mx
+      GetStorageData.writeData("logined", true);
+    } else {
+      if (GetStorageData.getData("user_tag") != null) {
+        GetStorageData.writeData("user_tag", generateRandomString(20));
+      }
+      GetStorageData.writeData("logined", false);
+    }
+  }
+
   getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String buildNumber = packageInfo.buildNumber;

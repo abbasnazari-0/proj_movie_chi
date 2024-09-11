@@ -40,7 +40,7 @@ class EditProfileController extends GetxController {
       familyController.text = profileModel.data?.first.lastName ?? "";
       phoneController.text = profileModel.data?.first.userAuth ?? "";
       pathImage = profileModel.data?.first.pic ?? "";
-      print(profileModel.data?.first.toJson());
+      debugPrint(profileModel.data?.first.toJson().toString());
       pageStatus = PageStatus.success;
     }
 

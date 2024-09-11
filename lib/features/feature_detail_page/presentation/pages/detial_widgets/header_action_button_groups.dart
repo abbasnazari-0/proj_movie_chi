@@ -6,7 +6,6 @@ import 'package:movie_chi/locator.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../controllers/detail_page_controller.dart';
-import '../../controllers/download_page_controller.dart';
 import '../../controllers/notify_controller.dart';
 import '../../widgets/action_button.dart';
 
@@ -16,7 +15,6 @@ class HeaderActionButtonGroup extends StatelessWidget {
   });
 
   final pageController = Get.find<DetailPageController>();
-  final downloadController = Get.find<DownloadPageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,40 +77,6 @@ class HeaderActionButtonGroup extends StatelessWidget {
                     },
                   );
                 }),
-
-          // if (pageController.videoDetail?.type == "video" &&
-          //     Constants.allowToShowAd())
-          //   HeaderActionButtons(
-          //     title: pageController.isVideoDownloaded
-          //         ? 'پخش دانلود شده'
-          //         : pageController.isDownloading == true &&
-          //                 pageController.videoDetail?.tag ==
-          //                     downloadController.video?.tag
-          //             ? 'لغو دانلود'
-          //             : "دانلود نیم بها",
-          //     icon: pageController.isVideoDownloaded
-          //         ? iconSax.Iconsax.play
-          //         : pageController.isDownloading == true &&
-          //                 pageController.videoDetail?.tag ==
-          //                     downloadController.video?.tag
-          //             ? iconSax.Iconsax.close_circle
-          //             : iconSax.Iconsax.arrow_down_24,
-          //     onTap: () {
-          //       final downloadController = Get.find<DownloadPageController>();
-
-          //       if (pageController.isDownloading) {
-          //         // should cancel download
-          //         if (pageController.videoDetail?.tag ==
-          //             downloadController.video?.tag) {
-          //           pageController.cancellTaskDownlod();
-          //           return;
-          //         }
-          //       }
-
-          //       downloadController.startNewDownload(pageController.videoDetail!,
-          //           detailController: pageController);
-          //     },
-          //   ),
         ],
       ),
     );

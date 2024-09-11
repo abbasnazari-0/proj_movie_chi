@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 
@@ -79,7 +80,7 @@ class VideoDetailDataGetter {
       "user_tag": GetStorageData.getData("user_tag"),
       "type": "getReply",
     });
-    print(res.data);
+    debugPrint(res.data);
     return res;
   }
 

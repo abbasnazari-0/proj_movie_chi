@@ -74,6 +74,7 @@ class SearchItem extends StatelessWidget {
                                   item.thumbnail1x.toString()),
 
                               filterQuality: FilterQuality.low,
+                              scale: 0.1,
                               fit: BoxFit.cover,
                               // color: Colors.black.withOpacity(0.2),
                               placeholder: (context, url) => Center(

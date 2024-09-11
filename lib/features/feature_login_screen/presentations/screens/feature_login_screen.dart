@@ -14,6 +14,7 @@ import 'package:movie_chi/locator.dart';
 import '../controllers/login_screen_controller.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const routeName = '/login_screen';
   LoginScreen({super.key});
   final numbercontroller = TextEditingController();
   final codecontroller = TextEditingController();
@@ -62,6 +63,18 @@ class LoginScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(top: 30, right: 20),
+          child: FloatingActionButton(
+            onPressed: () {
+              Get.back();
+            },
+            backgroundColor: Theme.of(context).colorScheme.background,
+            child: Icon(Iconsax.arrow_right,
+                color: Theme.of(context).textTheme.bodyMedium!.color),
+          ),
+        ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: GetBuilder<LoginScreenController>(builder: (screenController) {
           return SingleChildScrollView(

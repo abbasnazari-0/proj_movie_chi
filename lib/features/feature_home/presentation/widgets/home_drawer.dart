@@ -197,7 +197,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           onTap: () async {
                             // close drawer
                             Navigator.pop(context);
-                            await Get.to(() => LoginScreen());
+                            Get.toNamed(LoginScreen.routeName);
                           },
                           leading: Icon(Iconsax.login,
                               color: Theme.of(context).primaryIconTheme.color),

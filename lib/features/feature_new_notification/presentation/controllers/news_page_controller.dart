@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/database_helper.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
@@ -26,7 +27,7 @@ class NewsPageController extends GetxController {
     DictionaryDataBaseHelper dbHelper = locator();
     list = await dbHelper.getQuery('tbl_news_notif');
 
-    print(list);
+    debugPrint(list.toString());
     pageStatus = PageStatus.success;
     update();
   }

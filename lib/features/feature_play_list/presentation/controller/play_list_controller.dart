@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -43,7 +44,7 @@ class PlayListController extends GetxController {
     }
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    print(videoType);
+    debugPrint(videoType.toString());
     DataState dataState = await useCase.getPlayList(PlayListParams(
       version: packageInfo.version,
       playListId: playListId,

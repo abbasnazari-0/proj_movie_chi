@@ -57,6 +57,7 @@ class HomeBannerView extends StatelessWidget {
                 Hero(
                   tag: 'home-item-${homeCatagoryItem.data!.first.tag}',
                   child: CachedNetworkImage(
+                    filterQuality: FilterQuality.low,
                     imageUrl: Constants.imageFiller(
                         getBannerThumbnail(homeCatagoryItem.data!.first)),
                     width: double.infinity,

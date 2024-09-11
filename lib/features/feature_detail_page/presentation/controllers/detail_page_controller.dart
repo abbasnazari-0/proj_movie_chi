@@ -19,7 +19,6 @@ import 'package:movie_chi/features/feature_detail_page/data/model/comment_model.
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
 import 'package:movie_chi/features/feature_detail_page/domain/usecases/video_detail_usecase.dart';
 import 'package:movie_chi/core/models/search_video_model.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
 
 import '../../../../core/params/play_list_params.dart';
 import '../../../../core/utils/database_helper.dart';
@@ -519,45 +518,6 @@ class DetailPageController extends GetxController {
 
   updateStatus() {
     update();
-  }
-
-  cancellTaskDownlod() async {
-    final downloadController = Get.find<DownloadPageController>();
-    downloadController.cancelDownload();
-
-    // FileDownloader().destroy();
-
-    // Map taskElement =
-    //     taskList.where((element) => element["tag"] == vidTag).first;
-    // String taskID = this.taskID;
-    // if (taskIId != null) {
-    //   // FileDownloader().pause(taskIId!);
-    // }
-
-    // (await FileDownloader().cancelTaskWithId(taskID));
-
-    // FileDownloader().destroy();
-
-    isDownloading = false;
-
-    // isDownloading = false;
-
-    // progressbarValue = null;
-
-    fileSize = 0.0;
-    downloadedSize = 0.0;
-    prog = null;
-    remaingTime = "0:00";
-
-    // remove element from video downloaded list
-    // List videoDownloadedList = GetStorageData.getData("video_downloaded") ?? [];
-
-    // videoDownloadedList.removeWhere((element) => element["tag"] == vidTag);
-
-    // GetStorageData.writeData("video_downloaded", videoDownloadedList);
-
-    reorderDownloadedList();
-    // update();
   }
 
   checkVideoDownloaded(tag) async {

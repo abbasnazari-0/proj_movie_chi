@@ -35,7 +35,6 @@ class ArtistListController extends GetxController {
     artistPage++;
     pageStatus = PageStatus.loading;
 
-    print(artistPage);
     if (refrehController != null) refrehController.requestLoading();
     DataState dataState = await homeCatagoryUseCase.getArtistSuggestionData(
         20, artistPage, artistName, artistTag);

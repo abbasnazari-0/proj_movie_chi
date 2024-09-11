@@ -8,6 +8,7 @@ import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
 
 import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
+import 'package:movie_chi/locator.dart';
 
 import '../widgets/detail_page_content.dart';
 import '../widgets/detail_page_loading_view.dart';
@@ -30,7 +31,8 @@ class _DetailPageState extends State<DetailPage> {
   final String pic = Get.arguments['pic'];
   final String? heroTag = Get.arguments['heroTag'] ?? "";
 
-  final pageController = Get.find<DetailPageController>();
+  final pageController = Get.put<DetailPageController>(
+      DetailPageController(locator(), null, locator()));
 
   @override
   void initState() {

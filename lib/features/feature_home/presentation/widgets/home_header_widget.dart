@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
+
 import 'package:movie_chi/features/feature_home/presentation/controller/bottom_app_bar_controller.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
@@ -18,9 +17,7 @@ class HomeHeaderBar extends StatelessWidget {
   final searchController = Get.find<SearchPageController>();
   final homePageController = Get.find<HomePageController>();
   // final adController = Get.put(AdController());
-  final downloadController = Get.find<DownloadPageController>();
 
-  final pageController = Get.find<DetailPageController>();
   final bottomAppBarController = Get.put(BottomAppBarController());
 
   @override
@@ -51,7 +48,7 @@ class HomeHeaderBar extends StatelessWidget {
           IconButton(
             onPressed: () async {
               if ((GetStorageData.getData("user_logined") ?? false) == false) {
-                await Get.to(() => LoginScreen());
+                await Get.toNamed(LoginScreen.routeName);
               } else {
                 Get.to(() => const ProfileScreen());
               }

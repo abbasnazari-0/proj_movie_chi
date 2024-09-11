@@ -92,9 +92,6 @@ dependencies:
   flutter_animate: ^4.5.0
   device_apps: ^2.2.0
 
-  # new------------------------
-  flutter_native_splash: ^2.4.1
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

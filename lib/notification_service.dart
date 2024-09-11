@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:movie_chi/core/utils/database_helper.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
 import 'package:movie_chi/features/feature_new_notification/presentation/controllers/news_page_controller.dart';
 import 'package:movie_chi/features/feature_support/presentation/controllers/support_page_controller.dart';
 import 'package:movie_chi/firebase_options.dart';
@@ -59,12 +58,8 @@ class LocalNotificationService {
         }
       }
       if (notifData['type'] == 'video') {
-        bool hasRegestred = Get.isRegistered<DetailPageController>();
-
-        if (hasRegestred) {
-          Constants.openVideoDetail(
-              vidTag: notifData['tag'], picture: "", deepLink: true);
-        }
+        Constants.openVideoDetail(
+            vidTag: notifData['tag'], picture: "", deepLink: true);
       }
     }
   }

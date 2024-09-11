@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:movie_chi/core/params/profile_updator.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/features/feature_profile/data/models/profile_model.dart';
@@ -27,7 +28,7 @@ class ProfileRepositoryImpl extends ProfileRepository {
   Future<DataState<ProfileModel>> updateProfile(ProfileUpdator params) async {
     try {
       var response = await apiProvider.updateProfile(params);
-      print(response);
+      debugPrint(response.toString());
       if (response.statusCode == 200) {
         return DataSuccess(ProfileModel.fromJson(json.decode(response.data)));
       } else {

@@ -3,7 +3,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_page_controller.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/f_bottom_navigation.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_header_widget.dart';
 import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
@@ -12,7 +11,6 @@ import 'package:movie_chi/features/feature_series_movies/presentations/pages/ser
 import 'package:movie_chi/core/widgets/app_appbar.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/bottom_app_bar_controller.dart';
 import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
-import 'package:movie_chi/features/feature_home/presentation/pages/screen_contents/download_content.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/screen_contents/reels_content.dart';
 import 'package:movie_chi/features/feature_zhanner/presentation/pages/zhanner_content.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_bottom_app_bar.dart';
@@ -20,7 +18,7 @@ import 'package:movie_chi/features/feature_home/presentation/widgets/home_search
 import 'package:movie_chi/features/feature_search/presentation/pages/search_page.dart';
 
 // import '../../../../core/ad/ad_controller.dart';
-import '../../../feature_detail_page/presentation/controllers/detail_page_controller.dart';
+
 import '../../../feature_search/presentation/controller/search_page_controller.dart';
 import '../../../feature_series_movies/presentations/widgets/film_header_widget.dart';
 import '../../../feature_series_movies/presentations/widgets/serias_header_widget.dart';
@@ -42,9 +40,6 @@ class _HomeScreenState extends State<HomeScreen>
   final searchController = Get.find<SearchPageController>();
   final homePageController = Get.find<HomePageController>();
   // final adController = Get.put(AdController());
-  final downloadController = Get.find<DownloadPageController>();
-
-  final pageController = Get.find<DetailPageController>();
 
   //Method that to run url with url_launcher
 
@@ -97,7 +92,6 @@ class _HomeScreenState extends State<HomeScreen>
                     return NestedScrollView(
                       body: RefreshIndicator(
                           onRefresh: () async {
-                            await pageController.checkUSers();
                             return homePageController.getHomeCatagoryData(false,
                                 withClear: true);
                           },
@@ -268,31 +262,6 @@ class _HomeScreenState extends State<HomeScreen>
                                   padding: const EdgeInsets.only(top: 40),
                                   child: AppAppBar(height: height),
                                 ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ];
-                    },
-                  );
-
-                case 6:
-                  return NestedScrollView(
-                    floatHeaderSlivers: true,
-                    body: const DownloadContent(),
-                    physics: const BouncingScrollPhysics(),
-                    headerSliverBuilder: (context, innerBoxIsScrolled) {
-                      return [
-                        SliverAppBar(
-                          automaticallyImplyLeading: false,
-                          toolbarHeight: 80,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.background,
-                          flexibleSpace: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              children: [
-                                AppAppBar(height: height),
                               ],
                             ),
                           ),

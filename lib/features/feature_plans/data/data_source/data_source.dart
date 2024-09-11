@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 
 class PlanApiProvider {
@@ -6,7 +7,7 @@ class PlanApiProvider {
 
   getPlan() async {
     String appVersion = await Constants.versionApplication();
-    print({"version": appVersion});
+    debugPrint({"version": appVersion}.toString());
     Response res = await _dio.get("${Constants.baseUrl()}${pageUrl}plan.php",
         queryParameters: {"version": appVersion});
     return res;

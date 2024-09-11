@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/utils/constants.dart';
+import 'package:movie_chi/core/utils/player_utils/check_quality.dart';
+import 'package:movie_chi/core/utils/player_utils/download_video_function.dart';
+import 'package:movie_chi/core/utils/utils.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 
@@ -14,8 +17,6 @@ import '../../../../core/utils/get_storage_data.dart';
 import '../../../../core/widgets/mytext.dart';
 import '../../../../locator.dart';
 import '../../data/model/video_model.dart';
-import '../controllers/detail_page_controller.dart';
-import '../controllers/download_page_controller.dart';
 
 class SessionItem extends StatefulWidget {
   const SessionItem({
@@ -37,35 +38,6 @@ class _SessionItemState extends State<SessionItem> {
     loadLastView();
   }
 
-  checkUSers() async {
-    bool canSeeVide = await pageController.isallowToPlay();
-
-    if (canSeeVide) {
-      //launch mx
-      final downloadController = Get.find<DownloadPageController>();
-      String qualityLink = await downloadController
-          .checkQuality(pageController.videoDetail!, actionButton: "پخش");
-      GetStorageData.writeData("logined", true);
-
-      Constants.openVideoPlayer(
-        pageController.video ?? pageController.videoDetail!,
-        path: qualityLink,
-        customLink: qualityLink,
-        episoidList: pageController
-                .playListModel?.data?[pageController.sessionId].episoids ??
-            [],
-        episoidIndex: widget.index,
-        additionTitle: pageController.videoDetail?.type != "video"
-            ? pageController.videoDetail?.title ?? ""
-            : "",
-
-        // episoidList: pageController.playListModel?.data,
-      );
-
-      Get.close(0);
-    }
-  }
-
   DictionaryDataBaseHelper dbHelper = locator();
 
   List lastView = [];
@@ -79,22 +51,16 @@ class _SessionItemState extends State<SessionItem> {
     lastViewMap = lastView[lastView.length - 1];
 
     setState(() {});
-    LogPrint(lastViewMap);
+    debugPrint(lastViewMap.toString());
   }
 
-  final downloadController = Get.find<DownloadPageController>();
-  final pageController = Get.find<DetailPageController>();
+  // final pageController = Get.find<DetailPageController>();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return InkWell(
       onTap: () async {
-        print("video");
-        String qualityLink = await downloadController.checkQuality(widget.video,
-            actionButton: "پخش");
-
-        print(qualityLink);
         // Constants.openVideoPlayer(
         //   widget.video,
         //   path: qualityLink,
@@ -111,33 +77,33 @@ class _SessionItemState extends State<SessionItem> {
         // print(widget.video.toJson());
         try {
           if ((GetStorageData.getData("logined") ?? false)) {
-            String qualityLink = await downloadController
-                .checkQuality(widget.video, actionButton: "پخش");
+            String qualityLink = await CheckQuality.checkQuality(widget.video,
+                actionButton: "پخش");
             if (qualityLink == "") return;
-            Constants.openVideoPlayer(
-              widget.video,
-              path: qualityLink,
-              customLink: qualityLink,
-              episoidList: pageController.playListModel
-                      ?.data?[pageController.sessionId].episoids ??
-                  [],
-              episoidIndex: widget.index,
-              additionTitle: pageController.videoDetail?.type != "video"
-                  ? pageController.videoDetail?.title ?? ""
-                  : "",
-            );
+            // Constants.openVideoPlayer(
+            //   widget.video,
+            //   path: qualityLink,
+            //   customLink: qualityLink,
+            //   episoidList: pageController.playListModel
+            //           ?.data?[pageController.sessionId].episoids ??
+            //       [],
+            //   episoidIndex: widget.index,
+            //   additionTitle: pageController.videoDetail?.type != "video"
+            //       ? pageController.videoDetail?.title ?? ""
+            //       : "",
+            // );
           } else {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-            checkUSers();
+            // checkUSers();
             if (!(GetStorageData.getData("logined") ?? false)) {
               // launchUrl(Uri.parse(
               //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-              checkUSers();
+              Utils().checkUSers();
               if ((GetStorageData.getData("logined") ?? false) == false) {
                 if ((GetStorageData.getData("user_logined") ?? false) ==
                     false) {
-                  Get.to(() => LoginScreen());
+                  Get.toNamed(LoginScreen.routeName);
                   return;
                 } else {
                   if (GetStorageData.getData("user_status") == "premium") {
@@ -156,7 +122,6 @@ class _SessionItemState extends State<SessionItem> {
                       return;
                     }
                   } else {
-                    print('ddd');
                     await Constants.showGeneralSnackBar(
                         "تهیه اشتراک ارزان با تخفیف",
                         "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
@@ -172,14 +137,13 @@ class _SessionItemState extends State<SessionItem> {
             }
           }
         } catch (e) {
-          print('eeee');
           if (!(GetStorageData.getData("logined") ?? false)) {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-            checkUSers();
+            Utils().checkUSers();
             if ((GetStorageData.getData("logined") ?? false) == false) {
               if ((GetStorageData.getData("user_logined") ?? false) == false) {
-                Get.to(() => LoginScreen());
+       Get.toNamed(LoginScreen.routeName);
                 return;
               } else {
                 if (GetStorageData.getData("user_status") == "premium") {
@@ -272,15 +236,15 @@ class _SessionItemState extends State<SessionItem> {
             child: IconButton(
                 onPressed: () async {
                   if ((GetStorageData.getData("logined") ?? false)) {
-                    downloadController.downloadVideo(widget.video);
+                    DownloadVideo.downloadVideo(widget.video);
                   } else {
                     // launchUrl(Uri.parse(
                     //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
-                    checkUSers();
+                    Utils().checkUSers();
                     if ((GetStorageData.getData("logined") ?? false) == false) {
                       if ((GetStorageData.getData("user_logined") ?? false) ==
                           false) {
-                        Get.to(() => LoginScreen());
+                 Get.toNamed(LoginScreen.routeName);
                         return;
                       } else {
                         if (GetStorageData.getData("user_status") ==

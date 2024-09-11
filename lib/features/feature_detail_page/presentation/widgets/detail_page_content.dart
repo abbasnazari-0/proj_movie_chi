@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
+import 'package:movie_chi/core/utils/player_utils/check_quality.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/widgets/comment_section.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
@@ -25,7 +26,6 @@ import '../../../feature_home/data/model/cinimo_config_model.dart';
 import '../../../feature_home/presentation/widgets/home_drawer.dart';
 import '../../data/model/video_model.dart';
 import '../controllers/detail_page_controller.dart';
-import '../controllers/download_page_controller.dart';
 import '../pages/detial_widgets/header_action_button_groups.dart';
 import '../pages/detial_widgets/imdb.dart';
 import '../pages/detial_widgets/title_a_qualaties.dart';
@@ -41,7 +41,6 @@ class DetailPageContent extends StatelessWidget {
   final String? heroTag;
   final pageController = Get.find<DetailPageController>();
   final controller = Get.find<DetailPageController>();
-  final downloadController = Get.find<DownloadPageController>();
 
   CinimoConfig config = configDataGetter();
   checkUSers() async {
@@ -49,9 +48,10 @@ class DetailPageContent extends StatelessWidget {
 
     if (canSeeVide) {
       //launch mx
-      final downloadController = Get.find<DownloadPageController>();
-      String qualityLink = await downloadController
-          .checkQuality(pageController.videoDetail!, actionButton: "پخش");
+
+      String qualityLink = await CheckQuality.checkQuality(
+          pageController.videoDetail!,
+          actionButton: "پخش");
 
       GetStorageData.writeData("logined", true);
       Constants.openVideoPlayer(
@@ -300,7 +300,7 @@ class DetailPageContent extends StatelessWidget {
                     if ((GetStorageData.getData("logined") ?? false) == false) {
                       if ((GetStorageData.getData("user_logined") ?? false) ==
                           false) {
-                        Get.to(() => LoginScreen());
+                        Get.toNamed(LoginScreen.routeName);
                         return;
                       } else {
                         if (GetStorageData.getData("user_status") ==
@@ -332,9 +332,6 @@ class DetailPageContent extends StatelessWidget {
                         }
                       }
                     }
-                    downloadController.startNewDownload(
-                        pageController.videoDetail!,
-                        detailController: pageController);
 
                     // if ((GetStorageData.getData("logined") ?? false)) {
                     // } else {
@@ -363,15 +360,9 @@ class DetailPageContent extends StatelessWidget {
                             ? const Icon(
                                 Iconsax.play,
                               )
-                            : pageController.isDownloading == true &&
-                                    pageController.videoDetail?.tag ==
-                                        downloadController.video?.tag
-                                ? const Icon(
-                                    Icons.close,
-                                  )
-                                : const Icon(
-                                    Icons.download,
-                                  ),
+                            : const Icon(
+                                Icons.download,
+                              ),
                       ],
                     ),
                   ),
@@ -412,20 +403,22 @@ class DetailPageContent extends StatelessWidget {
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    const MyText(
-                      txt: "اشتراک گذاری در",
-                      fontWeight: FontWeight.bold,
-                    ),
-                    const Spacer(),
-                    ShareItemCirecule(
-                        messangerName: "90760-whatsapp-icon", onTap: () {}),
-                    const ShareItemCirecule(messangerName: "91510-instagram"),
-                    const ShareItemCirecule(messangerName: "69034-facebook"),
-                    const ShareItemCirecule(messangerName: "44061-telegram"),
-                    const ShareItemCirecule(messangerName: "99229-linkedin"),
-                  ],
+                child: RepaintBoundary(
+                  child: Row(
+                    children: [
+                      const MyText(
+                        txt: "اشتراک گذاری در",
+                        fontWeight: FontWeight.bold,
+                      ),
+                      const Spacer(),
+                      ShareItemCirecule(
+                          messangerName: "90760-whatsapp-icon", onTap: () {}),
+                      const ShareItemCirecule(messangerName: "91510-instagram"),
+                      const ShareItemCirecule(messangerName: "69034-facebook"),
+                      const ShareItemCirecule(messangerName: "44061-telegram"),
+                      const ShareItemCirecule(messangerName: "99229-linkedin"),
+                    ],
+                  ),
                 ),
               ),
             ),
