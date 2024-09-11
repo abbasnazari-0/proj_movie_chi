@@ -96,7 +96,7 @@ class _GridHomeViewState extends State<GridHomeView> {
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.homeCatagoryItem.data?.length,
                   // optimization
-                  cacheExtent: 20,
+                  cacheExtent: 10,
                   itemBuilder: (context, index) {
                     HomeItemData itemData =
                         widget.homeCatagoryItem.data![index];

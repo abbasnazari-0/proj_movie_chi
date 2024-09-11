@@ -481,7 +481,8 @@ class DetailPageController extends GetxController {
   }
 
   checkUSers() async {
-    if (dotenv.env['APP_ACCESS'] == "true") {
+    if (dotenv.env['APP_ACCESS'] == "true" &&
+        GetStorageData.getData("user_tag") != null) {
       GetStorageData.writeData("logined", true);
       return;
     }
