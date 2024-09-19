@@ -4,6 +4,7 @@ buildscript {
         google()
         mavenCentral()
     }
+    
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
@@ -22,6 +23,14 @@ allprojects {
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+
+
+    // beforeEvaluate { project ->
+    //     if (project.name == "platform_device_id") {
+    //         project.buildscript.dependencies.classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+    //     }
+    // }
+
 }
 subprojects {
     project.evaluationDependsOn(':app')

@@ -150,6 +150,7 @@ playerIcons() async {
     });
     return;
   }
+
   if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
       (config.config?.freeUserPaidVideo ?? false) == true) {
     try {

@@ -11,6 +11,7 @@ import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/core/widgets/divider_with_text.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
 import 'package:movie_chi/features/feature_plans/presentation/controllers/plan_controller.dart';
+import 'package:movie_chi/locator.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class PlanScreen extends StatefulWidget {
@@ -21,7 +22,8 @@ class PlanScreen extends StatefulWidget {
 }
 
 class _PlanScreenState extends State<PlanScreen> {
-  final controller = Get.find<PlanScreenController>();
+  final controller =
+      Get.put<PlanScreenController>(PlanScreenController(locator(), locator()));
 
   @override
   void dispose() {

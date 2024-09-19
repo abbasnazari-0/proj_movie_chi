@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
+import 'package:movie_chi/core/utils/utils.dart';
 import 'package:status_bar_control/status_bar_control.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
 import 'package:movie_chi/features/feature_onboarding/presentation/screens/onboarding_screen.dart';
@@ -44,6 +45,8 @@ class _SplashState extends State<Splash> {
     dbInitlizer();
 
     //Script that chnage Screen Status
+
+    Utils().checkUSers();
 
     initUniLinks();
   }
@@ -133,12 +136,14 @@ class _SplashState extends State<Splash> {
   }
 
   startNewActivity() {
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      if ((GetStorageData.getData('isNotFirestTime')) ?? true) {
+        Get.off(() => ObBoardingScreen());
+      } else {
+        Get.offNamed(HomeScreen.routeName);
+      }
+    });
 // Check if User come with first time
-    if ((GetStorageData.getData('isNotFirestTime')) ?? true) {
-      Get.off(() => ObBoardingScreen());
-    } else {
-      Get.offNamed(HomeScreen.routeName);
-    }
   }
 
   @override

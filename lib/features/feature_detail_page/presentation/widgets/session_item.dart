@@ -9,6 +9,7 @@ import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/player_utils/check_quality.dart';
 import 'package:movie_chi/core/utils/player_utils/download_video_function.dart';
 import 'package:movie_chi/core/utils/utils.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 
@@ -54,7 +55,7 @@ class _SessionItemState extends State<SessionItem> {
     debugPrint(lastViewMap.toString());
   }
 
-  // final pageController = Get.find<DetailPageController>();
+  final pageController = Get.find<DetailPageController>();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -80,18 +81,18 @@ class _SessionItemState extends State<SessionItem> {
             String qualityLink = await CheckQuality.checkQuality(widget.video,
                 actionButton: "پخش");
             if (qualityLink == "") return;
-            // Constants.openVideoPlayer(
-            //   widget.video,
-            //   path: qualityLink,
-            //   customLink: qualityLink,
-            //   episoidList: pageController.playListModel
-            //           ?.data?[pageController.sessionId].episoids ??
-            //       [],
-            //   episoidIndex: widget.index,
-            //   additionTitle: pageController.videoDetail?.type != "video"
-            //       ? pageController.videoDetail?.title ?? ""
-            //       : "",
-            // );
+            Constants.openVideoPlayer(
+              widget.video,
+              path: qualityLink,
+              customLink: qualityLink,
+              episoidList: pageController.playListModel
+                      ?.data?[pageController.sessionId].episoids ??
+                  [],
+              episoidIndex: widget.index,
+              additionTitle: pageController.videoDetail?.type != "video"
+                  ? pageController.videoDetail?.title ?? ""
+                  : "",
+            );
           } else {
             // launchUrl(Uri.parse(
             //     "https://imdb.com/find/?q=${pageController.videoDetail!.title ?? ''}"));
@@ -143,7 +144,7 @@ class _SessionItemState extends State<SessionItem> {
             Utils().checkUSers();
             if ((GetStorageData.getData("logined") ?? false) == false) {
               if ((GetStorageData.getData("user_logined") ?? false) == false) {
-       Get.toNamed(LoginScreen.routeName);
+                Get.toNamed(LoginScreen.routeName);
                 return;
               } else {
                 if (GetStorageData.getData("user_status") == "premium") {
@@ -244,7 +245,7 @@ class _SessionItemState extends State<SessionItem> {
                     if ((GetStorageData.getData("logined") ?? false) == false) {
                       if ((GetStorageData.getData("user_logined") ?? false) ==
                           false) {
-                 Get.toNamed(LoginScreen.routeName);
+                        Get.toNamed(LoginScreen.routeName);
                         return;
                       } else {
                         if (GetStorageData.getData("user_status") ==

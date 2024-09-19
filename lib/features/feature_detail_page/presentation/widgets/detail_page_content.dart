@@ -7,9 +7,8 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/utils/player_utils/check_quality.dart';
+import 'package:movie_chi/features/feature_detail_page/presentation/controllers/download_controller.dart';
 import 'package:movie_chi/features/feature_detail_page/presentation/widgets/comment_section.dart';
-import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
-import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -293,80 +292,43 @@ class DetailPageContent extends StatelessWidget {
                   width: width,
                   itemCount: itemCount,
                   pageController: pageController),
-            if ((GetStorageData.getData("logined") ?? false))
-              if (pageController.videoDetail?.type == "video")
-                InkWell(
-                  onTap: () async {
-                    if ((GetStorageData.getData("logined") ?? false) == false) {
-                      if ((GetStorageData.getData("user_logined") ?? false) ==
-                          false) {
-                        Get.toNamed(LoginScreen.routeName);
-                        return;
-                      } else {
-                        if (GetStorageData.getData("user_status") ==
-                            "premium") {
-                          String timeOut =
-                              GetStorageData.getData("time_out_premium");
-                          DateTime expireTimeOut = (DateTime.parse(timeOut));
-                          DateTime now = (DateTime.now());
 
-                          if (expireTimeOut.millisecondsSinceEpoch <
-                              now.millisecondsSinceEpoch) {
-                            await Constants.showGeneralSnackBar(
-                                "خطا", "اشتراک شما به پایان رسیده است");
-                            Future.delayed(const Duration(milliseconds: 1000),
-                                () async {
-                              await Get.to(() => const PlanScreen());
-                            });
-                            return;
-                          }
-                        } else {
-                          await Constants.showGeneralSnackBar(
-                              "تهیه اشتراک ارزان با تخفیف",
-                              "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
-                          Future.delayed(const Duration(milliseconds: 1000),
-                              () async {
-                            await Get.to(() => const PlanScreen());
-                          });
-                          return;
-                        }
-                      }
-                    }
-
-                    // if ((GetStorageData.getData("logined") ?? false)) {
-                    // } else {
-                    //   checkUSers();
-                    //   showSubscribtion();
-                    // }
-                  },
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50 / 4),
-                        color: Theme.of(context).primaryColor),
-                    width: width,
-                    height: 50,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const MyText(
-                          txt: "دانلود  فیلم",
-                          color: Colors.white,
+            // if ((GetStorageData.getData("user_logined") ?? false) == true)
+            if (pageController.videoDetail?.type == "video")
+              GetBuilder<DownloadController>(
+                  init: DownloadController(),
+                  builder: (contDownloader) {
+                    return InkWell(
+                      onTap: () async {
+                        contDownloader.downloadVideo(
+                          pageController.videoDetail!,
+                        );
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50 / 4),
+                            color: Theme.of(context).primaryColor),
+                        width: width,
+                        height: 50,
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            MyText(
+                              txt: "دانلود  فیلم",
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.download,
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 10),
-                        pageController.isVideoDownloaded
-                            ? const Icon(
-                                Iconsax.play,
-                              )
-                            : const Icon(
-                                Icons.download,
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
+                    );
+                  }),
 
             const Gap(10),
 
