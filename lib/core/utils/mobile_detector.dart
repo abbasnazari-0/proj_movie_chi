@@ -19,7 +19,7 @@ class MobileDetector {
 
   static PltformSize getPlatformSize(Size size) {
     if (size.width < 600) return PltformSize.mobile;
-    if (size.width < 900) return PltformSize.tablet;
+    if (size.width > 600) return PltformSize.tablet;
     return PltformSize.desktop;
   }
 

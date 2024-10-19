@@ -42,11 +42,13 @@ class Utils {
     if (canSeeVide) {
       //launch mx
       GetStorageData.writeData("logined", true);
+      GetStorageData.writeData('Authorizedd', true);
     } else {
       if (GetStorageData.getData("user_tag") != null) {
         GetStorageData.writeData("user_tag", generateRandomString(20));
       }
       GetStorageData.writeData("logined", false);
+      GetStorageData.writeData("Authorizedd", false);
     }
   }
 

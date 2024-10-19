@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:movie_chi/core/params/check_device_status.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/features/feature_login_screen/data/models/user_login_params.dart';
 import 'package:platform_device_id/platform_device_id.dart';
@@ -61,5 +62,40 @@ class AuthService {
       "sign_in_method": params.signInMethod,
       "prev_user_tag": GetStorageData.getData("user_tag")
     });
+  }
+
+  requestNewDevice(String userTag) async {
+    return await dio.request(
+      "${Constants.baseUrl()}${pageUrl}device_login.php",
+      queryParameters: {
+        "type": "create",
+        "user_tag": "Era5VYCSzSx1QoXS7bxq",
+      },
+    );
+  }
+
+  checkDeviceStatus(CheckDeviceStatusParams params) async {
+    debugPrint(params.token);
+    return await dio.request(
+      "${Constants.baseUrl()}${pageUrl}device_login.php",
+      queryParameters: {
+        "type": "check",
+        "user_tag": params.userTag,
+        "token_id": params.tokenID,
+        "token": params.token,
+      },
+    );
+  }
+
+  submitDeviceStatus(CheckDeviceStatusParams params) async {
+    return await dio.request(
+      "${Constants.baseUrl()}${pageUrl}device_login.php",
+      queryParameters: {
+        "type": "submit",
+        "user_tag": params.userTag,
+        "token_id": params.tokenID,
+        "token": params.token,
+      },
+    );
   }
 }

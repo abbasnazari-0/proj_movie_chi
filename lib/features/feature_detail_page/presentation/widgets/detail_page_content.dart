@@ -353,7 +353,7 @@ class DetailPageContent extends StatelessWidget {
                     )
                   : pageController.serialStatus == PageStatus.error
                       ? const Center(child: Text('Error'))
-                      : SessionItemGroupe(pageController: pageController),
+                      : const SessionItemGroupe(),
 
             const SizedBox(height: 10),
 

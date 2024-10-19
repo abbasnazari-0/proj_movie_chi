@@ -12,6 +12,7 @@ import 'package:movie_chi/features/feature_critism/presentation/pages/criticism_
 import 'package:movie_chi/features/feature_home/presentation/widgets/last_played.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/saved_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
+import 'package:movie_chi/features/feature_profile/presentations/controllers/add_device_controller.dart';
 import 'package:movie_chi/features/feature_profile/presentations/pages/feature_edit_profile.dart';
 import 'package:movie_chi/features/feature_profile/presentations/widgets/setting_item.dart';
 import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
@@ -160,8 +161,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SettingItems(
                       icon: Iconsax.add_circle,
                       title: 'خرید (تمدید) اشتراک',
-                      onTap: () {
-                        Get.to(() => const PlanScreen());
+                      onTap: () async {
+                        await Get.to(() => const PlanScreen());
+                        setState(() {});
+                      },
+                    ),
+                    const Gap(10),
+                    SettingItems(
+                      icon: Iconsax.devices_1,
+                      title: "افزودن دستگاه",
+                      onTap: () async {
+                        AddDeviceController().call();
                       },
                     ),
                     const Divider(
@@ -230,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                    const Text("version: 1.3.76-release"),
+                    const Text("version: 1.3.83-release"),
                     const Gap(10)
                   ],
                 ),

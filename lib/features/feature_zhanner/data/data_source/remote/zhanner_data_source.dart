@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/features/feature_home/data/model/home_catagory_model.dart';
 
@@ -13,7 +12,7 @@ class ZhannerDataSource {
         .post("${Constants.baseUrl()}${pageUrl}tags.php", queryParameters: {
       "version": await Constants.versionApplication(),
     });
-    debugPrint(res.data);
+    // debugPrint(res.data);
     return res;
   }
 

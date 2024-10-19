@@ -98,35 +98,30 @@ class ObBoardingScreen extends StatelessWidget {
                     size: 15,
                   ),
                   const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          GetStorageData.writeData('isNotFirestTime', false);
-                          // if (allowLogin)
-                          Get.off(() => const HomeScreen());
-                        },
-                        child: Container(
-                          width: MobileDetector.sizeHelper(
-                              MediaQuery.of(context).size,
-                              mobileSize: width * 0.9,
-                              tabletSize: width * 0.7,
-                              desktopSize: width * 0.4),
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Center(
-                            child: MyText(
-                              txt: 'شروع',
-                              color: Colors.white,
-                            ),
-                          ),
+                  InkWell(
+                    onTap: () {
+                      GetStorageData.writeData('isNotFirestTime', false);
+                      // if (allowLogin)
+                      Get.off(() => const HomeScreen());
+                    },
+                    child: Container(
+                      width: MobileDetector.sizeHelper(
+                          MediaQuery.of(context).size,
+                          mobileSize: width * 0.9,
+                          tabletSize: width * 0.7,
+                          desktopSize: width * 0.4),
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: MyText(
+                          txt: 'شروع',
+                          color: Colors.white,
                         ),
                       ),
-                    ],
+                    ),
                   )
                 ],
               ),

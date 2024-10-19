@@ -7,7 +7,7 @@ class SearchDataGetter {
     Dio dio = Dio();
 
     var res = await dio
-        .post('${Constants.baseUrl()}${pageUrl}search.php', queryParameters: {
+        .post('${Constants.baseUrl()}$pageUrl/search.php', queryParameters: {
       "page": searchParamsQuery.count,
       "query": searchParamsQuery.query,
       "type": searchParamsQuery.type,

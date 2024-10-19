@@ -42,6 +42,7 @@ chooseQuality(List videosQualities,
                       for (var item in videosQualities)
                         if (item["vid"] != null)
                           InkWell(
+                            autofocus: true,
                             onTap: () {
                               if ((justQuality ?? false) == true) {
                                 qualitySelected = item["quality"]!;

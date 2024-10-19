@@ -35,11 +35,8 @@ class CheckQuality {
       // if ((justQuality ?? false) == true) {
       return videosQualities
           .where((element) => element["vid"] != null)
-          .first["quality"]!;
+          .first["vid"]!;
       // }
-      // return getVideoUrl(videosQualities
-      //     .where((element) => element["vid"] != null)
-      //     .first["vid"]! as Video);
     } else {
       String qualitySelected = "";
       // debugPrint(videosQualities.toString());
@@ -47,7 +44,7 @@ class CheckQuality {
       // show dialog to choose quality
       qualitySelected = await chooseQuality(videosQualities,
           actionButton: actionButton, justQuality: justQuality);
-      // debugPrint(qualitySelected.toString());
+      debugPrint(qualitySelected.toString());
       return (qualitySelected);
     }
   }

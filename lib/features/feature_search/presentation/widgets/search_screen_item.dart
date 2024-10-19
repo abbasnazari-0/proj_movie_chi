@@ -34,11 +34,12 @@ class SearchItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UniqueKey key = UniqueKey();
     return GestureDetector(
       onTap: () {
         if (onTap != null) onTap!();
         Constants.openVideoDetail(
-            hero: 'search-item-${item.tag}',
+            hero: '$key-search-item-${item.tag}',
             vidTag: item.tag.toString(),
             type: item.type,
             commonTag: item.commonTag,
@@ -64,7 +65,7 @@ class SearchItem extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Hero(
-                            tag: 'search-item-${item.tag}',
+                            tag: '$key-search-item-${item.tag}',
                             child: CachedNetworkImage(
                               colorBlendMode: BlendMode.srcOver,
                               color: item.type == "video"

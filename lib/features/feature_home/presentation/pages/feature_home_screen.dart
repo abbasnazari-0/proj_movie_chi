@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
+import 'package:movie_chi/features/feature_home/presentation/pages/screens/android_tv_screen.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/f_bottom_navigation.dart';
 import 'package:movie_chi/features/feature_home/presentation/widgets/home_header_widget.dart';
 import 'package:movie_chi/features/feature_search/presentation/controller/home_searchbar_controller.dart';
@@ -53,13 +54,7 @@ class _HomeScreenState extends State<HomeScreen>
     homePageController.checkVideoStatus();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    //Change StatusBarColor
-
-    final height = MediaQuery.of(context).size.height;
-
+  buildPortrait(BuildContext context, double height) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(
@@ -278,6 +273,29 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
     );
+  }
+
+  buildLandscape(BuildContext context, double height) {
+    return AndroidTVScreen();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    //Change StatusBarColor
+
+    final height = MediaQuery.of(context).size.height;
+
+    return LayoutBuilder(builder: (context, constrains) {
+      if (constrains.maxWidth > 600.0) {
+        return buildLandscape(context, height);
+      } else {
+        return buildPortrait(context, height);
+      }
+    } 
+        // ?
+        // :
+        );
   }
 
   @override

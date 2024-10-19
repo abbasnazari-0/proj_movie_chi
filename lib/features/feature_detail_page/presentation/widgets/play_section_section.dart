@@ -65,7 +65,8 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: playerIcons,
+      onTap: () =>
+          playerIcons(pageController.video ?? pageController.videoDetail),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
@@ -124,8 +125,10 @@ class _PlaySectionDetailPageState extends State<PlaySectionDetailPage> {
   }
 }
 
-playerIcons() async {
-  final pageController = Get.find<DetailPageController>();
+checkUserStatus(Function onSuccess, Function onFail, Video videoDetail) async {
+  bool isTablet = Get.width > Get.height;
+
+  // final pageController = Get.find<DetailPageController>();
   CinimoConfig config = configDataGetter();
 
   // if ((GetStorageData.getData("logined") ?? false) == false) {
@@ -133,7 +136,7 @@ playerIcons() async {
   // // check from persian country or not
 
   try {
-    if ((GetStorageData.getData("logined") ?? false) == false) {
+    if ((GetStorageData.getData("user_logined") ?? false) == false) {
       Get.toNamed(LoginScreen.routeName);
       return;
     }
@@ -142,26 +145,24 @@ playerIcons() async {
     return;
   }
   if (GetStorageData.getData("user_status") != "premium" &&
-      pageController.videoDetail?.videoType?.type == VideoTypeEnum.premium) {
-    await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
-        "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
-    Future.delayed(const Duration(milliseconds: 1000), () async {
-      await Get.to(() => const PlanScreen());
-    });
+      videoDetail.videoType?.type == VideoTypeEnum.premium) {
+    if (isTablet) {
+      await Constants.showGeneralSnackBar("تهیه اشتراک با گوشی",
+          "لطفا با گوشی به اکانت خود مراجعه کنید و اشتراک تهیه کنید؛ این امکان برای تبلت ها وجود ندارد");
+    } else {
+      await Constants.showGeneralSnackBar("تهیه اشتراک ارزان با تخفیف",
+          "لطفا اشتراک ارزان تهیه کنید تا بتوانید از ما حمایت کنید");
+      Future.delayed(const Duration(milliseconds: 1000), () async {
+        await Get.to(() => const PlanScreen());
+      });
+    }
     return;
   }
 
-  if (pageController.videoDetail?.videoType?.type == VideoTypeEnum.free ||
+  if (videoDetail.videoType?.type == VideoTypeEnum.free ||
       (config.config?.freeUserPaidVideo ?? false) == true) {
     try {
-      String? qualityLink = await CheckQuality.checkQuality(
-          pageController.videoDetail!,
-          actionButton: "پخش");
-      if (qualityLink == null) return;
-      Constants.openVideoPlayer(
-          pageController.video ?? pageController.videoDetail!,
-          path: qualityLink,
-          customLink: qualityLink);
+      onSuccess();
 
       // }
     } catch (e) {
@@ -184,16 +185,15 @@ playerIcons() async {
 
       try {
         // if ((GetStorageData.getData("logined") ?? false)) {
-        String? qualityLink = await CheckQuality.checkQuality(
-            pageController.videoDetail!,
-            actionButton: "پخش");
-        if (qualityLink == null) return;
-        Constants.openVideoPlayer(
-            pageController.video ?? pageController.videoDetail!,
-            path: qualityLink,
-            customLink: qualityLink);
+        onSuccess();
+        // String? qualityLink =
+        //     await CheckQuality.checkQuality(videoDetail!, actionButton: "پخش");
 
-        // }
+        // if (qualityLink == null) return;
+        // Constants.openVideoPlayer(videoDetail,
+        //     path: qualityLink, customLink: qualityLink);
+
+        // // }
       } catch (e) {
         debugPrint("");
       }
@@ -206,6 +206,17 @@ playerIcons() async {
       return;
     }
   }
+}
+
+playerIcons(Video? videoDetail) async {
+  checkUserStatus(() async {
+    String? qualityLink =
+        await CheckQuality.checkQuality(videoDetail!, actionButton: "پخش");
+    if (qualityLink == null) return;
+
+    Constants.openVideoPlayer(videoDetail,
+        path: qualityLink, customLink: qualityLink);
+  }, () {}, videoDetail!);
 }
 
 // ignore: must_be_immutable
@@ -238,7 +249,8 @@ class PlayIcon extends StatelessWidget {
     return IconButton(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      onPressed: playerIcons,
+      onPressed: () =>
+          playerIcons(pageController.video ?? pageController.videoDetail),
       icon: Icon(
         Iconsax.play_circle5,
         color: Get.theme.colorScheme.secondary,

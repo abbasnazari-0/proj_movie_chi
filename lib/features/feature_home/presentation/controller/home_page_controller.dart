@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_chi/core/utils/constants.dart';
+import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
@@ -145,7 +146,8 @@ class HomePageController extends GetxController {
   }
 
   checkUseStatus() async {
-    final controllerss = Get.find<PlanScreenController>();
+    final controllerss = Get.put<PlanScreenController>(
+        PlanScreenController(locator(), locator()));
     // GetStorageData.writeData("plan_viewed", true);
     controllerss.checkAndGo();
   }
@@ -271,7 +273,8 @@ class HomePageController extends GetxController {
   int homeAmount = 0;
   int homePage = 0;
   // get home catagory data
-  getHomeCatagoryData(bool withmoreLoad, {bool? withClear}) async {
+  getHomeCatagoryData(bool withmoreLoad,
+      {bool? withClear, bool? tvMode = false}) async {
     if (homeAmount == 0) homeAmount = 10;
     if (homeAmount > 0 && withmoreLoad) homePage++;
 
@@ -289,7 +292,7 @@ class HomePageController extends GetxController {
             version: packageInfo.buildNumber,
             amount: homeAmount.toString(),
             page: homePage.toString(),
-            supportArea: (GetStorageData.getData("logined") ?? false)
+            supportArea: (GetStorageData.getData("Authorizedd") ?? false)
                 ? 'true'
                 : 'false'));
     if (dataState is DataSuccess) {
@@ -307,39 +310,40 @@ class HomePageController extends GetxController {
 
       List<HomeCatagoryItemModel> homeCatagoryData =
           List.from(homeCatagory!.data!.data!);
+      if (tvMode == true) {
+        List<HomeItemData> courselSlider = [];
 
-      List<HomeItemData> courselSlider = [];
-
-      for (var element in homeCatagoryData) {
-        if (element.viewName == "carousel_slider") {
-          courselSlider = List.from(element.data!);
-          break;
+        for (var element in homeCatagoryData) {
+          if (element.viewName == "carousel_slider") {
+            courselSlider = List.from(element.data!);
+            break;
+          }
         }
-      }
 
-      int insertIndex = 2;
+        int insertIndex = 2;
 
-      for (var i = 0; i < courselSlider.length; i++) {
-        homeCatagory?.data?.data?.insert(
-            insertIndex,
-            HomeCatagoryItemModel(
+        for (var i = 0; i < courselSlider.length; i++) {
+          homeCatagory?.data?.data?.insert(
+              insertIndex,
+              HomeCatagoryItemModel(
+                  viewName: "banner",
+                  title: "banner",
+                  valueType: 'video',
+                  data: [courselSlider[i]],
+                  id: '00'));
+
+          insertIndex = insertIndex +
+              2; // Add 2 instead of 1 to insert the element in the middle
+
+          if (insertIndex >= homeCatagory!.data!.data!.length) {
+            homeCatagory?.data?.data?.add(
+              HomeCatagoryItemModel(
                 viewName: "banner",
                 title: "banner",
-                valueType: 'video',
                 data: [courselSlider[i]],
-                id: '00'));
-
-        insertIndex = insertIndex +
-            2; // Add 2 instead of 1 to insert the element in the middle
-
-        if (insertIndex >= homeCatagory!.data!.data!.length) {
-          homeCatagory?.data?.data?.add(
-            HomeCatagoryItemModel(
-              viewName: "banner",
-              title: "banner",
-              data: [courselSlider[i]],
-            ),
-          );
+              ),
+            );
+          }
         }
       }
 
@@ -435,7 +439,10 @@ class HomePageController extends GetxController {
 
     configGetter();
 
-    getHomeCatagoryData(false);
+    getHomeCatagoryData(false,
+        tvMode: MobileDetector.getPlatformSize(Get.size) == PltformSize.mobile
+            ? true
+            : false);
 
     checkUpdateAvailable();
   }

@@ -34,9 +34,17 @@ class _PlanScreenState extends State<PlanScreen> {
   @override
   void initState() {
     super.initState();
+
     controller.getPlans();
     controller.checkAndGo();
     controller.monthly = false;
+
+    Future.delayed(const Duration(seconds: 1), () {
+      if ((GetStorageData.getData("user_logined") ?? false) == false) {
+        Get.offNamed("/login_screen");
+        // return;
+      }
+    });
   }
 
   @override
@@ -52,7 +60,8 @@ class _PlanScreenState extends State<PlanScreen> {
             padding: const EdgeInsets.only(top: 30, right: 20),
             child: FloatingActionButton(
               onPressed: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                Get.back();
               },
               backgroundColor:
                   Theme.of(context).colorScheme.secondary.withOpacity(0.5),

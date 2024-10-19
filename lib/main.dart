@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -7,12 +8,11 @@ import 'package:movie_chi/config/theme.dart';
 import 'package:movie_chi/core/routes.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
-import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
+
 import 'package:movie_chi/features/feature_search/presentation/controller/search_page_controller.dart';
 import 'firebase_options.dart';
 import 'locator.dart';
 import 'notification_service.dart';
-// I/flutter ( 5732): Pinput: App Signature for SMS Retriever API Is: mytcCT9Ar3o
 
 void main() async {
 // debugRepaintRainbowEnabled = true;
@@ -31,22 +31,18 @@ void main() async {
   // initialize the firebase for analytics
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+// Elsewhere in your code
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
   // initialize the notification service
   if (MobileDetector.isMobile()) {
     LocalNotificationService().initialize();
   }
 
-  // await initialDeepLinks();
-
-  // Get.put(PlanScreenController(locator(), locator()));
-
   Get.put(ArtistListController(homeCatagoryUseCase: locator()));
-  Get.put(HomePageController(locator(), locator()));
+
   Get.put(SearchPageController(locator()));
   // final adController = Get.put(AdController());
-  // Get.put(DownloadPageController());
-
-  // Get.put(DetailPageController(locator(), null, locator())).checkUSers();
 
   runApp(
     GetMaterialApp(

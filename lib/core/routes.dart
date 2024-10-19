@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:movie_chi/core/screens/splash_screen.dart';
+import 'package:movie_chi/core/screens/splash_screen_ios.dart';
+import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/utils/photo_viewer_screen.dart';
 import 'package:movie_chi/features/feature_artists/presentation/pages/artist_list.dart';
 import 'package:movie_chi/features/feature_artists/presentation/pages/feature_artist.dart';
@@ -10,10 +14,15 @@ import 'package:movie_chi/features/feature_play_list/presentation/pages/feature_
 import 'package:movie_chi/features/feature_zhanner/presentation/pages/zhanner_detail.dart';
 
 final List<GetPage> routes = [
-  GetPage(
-    name: "/",
-    page: () => const Splash(),
-  ),
+  Platform.isIOS && (GetStorageData.getData('Authorizedd') ?? false) == false
+      ? GetPage(
+          name: "/",
+          page: () => const SplashIOS(),
+        )
+      : GetPage(
+          name: "/",
+          page: () => const Splash(),
+        ),
   GetPage(
     name: "/home",
     page: () => const HomeScreen(),

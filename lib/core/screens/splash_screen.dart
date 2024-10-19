@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/core/utils/utils.dart';
+import 'package:movie_chi/features/feature_home/presentation/controller/home_page_controller.dart';
 import 'package:status_bar_control/status_bar_control.dart';
 import 'package:movie_chi/features/feature_home/presentation/pages/feature_home_screen.dart';
 import 'package:movie_chi/features/feature_onboarding/presentation/screens/onboarding_screen.dart';
@@ -38,17 +39,36 @@ class _SplashState extends State<Splash> {
     }
   }
 
+  // if user is accessed don't check again
+  checkAuthorization() async {
+    if (GetStorageData.getData('Authorizedd') != true) {
+      await Utils().checkUSers();
+    }
+
+    if (GetStorageData.getData('Authorizedd') == true) {}
+    dbInitlizer();
+
+    //Script that chnage Screen Status
+    initUniLinks();
+    // }
+    if (GetStorageData.getData('Authorizedd') != true) {}
+
+    // check platform  size, is bigger than mobile or not
+    // if (MobileDetector.getPlatformSize(MediaQuery.of(context).size) !=
+    //     PltformSize.mobile) {
+    //   chnageScreenToFull();
+    // }
+
+    Get.put(HomePageController(locator(), locator()), permanent: true);
+  }
+
+  // if user dosen't accessed, check again
+
   @override
   initState() {
     super.initState();
 
-    dbInitlizer();
-
-    //Script that chnage Screen Status
-
-    Utils().checkUSers();
-
-    initUniLinks();
+    checkAuthorization();
   }
 
   Future<void> initUniLinks() async {

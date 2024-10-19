@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:movie_chi/core/utils/episod_converter.dart';
 import 'package:movie_chi/core/utils/player_utils/check_quality.dart';
 import 'package:movie_chi/features/feature_detail_page/data/model/video_model.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
 
 import 'package:movie_chi/features/feature_video_player/presentation/controller/new_video_player_controller.dart';
 
@@ -39,9 +38,8 @@ class BottomRightWidget extends StatelessWidget {
             ),
             onPressed: () async {
               int prevideo = pageVideoPlayerController.episoidIndex - 1;
-              final detaiPageController = Get.find<DetailPageController>();
 
-              Video video = detaiPageController.episoidToVideo(
+              Video video = episoidToVideo(
                   pageVideoPlayerController.eposiod[prevideo],
                   pageVideoPlayerController.baseVideo ?? Video());
               String qualityLink =
@@ -64,9 +62,8 @@ class BottomRightWidget extends StatelessWidget {
             ),
             onPressed: () async {
               int prevideo = pageVideoPlayerController.episoidIndex + 1;
-              final detaiPageController = Get.find<DetailPageController>();
 
-              Video video = detaiPageController.episoidToVideo(
+              Video video = episoidToVideo(
                   pageVideoPlayerController.eposiod[prevideo],
                   pageVideoPlayerController.baseVideo ?? Video());
               String qualityLink =

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class HomeCatagory {
   String? status;
   String? code;
@@ -97,6 +99,7 @@ class HomeCatagoryItemModel {
   String? viewName;
   String? colorAlpha;
   List<HomeItemData>? data;
+  ScrollController scrollController = ScrollController();
 
   HomeCatagoryItemModel(
       {this.id,

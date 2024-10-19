@@ -4,8 +4,9 @@ class UserLoginModel {
   String? fullName;
   String? timeOutPremium;
   String? downloadMax;
+  String? userAuth;
 
-  UserLoginModel({this.userTag, this.userStatus});
+  UserLoginModel({this.userTag, this.userStatus, this.userAuth});
 
   UserLoginModel.fromJson(Map<String, dynamic> json) {
     userTag = json['user_tag'];
@@ -13,6 +14,7 @@ class UserLoginModel {
     fullName = json['full_name'];
     timeOutPremium = json['time_out_premium'];
     downloadMax = json['download_max'];
+    userAuth = json['user_auth'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +24,7 @@ class UserLoginModel {
     data['full_name'] = fullName;
     data['time_out_premium'] = timeOutPremium;
     data['download_max'] = downloadMax;
+    data['user_auth'] = userAuth;
     return data;
   }
 }

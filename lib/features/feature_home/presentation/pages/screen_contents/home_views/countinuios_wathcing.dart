@@ -63,7 +63,7 @@ class CountinuisWatching extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10.0),
                     child: Column(
                       children: [
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             Map<String, dynamic> videoDetail = json.decode(
                                 controller.historyList[index]['video_detail']

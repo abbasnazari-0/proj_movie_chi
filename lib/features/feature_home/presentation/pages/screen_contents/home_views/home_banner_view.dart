@@ -54,16 +54,14 @@ class HomeBannerView extends StatelessWidget {
                     // size: 10,
                   ),
                 ),
-                Hero(
-                  tag: 'home-item-${homeCatagoryItem.data!.first.tag}',
-                  child: CachedNetworkImage(
-                    filterQuality: FilterQuality.low,
-                    imageUrl: Constants.imageFiller(
-                        getBannerThumbnail(homeCatagoryItem.data!.first)),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    height: Get.size.width * 0.5,
-                  ),
+                // tag: 'home-item-${homeCatagoryItem.data!.first.tag}',
+                CachedNetworkImage(
+                  filterQuality: FilterQuality.low,
+                  imageUrl: Constants.imageFiller(
+                      getBannerThumbnail(homeCatagoryItem.data!.first)),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  height: Get.size.width * 0.5,
                 ),
               ],
             ),

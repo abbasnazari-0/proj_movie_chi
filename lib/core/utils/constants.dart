@@ -248,14 +248,16 @@ class Constants {
       bool deepLink = false,
       String? hero = "",
       required String picture}) {
-    Get.toNamed(DetailPage.routeName, arguments: {
-      "tag": vidTag,
-      "deepLinking": deepLink,
-      "pic": picture,
-      "heroTag": hero,
-      "commonTag": commonTag,
-      "type": type
-    });
+    Get.toNamed(DetailPage.routeName,
+        arguments: {
+          "tag": vidTag,
+          "deepLinking": deepLink,
+          "pic": picture,
+          "heroTag": hero,
+          "commonTag": commonTag,
+          "type": type
+        },
+        preventDuplicates: false);
   }
 
   static Color hexToColor(String hexString) {

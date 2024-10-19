@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:link_text/link_text.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_chi/core/utils/page_status.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -124,17 +125,15 @@ class SupportContent extends StatelessWidget {
                               ),
                               const Gap(10),
                               SizedBox(
-                                width: 0.5,
-                                child: MyText(
-                                  txt:
-                                      cont.messageClassModel.data?[index].msg ??
-                                          "",
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color,
-                                  size: 10,
-                                  fontWeight: FontWeight.bold,
+                                // width: 0.5,
+                                child: LinkText(
+                                  cont.messageClassModel.data?[index].msg ?? "",
+                                  // color: Theme.of(context)
+                                  //     .textTheme
+                                  //     .bodyMedium
+                                  //     ?.color,
+                                  // size: 10,
+                                  // fontWeight: FontWeight.bold,
                                   // overflow: TextOverflow.ellipsis,
                                 ),
                               ),

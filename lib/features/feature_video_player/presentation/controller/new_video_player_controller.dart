@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, unnecessary_null_comparison
+// igFeatureNewVideoPlayerore_for_file: unused_field, unnecessary_null_comparison
 
 import 'dart:async';
 import 'dart:convert';
@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:movie_chi/core/utils/episod_converter.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
-import 'package:movie_chi/features/feature_detail_page/presentation/controllers/detail_page_controller.dart';
 import 'package:movie_chi/features/feature_play_list/data/model/session_playlist.dart';
 import 'package:movie_chi/features/feature_video_player/domain/usecases/video_player_usecase.dart';
 import 'package:movie_chi/features/feature_video_player/presentation/controller/video_player_view_controller.dart';
@@ -18,6 +18,7 @@ import 'package:status_bar_control/status_bar_control.dart';
 
 import '../../../../core/utils/database_helper.dart';
 import '../../../../locator.dart';
+// ignore: library_prefixes
 import '../../../feature_detail_page/data/model/video_model.dart' as videoModel;
 import '../../../feature_home/presentation/controller/home_page_controller.dart';
 import 'setting_controller.dart';
@@ -35,7 +36,8 @@ class NewPageVideoPlayerController extends GetxController {
   late final player = Player();
 
   // Create a [VideoController] to handle video output from [Player].
-  late final controller = VideoController(player);
+  late final controller =
+      VideoController(player, configuration: VideoControllerConfiguration());
 
   // MeeduPlayerController controller = MeeduPlayerController(
   //   errorText: "خطا در پخش ویدیو",
@@ -257,20 +259,11 @@ class NewPageVideoPlayerController extends GetxController {
     }
   }
 
-  late Timer _timer;
-
   showCoinHalf() async {
     await showDialog(
         barrierColor: Colors.black45,
         context: Get.context!,
         builder: (context) {
-          _timer = Timer(const Duration(seconds: 5), () {
-            try {
-              Navigator.of(context).pop();
-            } catch (e) {
-              debugPrint(e.toString());
-            }
-          });
           return Material(
             color: Colors.transparent,
             child: Container(
@@ -336,7 +329,7 @@ class NewPageVideoPlayerController extends GetxController {
   @override
   void onReady() {
     // show dialog with 5 secound about "Your traffic consumption is calculated at half price in Cinema app"
-    if (localPath == null) checkLastSession();
+    // if (localPath == null) checkLastSession();
 
     // reportPlaye("video", viewedStatus, baseVideo!.tagData!);
     // sleep(Duration(seconds: 5));
@@ -535,8 +528,7 @@ class NewPageVideoPlayerController extends GetxController {
       // chnage episod
       if (episoidIndex != controller.player.state.playlist.index) {
         // videoState?.update();
-        final detaiPageController = Get.find<DetailPageController>();
-        videoModel.Video video = detaiPageController.episoidToVideo(
+        videoModel.Video video = episoidToVideo(
             eposiod[controller.player.state.playlist.index],
             baseVideo ?? videoModel.Video());
         baseVideo = video;
@@ -595,7 +587,6 @@ class NewPageVideoPlayerController extends GetxController {
     // set custom caption
 
     controller.player.stream.position.listen((event) {
-      print(videoState?.mounted ?? false);
       // if  start video and last seen is not 0
       if (event.inSeconds > 0 && lastSeen != 0 && showdLastSeen == false) {
         showdLastSeen = true;

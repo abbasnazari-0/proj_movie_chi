@@ -23,12 +23,12 @@ class GeneralDialog {
                   onPressed();
                 },
               ),
-              TextButton(
-                child: const MyText(txt: 'خیر'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
+              // TextButton(
+              // child: const MyText(txt: 'خیر'),
+              // onPressed: () {
+              //   Navigator.of(context).pop();
+              // },
+              // ),
             ],
           ),
         );
