@@ -114,7 +114,8 @@ class SearchTVPage extends StatelessWidget {
                           controller.isUpdating = false;
                           // controller.prevIndex = controller.itemIndex;
 
-                          if (value.logicalKey == LogicalKeyboardKey.enter) {
+                          if (value.logicalKey == LogicalKeyboardKey.enter ||
+                              value.logicalKey == LogicalKeyboardKey.select) {
                             controller.onClicked();
                             controller.searchScrollController.animateTo(
                               0,

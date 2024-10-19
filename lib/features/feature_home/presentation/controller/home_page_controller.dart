@@ -29,7 +29,7 @@ import 'package:status_bar_control/status_bar_control.dart';
 import '../../../../core/params/home_request_params.dart';
 import '../../../../core/utils/database_helper.dart';
 import '../../../../core/utils/lifecycle_controller.dart';
-import '../../../../core/utils/showPrivacyPolicy.dart';
+
 import '../../../../locator.dart';
 import '../../../feature_plans/presentation/controllers/plan_controller.dart';
 import '../../../feature_update/presentation/screens/feature_update.dart';
@@ -361,10 +361,10 @@ class HomePageController extends GetxController {
 
     if (GetStorageData.getData("privacy") == null ||
         GetStorageData.getData("privacy") == false) {
-      // show privacy dialog
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        showPrivacyDialog();
-      });
+      // // show privacy dialog
+      // Future.delayed(const Duration(milliseconds: 1000), () {
+      //   showPrivacyDialog();
+      // });
     }
 
     await checkClicedOnNotification();

@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:platform_device_id/platform_device_id.dart';
@@ -65,68 +66,80 @@ class ObBoardingScreen extends StatelessWidget {
     getDevice();
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              'assets/images/cover.jpg',
-              height: height,
-              width: width,
-              fit: BoxFit.cover,
-            ),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              height: height,
-              width: width,
-              color: Colors.black.withAlpha(180),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Spacer(),
-                  const MyText(
-                    textAlign: TextAlign.right,
-                    txt: 'به مووی چی! خوش آمدید',
-                    size: 25,
-                  ),
-                  const MyText(
-                    textAlign: TextAlign.right,
-                    txt: 'از دیدن فیلم های مورد علاقه تان در\nهمه جا لذت ببرید',
-                    size: 15,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      GetStorageData.writeData('isNotFirestTime', false);
-                      // if (allowLogin)
-                      Get.off(() => const HomeScreen());
-                    },
-                    child: Container(
-                      width: MobileDetector.sizeHelper(
-                          MediaQuery.of(context).size,
-                          mobileSize: width * 0.9,
-                          tabletSize: width * 0.7,
-                          desktopSize: width * 0.4),
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: MyText(
-                          txt: 'شروع',
-                          color: Colors.white,
+    return RawKeyboardListener(
+      focusNode: FocusNode(),
+      onKey: (event) {
+        if (event.logicalKey == LogicalKeyboardKey.enter ||
+            event.logicalKey == LogicalKeyboardKey.select) {
+          GetStorageData.writeData('isNotFirestTime', false);
+          // if (allowLogin)
+          Get.off(() => const HomeScreen());
+        }
+      },
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/images/cover.jpg',
+                height: height,
+                width: width,
+                fit: BoxFit.cover,
+              ),
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                height: height,
+                width: width,
+                color: Colors.black.withAlpha(180),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Spacer(),
+                    const MyText(
+                      textAlign: TextAlign.right,
+                      txt: 'به مووی چی! خوش آمدید',
+                      size: 25,
+                    ),
+                    const MyText(
+                      textAlign: TextAlign.right,
+                      txt:
+                          'از دیدن فیلم های مورد علاقه تان در\nهمه جا لذت ببرید',
+                      size: 15,
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        GetStorageData.writeData('isNotFirestTime', false);
+                        // if (allowLogin)
+                        Get.off(() => const HomeScreen());
+                      },
+                      child: Container(
+                        width: MobileDetector.sizeHelper(
+                            MediaQuery.of(context).size,
+                            mobileSize: width * 0.9,
+                            tabletSize: width * 0.7,
+                            desktopSize: width * 0.4),
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Center(
+                          child: MyText(
+                            txt: 'شروع',
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -528,7 +528,8 @@ class AndroidTVScreen extends StatelessWidget {
           androidTvSliderController.itemIndex - 1.0;
       androidTvSliderController.itemIndex =
           double.parse(androidTvSliderController.itemIndex.toStringAsFixed(0));
-    } else if (value.logicalKey == LogicalKeyboardKey.enter) {
+    } else if (value.logicalKey == LogicalKeyboardKey.enter ||
+        value.logicalKey == LogicalKeyboardKey.select) {
       // print("select ${androidTvSliderController.itemIndex}");
       onClick(androidTvSliderController.itemIndex);
     }
@@ -575,18 +576,17 @@ class AndroidTVScreen extends StatelessWidget {
           duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
     }
 
+    int index = int.parse(formatNumber(int.parse(androidTvSliderController
+        .itemIndex
+        .toStringAsFixed(2)
+        .toString()
+        .split(".")[0])));
+
+    debugPrint(index.toString());
+
     if (androidTvSliderController.itemIndex >= 2) {
-      if (androidTvSliderController.itemIndex >= 5) {
-        _scrollControllerItems.animateTo(
-            prevItemValue.toInt() < androidTvSliderController.itemIndex.toInt()
-                ? _scrollControllerItems.offset +
-                    (androidTvSliderController.itemIndex * 40)
-                : prevItemValue.toInt() >
-                        androidTvSliderController.itemIndex.toInt()
-                    ? _scrollControllerItems.offset -
-                        (androidTvSliderController.itemIndex * 35) +
-                        40
-                    : _scrollControllerItems.offset,
+      if (androidTvSliderController.itemIndex >= 4) {
+        _scrollControllerItems.animateTo((index * 300) - Get.height - 200,
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeInOut);
       }

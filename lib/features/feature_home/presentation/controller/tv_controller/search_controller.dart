@@ -246,7 +246,8 @@ class AndroidTvSearchController extends GetxController {
       if (itemIndex <= 10.07) {
         itemIndex = 10.01;
       }
-    } else if (value.logicalKey == LogicalKeyboardKey.enter) {
+    } else if (value.logicalKey == LogicalKeyboardKey.enter ||
+        value.logicalKey == LogicalKeyboardKey.select) {
       onClicked();
     }
 

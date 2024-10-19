@@ -128,6 +128,13 @@ class LoginScreenController extends GetxController {
     return null;
   }
 
+  @override
+  void dispose() {
+    checking5Second = false;
+
+    super.dispose();
+  }
+
   bool checking5Second = false;
   checkEvery5Second() {
     Timer.periodic(const Duration(seconds: 5), (timer) async {

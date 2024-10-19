@@ -259,7 +259,8 @@ class _FeatureNewVideoPlayerState extends State<FeatureNewVideoPlayer> {
     } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
       tvVideoPlayerController.onTopClick();
       // } else if (event.logicalKey == LogicalKeyboardKey.pres) {
-    } else if (event.logicalKey == LogicalKeyboardKey.enter) {
+    } else if (event.logicalKey == LogicalKeyboardKey.enter ||
+        event.logicalKey == LogicalKeyboardKey.select) {
       tvVideoPlayerController.onSelect();
     }
 
