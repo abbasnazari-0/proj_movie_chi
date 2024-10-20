@@ -63,6 +63,7 @@ class AuthService {
         "sign_in_method": params.signInMethod,
         "prev_user_tag": GetStorageData.getData("user_tag"),
         'with_profile_pic': params.profile != null ? '1' : '0',
+        "notification_token": params.userNotifToken,
       },
       data: params.profile != null
           ? FormData.fromMap(params.profile != null
