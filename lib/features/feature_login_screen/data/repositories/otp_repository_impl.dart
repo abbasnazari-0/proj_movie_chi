@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:movie_chi/core/params/check_device_status.dart';
 import 'package:movie_chi/core/resources/data_state.dart';
 import 'package:movie_chi/features/feature_login_screen/data/data_source/data_source.dart';
@@ -53,6 +54,7 @@ class OTPRepsitoryImpl extends OTPRepository {
       UserLoginParams loginParams) async {
     try {
       var res = await authService.loginUser(loginParams);
+      debugPrint("loginUser: ${res.data}");
       if (res.statusCode == 200) {
         UserLoginModel userLoginModel =
             UserLoginModel.fromJson(jsonDecode(res.data));
