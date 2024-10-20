@@ -43,8 +43,7 @@ dependencies:
   adaptive_theme: ^3.1.1
   salomon_bottom_bar: ^3.3.1
   shimmer: ^2.0.0
-  carousel_slider:  ./gradlew clean
-  ./gradlew build --stacktrace
+  carousel_slider:
   persian_number_utility: ^1.1.2
   fluttertoast: ^8.1.1
   # flutter_svg: ^2.0.4
