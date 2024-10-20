@@ -24,7 +24,7 @@ class HomeHeaderBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        if ((GetStorageData.getData("logined") ?? false))
+        if ((GetStorageData.getData("Authorizedd") ?? false))
           IconButton(
               onPressed: () {
                 bottomAppBarController.chnageItemSelected(4.obs);
@@ -44,7 +44,7 @@ class HomeHeaderBar extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         const Spacer(),
-        if ((GetStorageData.getData("logined") ?? false))
+        if ((GetStorageData.getData("Authorizedd") ?? false))
           IconButton(
             onPressed: () async {
               if ((GetStorageData.getData("user_logined") ?? false) == false) {

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:movie_chi/config/theme.dart';
 import 'package:movie_chi/core/routes.dart';
+import 'package:movie_chi/core/utils/get_storage_data.dart';
 // import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
 import 'package:movie_chi/features/feature_artists/presentation/controllers/artist_list_controller.dart';
@@ -30,7 +31,7 @@ void main() async {
   await setup();
 
   // for debug we can clear the storage
-  // GetStorageData.clear();
+  GetStorageData.clear();
 
   // initialize the firebase for analytics
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

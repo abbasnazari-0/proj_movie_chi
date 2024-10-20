@@ -483,6 +483,7 @@ class DetailPageController extends GetxController {
     if (dotenv.env['APP_ACCESS'] == "true" &&
         GetStorageData.getData("user_tag") != null) {
       GetStorageData.writeData("logined", true);
+      
       return;
     }
     bool canSeeVide = await isallowToPlay();

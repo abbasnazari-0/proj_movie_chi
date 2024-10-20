@@ -16,7 +16,7 @@ class _SplashIOSState extends State<SplashIOS> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offAll(() => HomeIOSScreen());
+      Get.offAll(() => const HomeIOSScreen());
     });
   }
 

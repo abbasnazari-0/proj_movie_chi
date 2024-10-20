@@ -10,9 +10,10 @@ class ProfileRepositoryImpl extends ProfileRepository {
   ProfileRepositoryImpl(super.apiProvider);
 
   @override
-  Future<DataState<ProfileModel>> getProfile() async {
+  Future<DataState<ProfileModel>> getProfile({String? userAuth}) async {
     try {
-      var response = await apiProvider.getProfile();
+      var response = await apiProvider.getProfile(userAuth: userAuth);
+      debugPrint(response.data);
 
       if (response.statusCode == 200) {
         return DataSuccess(ProfileModel.fromJson(json.decode(response.data)));

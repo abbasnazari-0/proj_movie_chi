@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -16,6 +15,7 @@ import 'package:movie_chi/features/feature_video_player/presentation/controller/
 import 'package:movie_chi/features/feature_video_player/presentation/controller/tv_video_player_controller.dart';
 import 'package:movie_chi/features/feature_video_player/presentation/pages/new_video_player_views/bottom_bar_buttons.dart';
 import 'package:movie_chi/features/feature_video_player/presentation/pages/new_video_player_views/top_button_bar.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../../../locator.dart';
 
@@ -36,11 +36,12 @@ class _FeatureNewVideoPlayerState extends State<FeatureNewVideoPlayer> {
   final pageVideoPlayerController =
       Get.put(NewPageVideoPlayerController(locator()));
 
-  // final detailPageController = Get.find<DetailPageController>();
-
   @override
   void initState() {
     super.initState();
+
+    // The following line will enable the Android and iOS wakelock.
+    WakelockPlus.enable();
 
     pageVideoPlayerController.loadLastView();
 
@@ -59,9 +60,11 @@ class _FeatureNewVideoPlayerState extends State<FeatureNewVideoPlayer> {
   late final TvVideoPlayerController tvVideoPlayerController;
   @override
   void dispose() {
-    super.dispose();
     pageVideoPlayerController.controller.player.dispose();
+    // The next line disables the wakelock again.
+    WakelockPlus.disable();
     // pageVideoPlayerController.dispose();
+    super.dispose();
   }
 
   Widget onStackPlayer() {

@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:movie_chi/core/params/check_device_status.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/features/feature_login_screen/data/models/user_login_params.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+// import 'package:platform_device_id/platform_device_id.dart';
 
 import '../../../../core/utils/constants.dart';
 
@@ -34,7 +34,7 @@ class AuthService {
 
   Future<Response> loginUser(UserLoginParams params) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    String? deviceId = await PlatformDeviceId.getDeviceId;
+    // String? deviceId = await PlatformDeviceId.getDeviceId;
 
     String deviceName = "";
 
@@ -49,19 +49,29 @@ class AuthService {
         deviceName = iosInfo.utsname.machine;
       }
     }
-    return await dio
-        .post("${Constants.baseUrl()}${pageUrl}login.php", queryParameters: {
-      "device_name": deviceName,
-      "device_id": deviceId,
-      "user_tag": params.userTag,
-      "version": await Constants.versionApplication(),
-      "full_name": params.fullName,
-      "user_auth": params.userAuth,
-      "google_id": params.googleId,
-      "google_token": params.googleToken,
-      "sign_in_method": params.signInMethod,
-      "prev_user_tag": GetStorageData.getData("user_tag")
-    });
+    return await dio.post(
+      "${Constants.baseUrl()}${pageUrl}login.php",
+      queryParameters: {
+        "device_name": deviceName,
+        "device_id": "",
+        "user_tag": params.userTag,
+        "version": await Constants.versionApplication(),
+        "full_name": params.fullName,
+        "user_auth": params.userAuth,
+        "google_id": params.googleId,
+        "google_token": params.googleToken,
+        "sign_in_method": params.signInMethod,
+        "prev_user_tag": GetStorageData.getData("user_tag"),
+        'with_profile_pic': params.profile != null ? '1' : '0',
+      },
+      data: params.profile != null
+          ? FormData.fromMap(params.profile != null
+              ? {
+                  'pic': await MultipartFile.fromFile(params.profile!.path),
+                }
+              : {})
+          : null,
+    );
   }
 
   requestNewDevice(String userTag) async {

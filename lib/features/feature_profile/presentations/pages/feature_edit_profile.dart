@@ -57,25 +57,7 @@ class EditProfileScreen extends StatelessWidget {
                                 Icons.person,
                                 size: 50,
                               )),
-                          // if (controller.hasImage)
-                          //   ClipRRect(
-                          //     borderRadius: BorderRadius.circular(11),
-                          //     child: CachedNetworkImage(
-                          //       imageUrl: controller.pathImage,
-                          //       fit: BoxFit.cover,
-                          //       // cacheManager: CustomCacheManager(),
-                          //     ),
-                          //   ),
-                          // if (controller.pickerFile != null)
-                          //   ClipRRect(
-                          //     borderRadius: BorderRadius.circular(11),
-                          //     child: Image.file(
-                          //       File(controller.pickerFile?.path ?? ""),
-                          //       fit: BoxFit.cover,
-                          //       colorBlendMode: BlendMode.darken,
-                          //       color: Colors.black38,
-                          //     ),
-                          //   ),
+                        
                           Positioned(
                             bottom: 0,
                             right: 0,

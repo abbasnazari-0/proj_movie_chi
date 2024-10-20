@@ -7,8 +7,8 @@ class ProfileUsecase {
 
   ProfileUsecase(this.repository);
 
-  Future<DataState<ProfileModel>> getProfile() async {
-    return await repository.getProfile();
+  Future<DataState<ProfileModel>> getProfile({String? userAuth}) async {
+    return await repository.getProfile(userAuth: userAuth);
   }
 
   Future<DataState<ProfileModel>> updateProfile(params) async {

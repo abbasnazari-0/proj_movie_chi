@@ -16,7 +16,7 @@ import 'package:movie_chi/features/feature_home/presentation/controller/drawer_c
 import 'package:movie_chi/features/feature_login_screen/presentations/screens/feature_login_screen.dart';
 import 'package:movie_chi/features/feature_plans/presentation/screens/plan_screen.dart';
 import 'package:movie_chi/features/feature_support/presentation/pages/support_page.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+// import 'package:platform_device_id/platform_device_id.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -43,7 +43,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   getDevice() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    String? deviceId = await PlatformDeviceId.getDeviceId;
+    // String? deviceId = await PlatformDeviceId.getDeviceId;
 
     String deviceName = "";
     if (kIsWeb) {
@@ -58,8 +58,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       }
     }
     GetStorageData.writeData("user_tag", generateRandomString(10));
-    postdeviceInfoToServer(
-        deviceName, deviceId, GetStorageData.getData("user_tag"));
+    postdeviceInfoToServer(deviceName, "", GetStorageData.getData("user_tag"));
   }
 
   postdeviceInfoToServer(deviceName, deviceId, userTag) async {

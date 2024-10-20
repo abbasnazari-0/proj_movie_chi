@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_chi/core/params/profile_updator.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
@@ -8,12 +9,18 @@ import 'package:movie_chi/core/utils/get_storage_data.dart';
 class ProfileApiProvider {
   Dio dio = Dio();
 
-  Future<Response> getProfile() async {
+  Future<Response> getProfile({String? userAuth}) async {
+    debugPrint({
+      "type": "get_profile",
+      "user_token": GetStorageData.getData("user_tag") ?? "",
+      "user_auth": userAuth
+    }.toString());
     var baseUrl = dotenv.env['CONST_URL'];
     return await dio
         .get("$baseUrl/v9/cinimo/user_managing.php", queryParameters: {
       "type": "get_profile",
       "user_token": GetStorageData.getData("user_tag") ?? "",
+      "user_auth": userAuth
     });
   }
 

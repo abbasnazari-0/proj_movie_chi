@@ -7,7 +7,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   local_notifier
   media_kit_libs_linux
   media_kit_video
-  platform_device_id_linux
   screen_retriever
   url_launcher_linux
   window_manager

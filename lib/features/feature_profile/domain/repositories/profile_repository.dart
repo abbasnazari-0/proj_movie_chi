@@ -8,7 +8,7 @@ abstract class ProfileRepository {
 
   ProfileRepository(this.apiProvider);
 
-  Future<DataState<ProfileModel>> getProfile();
+  Future<DataState<ProfileModel>> getProfile({String? userAuth});
 
   Future<DataState<ProfileModel>> updateProfile(ProfileUpdator params);
 }

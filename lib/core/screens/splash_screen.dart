@@ -41,10 +41,12 @@ class _SplashState extends State<Splash> {
 
   // if user is accessed don't check again
   checkAuthorization() async {
-    if (GetStorageData.getData('Authorizedd') != true) {
+    if ((GetStorageData.getData('Authorizedd') ?? false) != true ||
+        (GetStorageData.getData('logined') ?? false) != true) {
       await Utils().checkUSers();
     }
 
+    debugPrint(GetStorageData.getData('Authorizedd').toString());
     if (GetStorageData.getData('Authorizedd') == true) {}
     dbInitlizer();
 

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:movie_chi/core/utils/mobile_detector.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+// import 'package:platform_device_id/platform_device_id.dart';
 import 'package:movie_chi/core/utils/constants.dart';
 import 'package:movie_chi/core/utils/get_storage_data.dart';
 import 'package:movie_chi/core/widgets/mytext.dart';
@@ -26,7 +26,7 @@ class ObBoardingScreen extends StatelessWidget {
   getDevice() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    String? deviceId = await PlatformDeviceId.getDeviceId;
+    // String? deviceId = await PlatformDeviceId.getDeviceId;
 
     String deviceName = "";
     if (kIsWeb) {
@@ -41,8 +41,7 @@ class ObBoardingScreen extends StatelessWidget {
       }
     }
     GetStorageData.writeData("user_tag", generateRandomString(10));
-    postdeviceInfoToServer(
-        deviceName, deviceId, GetStorageData.getData("user_tag"));
+    postdeviceInfoToServer(deviceName, "", GetStorageData.getData("user_tag"));
   }
 
   postdeviceInfoToServer(deviceName, deviceId, userTag) async {

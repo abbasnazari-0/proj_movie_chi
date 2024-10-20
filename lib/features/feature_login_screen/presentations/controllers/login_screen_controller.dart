@@ -57,7 +57,9 @@ class LoginScreenController extends GetxController {
       }
     } else {
       logError("شماره همراه را صحیح وارد کنید");
+      otpSenderOTP = PageStatus.error;
     }
+    update();
   }
 
   verifyOTPCode(String code, String phone) async {

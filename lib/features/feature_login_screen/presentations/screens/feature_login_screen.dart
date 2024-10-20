@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -276,7 +276,10 @@ class LoginScreen extends StatelessWidget {
                                 pinputAutovalidateMode:
                                     PinputAutovalidateMode.onSubmit,
                                 showCursor: true,
-                                onCompleted: (pin) => debugPrint(pin),
+                                onCompleted: (pin) =>
+                                    authControlle.verifyOTPCode(
+                                        codecontroller.text,
+                                        numbercontroller.text),
                                 // set color
                               ),
                             ),
@@ -300,9 +303,9 @@ class LoginScreen extends StatelessWidget {
                               textColor: Colors.white,
                               icon: Icons.arrow_forward,
                               // loading: ,
-                              onPressed: () {
+                              onPressed: () async {
                                 if (authControlle.pageNumber == 1) {
-                                  authControlle.verifyOTPCode(
+                                  await authControlle.verifyOTPCode(
                                       codecontroller.text,
                                       numbercontroller.text);
                                 }
@@ -339,25 +342,31 @@ class LoginScreen extends StatelessWidget {
                         //     ),
                         //   ),
                         // ),
+
                         const SizedBox(height: 20),
-                        const DividerWithText(
-                            horizontalPadding: 100, text: "یا ورود با"),
-                        IconButton(
-                          onPressed: () {
-                            googleLoginController.login();
-                          },
-                          icon: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(80),
-                                color: Colors.transparent,
-                                border: Border.all(
-                                    color: Colors.grey.withAlpha(100))),
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(5),
-                            child: Logo(Logos.google),
+                        if (authControlle.pageNumber == 0)
+                          Column(
+                            children: [
+                              const DividerWithText(
+                                  horizontalPadding: 100, text: "یا ورود با"),
+                              IconButton(
+                                onPressed: () {
+                                  googleLoginController.login();
+                                },
+                                icon: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(80),
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                          color: Colors.grey.withAlpha(100))),
+                                  width: 40,
+                                  height: 40,
+                                  padding: const EdgeInsets.all(5),
+                                  child: Logo(Logos.google),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
                       ],
                     ),
                   );
