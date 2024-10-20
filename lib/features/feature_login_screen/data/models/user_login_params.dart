@@ -8,8 +8,9 @@ class UserLoginParams {
   final String signInMethod;
   final String userTag;
   final XFile? profile;
+  final String? userNotifToken;
 
   UserLoginParams(this.fullName, this.userAuth, this.googleId, this.googleToken,
       this.signInMethod, this.userTag,
-      {this.profile});
+      {this.profile, this.userNotifToken});
 }
