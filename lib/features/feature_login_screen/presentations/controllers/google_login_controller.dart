@@ -57,3 +57,4 @@ class GoogleLoginController extends GetxController {
     _googleSignIn.signInSilently();
   }
 }
+ 
