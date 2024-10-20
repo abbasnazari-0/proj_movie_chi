@@ -232,6 +232,9 @@ class LoginScreen extends StatelessWidget {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
+                              onSubmitted: (value) {
+                                authControlle.sendCode(numbercontroller);
+                              },
                               decoration: InputDecoration(
                                 hintText: '09xx xxx xxxx',
                                 hintStyle: const TextStyle(
