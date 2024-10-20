@@ -71,7 +71,7 @@ class LoginScreenController extends GetxController {
     otpSenderOTP = PageStatus.loading;
     update();
     DataState dataState = await authService.validateCode(code, phone);
-
+ 
     if (dataState is DataSuccess) {
       OTPModel otpModel = dataState.data;
       if (otpModel.message!.contains("Code verified successfully")) {
