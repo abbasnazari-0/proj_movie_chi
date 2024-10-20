@@ -51,31 +51,13 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              // Container(
-              //   decoration: BoxDecoration(
-              //       gradient: LinearGradient(
-              //         colors: [
-              //           Get.theme.colorScheme.onSecondary,
-              //           Get.theme.colorScheme.secondary.withAlpha(50),
-              //         ],
-              //         end: Alignment.topLeft,
-              //         begin: Alignment.bottomRight,
-              //       ),
-              //       borderRadius: const BorderRadius.only(
-              //         bottomLeft: Radius.circular(99),
-              //         bottomRight: Radius.circular(99),
-              //       )),
-              //   height: size.height * 0.35,
-              //   width: size.width,
-              // ),
               GetBuilder<SignInProfileController>(builder: (controller) {
                 return Center(
                   child: profileController.pageStatus != PageStatus.loading
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(height: size.height * 0.35 - 40),
-
+                            SizedBox(height: size.height * 0.1),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
@@ -151,50 +133,7 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
                                 ],
                               ),
                             ),
-
                             SizedBox(height: size.height * 0.02),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     IntrinsicWidth(
-                            //       child: TextField(
-                            //         enabled: enabledEdit,
-                            //         textAlign: TextAlign.center,
-                            //         controller: profileController.name,
-                            //         decoration: InputDecoration(
-                            //             border: InputBorder.none,
-                            //             hintText: enabledEdit == true
-                            //                 ? "لطفا نام مورد نظر را وارد کنید"
-                            //                 : ""),
-                            //         style: const TextStyle(
-                            //             color: Colors.white,
-                            //             fontFamily: "vazir",
-                            //             fontWeight: FontWeight.bold,
-                            //             fontSize: 20),
-                            //       ),
-                            //     ),
-                            //     IconButton(
-                            //         onPressed: () {
-                            //           setState(() {
-                            //             enabledEdit = !enabledEdit;
-                            //             if (enabledEdit == true) {
-                            //               profileController.name.setText("");
-                            //             } else {
-                            //               profileController.name
-                            //                   .setText(signInParams.fullName);
-                            //             }
-                            //           });
-                            //         },
-                            //         icon: const Icon(Icons.edit_rounded)),
-                            //   ],
-                            // ),
-
-                            // MyText(
-                            //     txt: signInParams.email,
-                            //     color: Colors.grey,
-                            //     fontWeight: FontWeight.normal,
-                            //     size: 14),
-                            // SizedBox(height: size.height * 0.05),
                             const MyText(
                                 txt: "شما با موفقیت وارد شدید!!!",
                                 color: Colors.green,
@@ -215,27 +154,6 @@ class _SignInProfileScreenState extends State<SignInProfileScreen> {
                                     PageStatus.loading,
                               ),
                             ),
-                            // EasyButton(
-                            //   type: EasyButtonType.elevated,
-
-                            //   idleStateWidget: const MyText(
-                            //       txt: "شروع", fontWeight: FontWeight.bold),
-
-                            //   // Content inside of the button when the button state is loading.
-                            //   loadingStateWidget: const CircularProgressIndicator(
-                            //     strokeWidth: 3.0,
-                            //     valueColor: AlwaysStoppedAnimation<Color>(
-                            //       Colors.white,
-                            //     ),
-                            //   ),
-                            //   useWidthAnimation: true,
-                            //   contentGap: 6.0,
-                            //   borderRadius: 99.0,
-                            //   width: size.width * 0.8,
-                            //   height: size.height * 0.06,
-                            //   useEqualLoadingStateWidgetDimension: false,
-                            //   onPressed: profileController.startApp,
-                            // ),
                           ],
                         )
                       : const CircularProgressIndicator(),
