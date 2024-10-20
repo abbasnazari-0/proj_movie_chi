@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -93,8 +94,6 @@ class SignInProfileController extends GetxController {
   XFile? pickerFile;
   PageStatus registerProfile = PageStatus.empty;
   startApp() async {
-    getProfileData();
-
     // if (registerProfile == PageStatus.loading) {
     //   registerProfile = PageStatus.success;
     //   update();
@@ -108,7 +107,10 @@ class SignInProfileController extends GetxController {
 
     registerProfile = PageStatus.loading;
     update();
-    // Constants.showGeneralProgressBar(backDismissable: true);
+
+    var messaging = FirebaseMessaging.instance;
+    var token = await messaging.getToken();
+    // GetStorageData.writeData("user_noti", token);
     DataState dataState = await authService.loginUser(UserLoginParams(
       name.text,
       signInParams.email,
@@ -117,6 +119,7 @@ class SignInProfileController extends GetxController {
       signInParams.useGoogle ? "google" : "phone_number",
       generateRandomString(20),
       profile: pickerFile,
+      userNotifToken: token,
     ));
 
     if (dataState is DataSuccess) {
@@ -130,8 +133,21 @@ class SignInProfileController extends GetxController {
       GetStorageData.writeData("user_auth", signInParams.email);
       GetStorageData.writeData("user_logined", true);
 
+      ProfileModel profileModel = ProfileModel(data: [
+        ProfileModelData(
+          fullName: name.text,
+          lastName: fName.text,
+          userAuth: signInParams.email,
+          pic: model.profile,
+          signInMethod: signInParams.useGoogle ? "google" : "phone_number",
+        )
+      ]);
+
+      GetStorageData.writeData(
+          "user_profile", profileModel.data?.first.toJson());
       registerProfile = PageStatus.success;
       update();
+
       if (singInPage) {
         Get.back(result: model);
         Constants.showGeneralSnackBar("با موفقیت وارد شدید", "");
@@ -148,9 +164,6 @@ class SignInProfileController extends GetxController {
       } else {
         return UserLoginModel();
       }
-
-      registerProfile = PageStatus.error;
-      update();
     }
   }
 }
